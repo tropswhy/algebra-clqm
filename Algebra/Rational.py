@@ -12,3 +12,9 @@ class Rational():
 
     def __str__(self):
         return str(self._numerator) + " / " + str(self._denumerator)
+
+    def integer_to_rational(self, n):
+        # Преобразование целого числа в дробное
+        # Трибунский Алексей
+        self._numerator = n
+        self._denumerator = "1"

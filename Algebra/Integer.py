@@ -29,6 +29,7 @@ class Integer():
     def __str__(self):
         return "-" * (self._sign == NEGATIVE) + str(self._number)
 
+
     def sign(self):
         # Определение положительности числа
         # Трибунский Алексей
