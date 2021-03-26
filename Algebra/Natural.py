@@ -34,3 +34,47 @@ class Natural():
             return ''.join([str(i) for i in reversed(self._number)])
         else:
             return "0"
+
+
+    def __gt__(self, num):
+        '''Модуль переполнения ">". Оформил Шабров Иван'''
+        # Принимает уже реверсированные массивы!
+        if len(self.n) > len(num.n):
+            return True
+        elif len(self.n) < len(num.n):
+            return False
+        elif (self[0] != 0) or (num[0] != 0):
+            for i in range(len(self.n)):
+                if self.n[i] > num.n[i]:
+                    return True
+                elif self.n[i] < num.n[i]:
+                    return False
+        else:
+            return False
+
+
+    def __lt__(self, num):
+        '''Модуль переполнения "<". Оформил Шабров Иван'''
+        # Принимает уже реверсированные массивы!
+        if len(self.n) < len(num.n):
+            return True
+        elif len(self.n) > len(num.n):
+            return False
+        elif (self[0] != 0) or (num[0] != 0):
+            for i in range(len(self.n)):
+                if self.n[i] < num.n[i]:
+                    return True
+                elif self.n[i] > num.n[i]:
+                    return False
+        else:
+            return False
+
+
+    def compare(self, num):
+        '''Модуль COM_NN_D. Оформил Шабров Иван'''
+        if self > num:
+            return 2
+        elif self < num:
+            return 1
+        else:
+            return 0
