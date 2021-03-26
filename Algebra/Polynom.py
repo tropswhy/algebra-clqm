@@ -22,3 +22,7 @@ class Polynom():
             else:
                 s += str(self._coef[self._coef_n - i - 1])
         return s
+
+    def power(self):
+        '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
+        return self._coef_n - 1

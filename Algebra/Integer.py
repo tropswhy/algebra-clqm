@@ -33,3 +33,7 @@ class Integer():
         # Определение положительности числа
         # Трибунский Алексей
         return self._sign
+
+    def natural_to_integer(self, numb):
+        '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
+        return Integer(numb)
