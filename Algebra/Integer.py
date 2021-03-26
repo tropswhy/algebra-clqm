@@ -37,3 +37,12 @@ class Integer():
     def natural_to_integer(self, numb):
         '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
         return Integer(numb)
+
+    def change_sign(self):
+        ''' Функция умножения целого числа на -1'''
+    # Показацкая Арина
+        if self._sign == NEGATIVE:
+            self._sign = POSITIVE
+        elif self._sign == POSITIVE:
+            self._sign = NEGATIVE
+        return self
