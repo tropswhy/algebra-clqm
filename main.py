@@ -11,3 +11,4 @@ c = Algebra.Polynom([25, -21, 2])
 print(a)
 print(b)
 print(c)
+фыаыа
