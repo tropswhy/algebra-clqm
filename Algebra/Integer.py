@@ -29,6 +29,11 @@ class Integer():
     def __str__(self):
         return "-" * (self._sign == NEGATIVE) + str(self._number)
 
+    def sign(self):
+        # Определение положительности числа
+        # Трибунский Алексей
+        return self._sign
+
     def natural_to_integer(self, numb):
         '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
         return Integer(numb)
