@@ -34,3 +34,43 @@ class Natural():
             return ''.join([str(i) for i in reversed(self._number)])
         else:
             return "0"
+
+
+    def __gt__(self, num):
+        '''Модуль переполнения ">". Оформил Шабров Иван'''
+        if self._dig_n > num._dig_n:
+            return True
+        elif self._dig_n < num._dig_n:
+            return False
+        else:
+            for i in range(-1, -(self._dig_n + 1), -1):
+                if self._number[i] > num._number[i]:
+                    return True
+                elif self._number[i] < num._number[i]:
+                    return False
+        return False
+
+
+
+    def __lt__(self, num):
+        '''Модуль переполнения "<". Оформил Шабров Иван'''
+        if self._dig_n < num._dig_n:
+            return True
+        elif self._dig_n > num._dig_n:
+            return False
+        else:
+            for i in range(-1, -(self._dig_n + 1), -1):
+                if self._number[i] < num._number[i]:
+                    return True
+                elif self._number[i] > num._number[i]:
+                    return False
+        return False
+
+    def compare(self, num):
+        '''Модуль COM_NN_D. Оформил Шабров Иван'''
+        if self > num:
+            return 2
+        elif self < num:
+            return 1
+        else:
+            return 0
