@@ -38,36 +38,32 @@ class Natural():
 
     def __gt__(self, num):
         '''Модуль переполнения ">". Оформил Шабров Иван'''
-        # Принимает уже реверсированные массивы!
-        if len(self.n) > len(num.n):
+        if self._dig_n > num._dig_n:
             return True
-        elif len(self.n) < len(num.n):
+        elif self._dig_n < num._dig_n:
             return False
-        elif (self[0] != 0) or (num[0] != 0):
-            for i in range(len(self.n)):
-                if self.n[i] > num.n[i]:
-                    return True
-                elif self.n[i] < num.n[i]:
-                    return False
         else:
-            return False
+            for i in range(-1, -(self._dig_n + 1), -1):
+                if self._numerator[i] > num._numerator[i]:
+                    return True
+                elif self._numerator[i] < num._numerator[i]:
+                    return False
+
+
 
 
     def __lt__(self, num):
         '''Модуль переполнения "<". Оформил Шабров Иван'''
-        # Принимает уже реверсированные массивы!
-        if len(self.n) < len(num.n):
+        if self._dig_n < num._dig_n:
             return True
-        elif len(self.n) > len(num.n):
+        elif self._dig_n > num._dig_n:
             return False
-        elif (self[0] != 0) or (num[0] != 0):
-            for i in range(len(self.n)):
-                if self.n[i] < num.n[i]:
-                    return True
-                elif self.n[i] > num.n[i]:
-                    return False
         else:
-            return False
+            for i in range(-1, -(self._dig_n + 1), -1):
+                if self._numerator[i] < num._numerator[i]:
+                    return True
+                elif self._numerator[i] > num._numerator[i]:
+                    return False
 
 
     def compare(self, num):
