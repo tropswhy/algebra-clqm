@@ -44,11 +44,11 @@ class Natural():
             return False
         else:
             for i in range(-1, -(self._dig_n + 1), -1):
-                if self._numerator[i] > num._numerator[i]:
+                if self._number[i] > num._number[i]:
                     return True
-                elif self._numerator[i] < num._numerator[i]:
+                elif self._number[i] < num._number[i]:
                     return False
-
+        return False
 
 
 
@@ -60,11 +60,11 @@ class Natural():
             return False
         else:
             for i in range(-1, -(self._dig_n + 1), -1):
-                if self._numerator[i] < num._numerator[i]:
+                if self._number[i] < num._number[i]:
                     return True
-                elif self._numerator[i] > num._numerator[i]:
+                elif self._number[i] > num._number[i]:
                     return False
-
+        return False
 
     def compare(self, num):
         '''Модуль COM_NN_D. Оформил Шабров Иван'''
