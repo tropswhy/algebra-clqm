@@ -19,9 +19,9 @@ class Natural():
             self._number = [0]
             self._dig_n = 1
         else:
-            # Убираем все нули
-            while n.find("0") != -1:
-                n = remove_char(n, n.index("0"))
+            i = 0
+            while n.find("0") != -1 and n[0] == "0":
+                n = remove_char(n,n.index("0"))
             self._number = [int(i) for i in n[::-1]]
             self._dig_n = len(self._number)
 
@@ -34,3 +34,32 @@ class Natural():
             return ''.join([str(i) for i in reversed(self._number)])
         else:
             return "0"
+            
+    def mul_d(self,digit):
+        if self._dig_n != 0 and digit._dig_n != 0:
+            if self._number == [0] or digit._number[0] == 0:
+                return 0
+            else:
+                temp = 0
+                for j in range(self._dig_n):
+                    if temp != 0:
+                        if self._number[j]*digit._number[0]+temp >= 10:
+                            temp_n = self._number[j]
+                            self._number[j] = (self._number[j]*digit._number[0]+temp)%10
+                            temp = (temp_n*digit._number[0]+temp)//10
+                        else:
+                            self._number[j] = self._number[j]*digit._number[0]+temp
+                            temp = 0
+                    elif self._number[j]*digit._number[0] >= 10:
+                        temp_n = self._number[j]
+                        self._number[j] = (self._number[j]*digit._number[0])%10
+                        temp = (temp_n*digit._number[0])//10
+                    else:
+                        self._number[j] = self._number[j]*digit._number[0]
+                        temp = 0
+                if temp != 0:
+                    self._number.insert(self._dig_n,temp)
+                return self._number
+        else:
+            return -1
+            
