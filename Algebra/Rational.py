@@ -27,3 +27,11 @@ class Rational():
         # Трибунский Алексей
         self._numerator = n
         self._denumerator = "1"
+
+    def to_integer(self):
+        ''' Функция преобразования дробного числа в целое '''
+    # Показацкая Арина
+        if str(self._denumerator) == "1":
+            return self._numerator
+        else:
+            return Integer()
