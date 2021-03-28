@@ -8,7 +8,8 @@ ZERO = 0
 
 class Integer():
 
-    def __init__(self, n):
+    def __init__(self, n = None):
+        # Если число не было передано в качестве аргумента
         if n is None:
             self._number = Natural()
             self._sign = ZERO
