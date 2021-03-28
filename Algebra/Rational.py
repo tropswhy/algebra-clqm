@@ -26,7 +26,7 @@ class Rational():
         # Преобразование целого числа в дробное
         # Трибунский Алексей
         self._numerator = n
-        self._denumerator = "1"
+        self._denumerator = Natural("1")
 
     def to_integer(self):
         ''' Функция преобразования дробного числа в целое '''
