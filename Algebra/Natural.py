@@ -34,32 +34,43 @@ class Natural():
             return ''.join([str(i) for i in reversed(self._number)])
         else:
             return "0"
-            
+
+    '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
     def mul_d(self,digit):
-        if self._dig_n != 0 and digit._dig_n != 0:
-            if self._number == [0] or digit._number[0] == 0:
+        if self._dig_n != 0 and digit._dig_n != 0: #если числа не пустые
+            if self._number == [0] or digit._number[0] == 0: #если одно из чисел нулевое
                 return 0
             else:
                 temp = 0
                 for j in range(self._dig_n):
-                    if temp != 0:
-                        if self._number[j]*digit._number[0]+temp >= 10:
+                    if temp != 0: #если после предыдущего шага есть остаток
+                        if self._number[j]*digit._number[0]+temp >= 10: #если умножение очередной цифры числа оказалось больше 10
                             temp_n = self._number[j]
                             self._number[j] = (self._number[j]*digit._number[0]+temp)%10
                             temp = (temp_n*digit._number[0]+temp)//10
                         else:
                             self._number[j] = self._number[j]*digit._number[0]+temp
                             temp = 0
-                    elif self._number[j]*digit._number[0] >= 10:
+                    elif self._number[j]*digit._number[0] >= 10:#если умножение очередной цифры числа оказалось больше 10
                         temp_n = self._number[j]
                         self._number[j] = (self._number[j]*digit._number[0])%10
                         temp = (temp_n*digit._number[0])//10
                     else:
                         self._number[j] = self._number[j]*digit._number[0]
                         temp = 0
-                if temp != 0:
+                if temp != 0: #если на последнем шаге остался остаток, то записываем его в 1 позицию
                     self._number.insert(self._dig_n,temp)
                 return self._number
         else:
             return -1
+
+    '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
+    def mul_k(self,tenpow):
+        count = 0
+        for dig in (tenpow._number):
+            if dig == 0: count += 1
+        for i in range(count):
+            self._number.insert(i,0)
+        return self._number
+
             
