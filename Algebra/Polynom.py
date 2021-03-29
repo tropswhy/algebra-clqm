@@ -29,4 +29,4 @@ class Polynom():
 
     def higher_coef(self):
         '''Модуль LED_P_Q выполнил и оформил Шабров Иван'''
-        return self._coef[-1]
+        return self._coef[0]
