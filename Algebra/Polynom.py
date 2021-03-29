@@ -29,3 +29,7 @@ class Polynom():
     def power(self):
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
         return self._coef_n - 1
+
+    def higher_coef(self):
+        '''Модуль LED_P_Q выполнил и оформил Шабров Иван'''
+        return self._coef[0]
