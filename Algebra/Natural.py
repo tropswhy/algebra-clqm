@@ -20,7 +20,7 @@ class Natural():
             self._dig_n = 1
         else:
             # Убираем все нули
-            while n.find("0") != -1:
+            while n.find("0") != -1 and n[0] == "0":
                 n = remove_char(n, n.index("0"))
             self._number = [int(i) for i in n[::-1]]
             self._dig_n = len(self._number)
