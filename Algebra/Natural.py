@@ -75,56 +75,59 @@ class Natural():
         else:
             return 0
 
-        def __add__(self, num):
-            '''Модуль ADD_NN_N. Оформил Крысиль Жексенгалиев'''
-            # Сложение натуральных чисел
-            res = Natural()
-            if self.compare(num) == 1:
-                res._dig_n = num._dig_n
-                n = self._dig_n
+    def __add__(self, num):
+        '''Модуль ADD_NN_N. Оформил Крысиль Жексенгалиев'''
+        #Сложение натуральных чисел
+        res = Natural()
+        if self.compare(num) == 1:
+            res._dig_n = num._dig_n
+            n = self._dig_n
+        else:
+            res._dig_n = self._dig_n
+            n = num._dig_n
+        res._number = [0 for i in range(res._dig_n)]
+        i = 0
+        while i < n:
+            x = res._number[i] + self._number[i] + num._number[i]
+            if x == 10:
+                res._number[i] = 0
+                #  расширение массива чисел
+                if (i == res._dig_n - 1):
+                    res._number.append(0)
+                    res._dig_n += 1
+                res._number[i + 1] += 1
+                if res._number[i + 1] == 10:
+                    res._number[i + 1] = 0
+                    res._number[i + 2] += 1
+
+            elif x > 10:
+                res._number[i] = x - 10
+                if (i == res._dig_n - 1):
+                    res._number.append(0)
+                    res._dig_n += 1
+                res._number[i + 1] += 1
             else:
-                res._dig_n = self._dig_n
-                n = num._dig_n
-            res._number = [0 for i in range(res._dig_n)]
-            i = 0
-            while i < n:
-                x = res._number[i] + self._number[i] + num._number[i]
-                if x == 10:
-                    res._number[i] = 0
-                    #  расширение массива чисел
-                    if (i == res._dig_n - 1):
-                        res._number.append(0)
-                        res._dig_n += 1
-                    res._number[i + 1] += 1
-                    if res._number[i + 1] == 10:
-                        res._number[i + 1] = 0
-                        res._number[i + 2] += 1
+                res._number[i] += self._number[i] + num._number[i]
 
-                elif x > 10:
-                    res._number[i] = x - 10
-                    if (i == res._dig_n - 1):
-                        res._number.append(0)
-                        res._dig_n += 1
-                    res._number[i + 1] += 1
-                else:
-                    res._number[i] += self._number[i] + num._number[i]
+            i = i + 1
+        # Для случая когда числа имеют разные разряды
+        # Для случая когда числа имеют разные разряды
+        # Для случая когда числа имеют разные разряды
+        # подписюн
+        j = 0
+        while j < abs(self._dig_n - num._dig_n):
+            # cтоит ли заменить метод  на переменную или оставить так для читаемости кода?
+            if self.compare(num) == 2:
+                res._number[j + i] += self._number[j + i]
+            else:
+                res._number[j + i] += num._number[j + i]
+            if res._number[j + i] == 10:
+                res._number[j + i] = 0
+                if (j + i == res._dig_n - 1):
+                    res._dig_n+=1
+                    res._number.append(0)
 
-                i = i + 1
-            # Для случая когда числа имеют разные разряды
-            j = 0
-            while j < abs(self._dig_n - num._dig_n):
-                # cтоит ли заменить метод  на переменную или оставить так для читаемости кода?
-                if self.compare(num) == 2:
-                    res._number[j + i] += self._number[j + i]
-                else:
-                    res._number[j + i] += num._number[j + i]
-                if res._number[j + i] == 10:
-                    res._number[j + i] = 0
-                    if (j + i == res._dig_n - 1):
-                        res._dig_n += 1
-                        res._number.append(0)
+                res._number[j + i + 1] += 1
 
-                    res._number[j + i + 1] += 1
-
-                j = j + 1
-            return res
+            j = j + 1
+        return res
