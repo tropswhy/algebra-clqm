@@ -51,6 +51,13 @@ class Natural():
         return False
 
 
+    def __eq__(self, num):
+        '''Перегрузка оператора "==". Оформила Реброва Юлия'''
+        if self.__str__() == num:
+            return True
+        else:
+            return False
+
 
     def __lt__(self, num):
         '''Модуль переполнения "<". Оформил Шабров Иван'''
@@ -74,3 +81,10 @@ class Natural():
             return 1
         else:
             return 0
+
+    def is_zero(self):
+        '''Модуль NZER_N_B. Оформила Реброва Юлия'''
+        if self.__str__() == Natural("0"):
+            return True
+        else:
+            return False
