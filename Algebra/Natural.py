@@ -62,7 +62,7 @@ class Natural():
                     self_c._number.insert(self_c._dig_n, temp)
                 return self_c
         else:
-            Natural()
+            return Natural()
 
     '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
     def mul_k(self,tenpow:int):
