@@ -146,3 +146,10 @@ class Natural():
 
             j = j + 1
         return res
+
+    def __mul__(self, x):
+        '''Модуль MUL_NN_N. Оформил Трибунский Алексей'''
+        s = Natural("0")
+        for i in range(x._dig_n):
+            s += mul_k(mul_d(self, x._number[i]), i)
+        return s
