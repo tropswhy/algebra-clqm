@@ -36,10 +36,10 @@ class Polynom():
 
     def mul_xk(self, k):
         '''Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия'''
-        a = Polynom(self._coef_n + k)
-        a._coef = [0 * (self._coef_n + k)]
+        b = Polynom(self._coef_n + k)
+        b._coef = [0 * (self._coef_n + k)]
         for i in range(self._coef_n):
-            a._coef[i] = self._coef[i]
-        return a
+            b._coef[i] = self._coef[i]
+        return b
 
 
