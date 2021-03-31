@@ -9,7 +9,8 @@ ZERO = 0
 
 class Integer():
 
-    def __init__(self, n):
+    def __init__(self, n = None):
+        # Если число не было передано в качестве аргумента
         if n is None:
             self._number = Natural()
             self._sign = ZERO
@@ -30,6 +31,7 @@ class Integer():
     def __str__(self):
         return "-" * (self._sign == NEGATIVE) + str(self._number)
 
+
     def sign(self):
         # Определение положительности числа
         # Трибунский Алексей
@@ -38,3 +40,23 @@ class Integer():
     def natural_to_integer(self, numb):
         '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
         return Integer(numb)
+
+    def change_sign(self):
+        ''' Функция умножения целого числа на -1'''
+    # Показацкая Арина
+        if self._sign == NEGATIVE:
+            self._sign = POSITIVE
+        elif self._sign == POSITIVE:
+            self._sign = NEGATIVE
+        return self
+
+    def __abs__(self):
+        '''Модуль ABS_Z_N выполнила и оформила Реброва Юлия'''
+        if self._sign == NEGATIVE:
+            a = Integer(self)
+            a._sign = POSITIVE
+            b = Natural(str(a))
+            return b
+        else:
+            b = Natural(str(self))
+            return b
