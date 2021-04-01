@@ -251,8 +251,8 @@ class Natural():
         '''Модуль GCF_NN_N. Оформил Шабров Иван'''
         n1 = Natural(str(self))
         n2 = Natural(str(num))
-        while (not is_zero(n1)) and (not is_zero(n2)):
-            if compare(n1, n2) == 2:
+        while (not n1.is_zero()) and (not n2.is_zero()):
+            if n1.compare(n2) == 2:
                 n1 = n1 % n2
             else:
                 n2 = n2 % n1
