@@ -247,9 +247,12 @@ class Natural():
 
     def gcf(self, num):
         '''Модуль GCF_NN_N. Оформил Шабров Иван'''
-        while (not is_zero(self)) and (not is_zero(num)):
-            if compare(self, num) == 2:
-                self = self.__mod__(self, num)
+        n1 = Natural(str(self))
+        n2 = Natural(str(num))
+        while (not is_zero(n1)) and (not is_zero(n2)):
+            if compare(n1, n2) == 2:
+                n1 = n1 % n2
             else:
-                num = self.__mod__(self, num)
-        return self + num
+                n2 = n2 % n1
+        return n1 + n2
+
