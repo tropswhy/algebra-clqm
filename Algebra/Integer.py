@@ -9,7 +9,7 @@ ZERO = 0
 
 class Integer():
 
-    def __init__(self, n = None):
+    def __init__(self, n: str = None):
         # Если число не было передано в качестве аргумента
         if n is None:
             self._number = Natural()
@@ -37,7 +37,7 @@ class Integer():
         # Трибунский Алексей
         return self._sign
 
-    def natural_to_integer(self, numb):
+    def natural_to_integer(self, numb: Natural):
         '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
         return Integer(numb)
 

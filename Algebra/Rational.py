@@ -6,7 +6,7 @@ __all__ = ["Rational"]
 
 class Rational():
 
-    def __init__(self, n = None, m = None):
+    def __init__(self, n: str = None, m: str = None):
         # Если в __init__ не был передан ни один аргумент
         # то создаём "пустое" число
         if n is None and m is None:
@@ -22,7 +22,7 @@ class Rational():
     def __str__(self):
         return str(self._numerator) + " / " + str(self._denumerator)
 
-    def integer_to_rational(self, n):
+    def integer_to_rational(self, n: Integer):
         # Преобразование целого числа в дробное
         # Трибунский Алексей
         self._numerator = n
@@ -30,7 +30,7 @@ class Rational():
 
     def to_integer(self):
         ''' Функция преобразования дробного числа в целое '''
-    # Показацкая Арина
+        # Показацкая Арина
         if str(self._denumerator) == "1":
             return self._numerator
         else:

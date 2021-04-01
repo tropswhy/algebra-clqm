@@ -10,7 +10,7 @@ class Natural():
 
     # _dig_n - количество разрядов в числе
     # _number - натуральное число, представленое в виде перевёрнутого массива цифр
-    def __init__(self, n = None):
+    def __init__(self, n: str = None):
         self._number = []
         if n is None:
             self._dig_n = 0
@@ -36,7 +36,7 @@ class Natural():
             return "0"
 
     '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
-    def mul_d(self,digit:int):
+    def mul_d(self, digit: int):
         self_c = Natural(str(self))
         if self_c._dig_n != 0: #если числа не пустые
             if self_c._number == [0] or digit == 0: #если одно из чисел нулевое
@@ -66,7 +66,7 @@ class Natural():
             return Natural()
 
     '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
-    def mul_k(self,tenpow:int):
+    def mul_k(self, tenpow: int):
         self_c = Natural(str(self))
         for i in range(tenpow):
             self_c._number.insert(i,0)

@@ -7,7 +7,7 @@ class Polynom():
 
     # _coef - массив коэффициентов начиная с большего и заканчивая меньшим
     # _coef_n - количество коэффициентов
-    def __init__(self, l = None):
+    def __init__(self, l: list = None):
         if l is None:
             self._coef = []
             self._coef_n = 0
@@ -34,7 +34,7 @@ class Polynom():
         '''Модуль LED_P_Q выполнил и оформил Шабров Иван'''
         return self._coef[0]
 
-    def mul_xk(self, k):
+    def mul_xk(self, k: int):
         '''Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия'''
         b = Polynom(self._coef_n + k)
         b._coef = [0 * (self._coef_n + k)]
