@@ -245,3 +245,16 @@ class Natural():
             del res._number[i]
             i -= 1
         return res
+
+
+    def gcf(self, num):
+        '''Модуль GCF_NN_N. Оформил Шабров Иван'''
+        n1 = Natural(str(self))
+        n2 = Natural(str(num))
+        while (not is_zero(n1)) and (not is_zero(n2)):
+            if compare(n1, n2) == 2:
+                n1 = n1 % n2
+            else:
+                n2 = n2 % n1
+        return n1 + n2
+
