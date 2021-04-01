@@ -6,17 +6,19 @@ __all__ = ["Rational"]
 
 class Rational():
 
-    def __init__(self, n: str = None, m: str = None):
-        # Если в __init__ не был передан ни один аргумент
-        # то создаём "пустое" число
-        if n is None and m is None:
+    def __init__(self, n: str = None):
+        if n is None:
             self._numerator = Integer()
             self._denumerator = Natural()
-        # Если m не было введено
-        # то оно считается равным единице
         else:
-            self._numerator = Integer(n)
-            self._denumerator = Integer("1" if m is None else m)
+            k = n.find("/")
+            num = n[:k]
+            denum = n[k + 1:]
+            self._numerator = Integer(num)
+            self._denumerator = Natural(denum)
+            if self._numerator == Integer("0") or self._denumerator == Natural("0"):
+                self._numerator = Integer()
+                self._denumerator = Natural()
 
 
     def __str__(self):
