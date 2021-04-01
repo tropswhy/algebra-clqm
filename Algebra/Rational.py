@@ -22,7 +22,7 @@ class Rational():
 
 
     def __str__(self):
-        return str(self._numerator) + " / " + str(self._denumerator)
+        return str(self._numerator) + "/" + str(self._denumerator)
 
     def integer_to_rational(self, n: Integer):
         # Преобразование целого числа в дробное
