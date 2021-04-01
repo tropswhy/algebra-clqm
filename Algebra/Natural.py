@@ -189,6 +189,7 @@ class Natural():
         res = Natural("0")
         for i in range(x._dig_n):
             res += self.mul_d(x._number[i]).mul_k(i)
+        res = Natural(str(res))
         return res
 
     def __sub__(self, num):
