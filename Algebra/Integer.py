@@ -31,6 +31,11 @@ class Integer():
     def __str__(self):
         return "-" * (self._sign == NEGATIVE) + str(self._number)
 
+    def __eq__(self, num):
+        if self._sign != num._sign:
+            return False
+        else:
+            return self._number == num._number
 
     def sign(self):
         # Определение положительности числа

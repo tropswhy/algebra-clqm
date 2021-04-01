@@ -90,7 +90,6 @@ class Natural():
 
     def __eq__(self, num):
         '''Перегрузка оператора "==". Оформила Реброва Юлия'''
-
         if self._dig_n != num._dig_n:
             return False
         else:
