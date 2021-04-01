@@ -130,3 +130,73 @@ class Natural():
 
             j = j + 1
         return res
+
+    def __mul__(self, x):
+        '''Модуль MUL_NN_N. Оформил Трибунский Алексей'''
+        s = Natural("0")
+        for i in range(x._dig_n):
+            s += mul_k(mul_d(self, x._number[i]), i)
+        return s
+
+    # def icm (self,num):
+    # '''Модуль LCM_NN_N. Оформил Жексенгалиев Адиль'''
+    # NoD = gcf(self, num)
+    # res = self * num
+    # while res > NoD:
+    #   res = res - NoD
+    # return res
+
+    def __sub__(self, num):
+        '''Модуль LCM_NN_N. Оформил Жексенгалиев Адиль'''
+        ''' SUB_NN_N'''
+        t = self.compare(num)
+        if t == 2:
+            big = self
+            less = num
+            n = num._dig_n
+            m = self._dig_n
+        elif t == 1:
+            big = num
+            less = self
+            n = self._dig_n
+            m = num._dig_n
+        else:
+            return Natural("0")
+        # создание результирующего натур  числа
+        res = Natural()
+        res._dig_n = big._dig_n
+        res._number = [0 for i in range(big._dig_n)]
+        print(res._number)
+        i = m - 1
+        while i > n - 1:
+            res._number[i] = big._number[i]
+            i -= 1
+        # i  по сути будет равно n
+        while i >= 0:
+            x = big._number[i] - less._number[i]
+            if x < 0:
+                # Поиск разряда у которого можно занять
+                j = i + 1
+                while res._number[j] == 0:
+                    j += 1
+                res._number[j] -= 1
+                n = i
+                z = j - 1
+                while z > n - 1:
+                    if res._number[z] == 0:
+                        res._number[z] = 9
+                    z -= 1
+                res._number[i] = x + 10
+            elif x > 0:
+                res._number[i] = x
+            else:
+                res._number[i] = 0
+            i -= 1
+        # Удаление нулей
+        i = m - 1
+        while res._number[i] == 0:
+            res._dig_n -= 1
+            del res._number[i]
+            i -= 1
+        return res
+
