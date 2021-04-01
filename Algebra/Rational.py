@@ -12,13 +12,17 @@ class Rational():
             self._denumerator = Natural()
         else:
             k = n.find("/")
-            num = n[:k]
-            denum = n[k + 1:]
-            self._numerator = Integer(num)
-            self._denumerator = Natural(denum)
-            if self._numerator == Integer("0") or self._denumerator == Natural("0"):
-                self._numerator = Integer()
-                self._denumerator = Natural()
+            if k == -1:
+                self._numerator = Integer(n)
+                self._denumerator = Natural("1")
+            else:
+                num = n[:k]
+                denum = n[k + 1:]
+                self._numerator = Integer(num)
+                self._denumerator = Natural(denum)
+                if self._numerator == Integer("0") or self._denumerator == Natural("0"):
+                    self._numerator = Integer()
+                    self._denumerator = Natural()
 
 
     def __str__(self):
