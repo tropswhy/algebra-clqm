@@ -53,7 +53,7 @@ class Integer():
     def __abs__(self):
         '''Модуль ABS_Z_N выполнила и оформила Реброва Юлия'''
         if self._sign == NEGATIVE:
-            a = Integer(self)
+            a = Integer(str(self))
             a._sign = POSITIVE
             b = Natural(str(a))
             return b
