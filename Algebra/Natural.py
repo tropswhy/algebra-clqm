@@ -70,6 +70,7 @@ class Natural():
         self_c = Natural(str(self))
         for i in range(tenpow):
             self_c._number.insert(i,0)
+            self_c._dig_n += 1
         return self_c
 
     def __gt__(self, num):
@@ -185,10 +186,10 @@ class Natural():
 
     def __mul__(self, x):
         '''Модуль MUL_NN_N. Оформил Трибунский Алексей'''
-        s = Natural("0")
+        res = Natural("0")
         for i in range(x._dig_n):
-            s += mul_k(mul_d(self, x._number[i]), i)
-        return s
+            res += self.mul_d(x._number[i]).mul_k(i)
+        return res
 
     def __sub__(self, num):
         '''Модуль LCM_NN_N. Оформил Жексенгалиев Адиль'''
