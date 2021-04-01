@@ -1,5 +1,5 @@
 
-from .Integer import *
+from .Rational import *
 
 __all__ = ["Polynom"]
 
@@ -12,7 +12,7 @@ class Polynom():
             self._coef = []
             self._coef_n = 0
         else:
-            self._coef = [Integer(str(i)) for i in list(l)]
+            self._coef = [Rational(str(i)) for i in list(l)]
             self._coef_n = len(l)
 
     # TO DO:
