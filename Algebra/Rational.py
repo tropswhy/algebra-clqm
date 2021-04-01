@@ -35,3 +35,16 @@ class Rational():
             return self._numerator
         else:
             return Integer()
+
+
+    def reduce(self):
+        ''' Модуль Q-1 RED_Q_Q оформил Шабров Иван '''
+        r = Rational(str(self))
+        k = gcf(abs(r._numerator), r._denumerator)
+        # Переводим k из Natural в Integer
+        k_int = Integer()
+        k_int = k_new.natural_to_integer(k)
+        # ---------------------------------
+        r._denumerator = r._denumerator / k
+        r._numerator = r._numerator / k_int
+        return r
