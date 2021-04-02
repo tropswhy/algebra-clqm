@@ -14,7 +14,7 @@ class Rational():
             k = n.find("/")
             if k == -1:
                 self._numerator = Integer(n)
-                self._denumerator = Natural("1")
+                self._denumerator = Natural("1" if self._numerator != Integer("0") else "0")
             else:
                 num = n[:k]
                 denum = n[k + 1:]
