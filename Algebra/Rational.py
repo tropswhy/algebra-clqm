@@ -33,6 +33,7 @@ class Rational():
         # Трибунский Алексей
         self._numerator = n
         self._denumerator = Natural("1")
+        return self
 
     def to_integer(self):
         ''' Функция преобразования дробного числа в целое '''
