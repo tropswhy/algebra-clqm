@@ -38,7 +38,7 @@ class Rational():
     def to_integer(self):
         ''' Функция преобразования дробного числа в целое '''
         # Показацкая Арина
-        if str(self._denumerator) == "1":
+        if self._denumerator == Natural("1"):
             return self._numerator
         else:
             return Integer()
