@@ -12,7 +12,7 @@ class Polynom():
             self._coef = []
             self._coef_n = 0
         else:
-            self._coef = [Rational(str(i)) for i in list(l)]
+            self._coef = [Rational(str(i)) for i in l[::-1]]
             self._coef_n = len(l)
 
     # TO DO:
@@ -21,9 +21,9 @@ class Polynom():
         s = ""
         for i in range(self._coef_n - 1, -1, -1):
             if i != 0:
-                s += str(self._coef[self._coef_n - i - 1]) + f"x^{i} + "
+                s += str(self._coef[i]) + f"x^{i} + "
             else:
-                s += str(self._coef[self._coef_n - i - 1])
+                s += str(self._coef[i])
         return s
 
     def power(self):
@@ -32,14 +32,15 @@ class Polynom():
 
     def higher_coef(self):
         '''Модуль LED_P_Q выполнил и оформил Шабров Иван'''
-        return self._coef[0]
+        return self._coef[-1]
 
+    # КОД НЕ РАБОТАЕТ
+    '''
     def mul_xk(self, k: int):
-        '''Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия'''
+        #Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия
         b = Polynom(self._coef_n + k)
         b._coef = [0 * (self._coef_n + k)]
         for i in range(self._coef_n):
             b._coef[i] = self._coef[i]
         return b
-
-
+    '''
