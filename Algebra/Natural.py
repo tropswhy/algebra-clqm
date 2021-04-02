@@ -258,4 +258,21 @@ class Natural():
                 n2 = n2 % n1
         return n1 + n2
     '''
+    
+    def increment(self):
+        '''Модуль ADD_1N_N, оформил Проскуряк Влад.'''
+        res = Natural(str(self))
+        i = int(0)
+        if((res._number[0] + 1) < 10):
+            res._number[0] = res._number[0] + 1
+        else:
+            while((res._number[i] + 1) == 10)and(i < res._dig_n):
+                res._number[i] = 0
+                i = i + 1
+        if(i < res._dig_n):
+            res._number[i] = res._number[i] + 1
+        else:
+            res._dig_n = res._dig_n + 1
+            res._number.append(1)
+        return res
 
