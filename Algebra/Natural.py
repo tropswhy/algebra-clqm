@@ -245,9 +245,10 @@ class Natural():
             i -= 1
         return res
 
-
+    '''
+    НЕ РАБОЧИЙ КОД. НЕ ГОТОВЫ ПОДМОДУЛИ
     def gcf(self, num):
-        '''Модуль GCF_NN_N. Оформил Шабров Иван'''
+        #Модуль GCF_NN_N. Оформил Шабров Иван
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         while (not n1.is_zero()) and (not n2.is_zero()):
@@ -256,4 +257,5 @@ class Natural():
             else:
                 n2 = n2 % n1
         return n1 + n2
+    '''
 

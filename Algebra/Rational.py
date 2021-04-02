@@ -43,8 +43,10 @@ class Rational():
         else:
             return Integer()
 
+    '''
+    НЕ РАБОЧИЙ КОД. НЕ ГОТОВЫ ПОДМОДУЛИ
     def reduce(self):
-        ''' Модуль Q-1 RED_Q_Q оформил Шабров Иван '''
+        #Модуль Q-1 RED_Q_Q оформил Шабров Иван
         r = Rational(str(self))
         k = abs(r._numerator).gcf(r._denumerator)
         # Переводим k из Natural в Integer
@@ -54,3 +56,4 @@ class Rational():
         r._denumerator = r._denumerator / k
         r._numerator = r._numerator / k_int
         return r
+    '''
