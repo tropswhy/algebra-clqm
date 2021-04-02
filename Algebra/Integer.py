@@ -66,8 +66,10 @@ class Integer():
             b = Natural(str(self))
             return b
     
-    def to_natural(self)
+    def to_natural(self):
         '''Модуль TRANZ_Z_N, оформил Проскуряк Влад'''
         if (self._sign != NEGATIVE):
             res = Natural(str(self))
             return res
+        else:
+            return Natural()
