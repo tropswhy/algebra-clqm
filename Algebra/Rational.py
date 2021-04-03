@@ -8,8 +8,8 @@ class Rational():
 
     def __init__(self, n: str = None):
         if n is None:
-            self._numerator = Integer()
-            self._denumerator = Natural()
+            self._numerator = Integer("0")
+            self._denumerator = Natural("0")
         else:
             k = n.find("/")
             if k == -1:
@@ -42,6 +42,12 @@ class Rational():
             return self._numerator
         else:
             return Integer()
+
+    def __mul__(self, num):
+        res = Rational()
+        res._numerator = self._numerator * num._numerator
+        res._denumerator = self._denumerator * num._denumerator
+        return res
 
     '''
     НЕ РАБОЧИЙ КОД. НЕ ГОТОВЫ ПОДМОДУЛИ
