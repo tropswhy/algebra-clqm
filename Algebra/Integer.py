@@ -74,6 +74,13 @@ class Integer():
         else:
             return Natural()
 
+    def __mul__(self, num):
+        res = self._number * num._number
+        res = Integer(str(res))
+        if (self._sign == POSITIVE and num._sign == NEGATIVE) or (num._sign == POSITIVE and self._sign == NEGATIVE):
+            res.change_sign()
+        return res
+
     def __add__(self, num):
         '''Модуль ADD_ZZ_Z, оформил Трибунский Алексей'''
         res = Integer("0")
