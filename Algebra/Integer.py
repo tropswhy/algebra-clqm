@@ -73,3 +73,10 @@ class Integer():
             return res
         else:
             return Natural()
+
+    def __mul__(self, num):
+        res = self._number * num._number
+        res = Integer(str(res))
+        if (self._sign == POSITIVE and num._sign == NEGATIVE) or (num._sign == POSITIVE and self._sign == NEGATIVE):
+            res.change_sign()
+        return res
