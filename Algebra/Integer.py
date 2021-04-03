@@ -73,3 +73,28 @@ class Integer():
             return res
         else:
             return Natural()
+
+    def __add__(self, num):
+        '''Модуль ADD_ZZ_Z, оформил Трибунский Алексей'''
+        res = Integer("0")
+        sign1 = self.sign()
+        sign2 = num.sign()
+        if (sign1 == 0):
+            res = num
+        elif (sign2 == 0):
+            res = self
+        elif (sign1 == 2 and sign2 == 2):
+            res = Integer(str(abs(self) + abs(num)))
+        elif (sign1 == 1 and sign2 == 1):
+            res = Integer(str(abs(self) + abs(num))).change_sign()
+        else:
+            if (abs(self) > abs(num)):
+                large = self
+                less = num
+            else:
+                large = num
+                less = self
+            res = Integer(str(abs(large) - abs(less)))
+            if (large.sign() == 1):
+                res = res.change_sign()
+        return res
