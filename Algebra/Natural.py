@@ -276,3 +276,9 @@ class Natural():
             res._number.append(1)
         return res
 
+    '''
+    def lcm (self, num):
+    # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
+      NoD = gcf(self, num)
+      return (self * num) / NoD
+    '''
