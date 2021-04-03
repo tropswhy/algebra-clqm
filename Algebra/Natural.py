@@ -211,7 +211,7 @@ class Natural():
         res = Natural()
         res._dig_n = big._dig_n
         res._number = [0 for i in range(big._dig_n)]
-        print(res._number)
+        #print(res._number)
         i = m - 1
         while i > n - 1:
             res._number[i] = big._number[i]
@@ -276,3 +276,17 @@ class Natural():
             res._number.append(1)
         return res
 
+    def __div__(self, num):
+        ''' Функция нахождения частого '''
+    # Показацкая Арина
+        res = Natural(str(self))
+        num = Natural(str(num))
+        count = 0
+        if (res.compare(num) == 1):
+            temp = res
+            res = num
+            num = temp
+        while (res.compare(num) == 2 or res.compare(num) == 0):
+            res -= num
+            count = count + 1
+        return count
