@@ -281,12 +281,8 @@ class Natural():
     # Показацкая Арина
         res = Natural(str(self))
         num = Natural(str(num))
-        count = 0
-        if (res.compare(num) == 1):
-            temp = res
-            res = num
-            num = temp
+        count = Natural("0")
         while (res.compare(num) == 2 or res.compare(num) == 0):
             res -= num
-            count = count + 1
+            count += Natural(str(1))
         return count
