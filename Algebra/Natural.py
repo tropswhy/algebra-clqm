@@ -61,6 +61,7 @@ class Natural():
                         temp = 0
                 if temp != 0: #если на последнем шаге остался остаток, то записываем его в 1 позицию
                     self_c._number.insert(self_c._dig_n, temp)
+                    self_c._dig_n += 1
                 return self_c
         else:
             return Natural()
@@ -282,3 +283,40 @@ class Natural():
       NoD = gcf(self, num)
       return (self * num) / NoD
     '''
+    def div_dk(self, num):
+        '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
+        n1 = Natural(str(self))
+        n2 = Natural(str(num))
+        k = 0
+        if n1.compare(n2) == 1:
+            n3 = n1
+            while n2.compare(n3) == 2:
+                k += 1
+                n3 = n1.mul_k(k)
+            k -= 1
+            n3 = n1.mul_k(k)
+            n1 = n3
+            dig = 1
+            while n2.compare(n3) == 2:
+                dig += 1
+                n3 = n1.mul_d(dig)
+            dig -= 1
+        elif n1.compare(n2) == 2:
+            n3 = n2
+            while n1.compare(n3) == 2:
+                k += 1
+                n3 = n2.mul_k(k)
+            k -= 1
+            n3 = n2.mul_k(k)
+            n2 = n3
+            dig = 1
+            while n1.compare(n3) == 2:
+                dig += 1
+                n3 = n2.mul_d(dig)
+            dig -= 1
+        else:
+            return 1,0
+        return dig,k
+
+
+
