@@ -1,4 +1,6 @@
 
+from .Natural import *
+from .Integer import *
 from .Rational import *
 
 __all__ = ["Polynom"]
@@ -56,6 +58,7 @@ class Polynom():
             res._coef[i]._denumerator = self._coef[i]._denumerator * num._denumerator
         return res
 
+
     def derivate(self):
         res = Polynom(list(self._coef))
         for i in range(len(self._coef)-1):
@@ -80,3 +83,17 @@ class Polynom():
                 res._coef[i] = res._coef[i] + p2._coef[i]
         return res
 '''
+
+    def fac(self):
+        # Модуль FAC_P_Q выполнил и оформил Солодков Никита'''
+        res = Rational()
+        # Присваиваем НОД и НОК значение числителя и знаменателя первых элементов соответственно
+        num_gcd = abs(self._coef[0]._numerator)
+        num_lcm = self._coef[0]._denumerator
+        for i in range (self._coef_n):
+            num_gcd = num_gcd.gcd(abs(self._coef[i]._numerator))
+            num_lcm = num_lcm.lcm(self._coef[i]._denumerator)
+        num_gcd = Integer(str(num_gcd))
+        res.numerator = num_gcd
+        res.denumerator = num_lcm
+        return res

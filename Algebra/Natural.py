@@ -211,7 +211,7 @@ class Natural():
         res = Natural()
         res._dig_n = big._dig_n
         res._number = [0 for i in range(big._dig_n)]
-        print(res._number)
+        #print(res._number)
         i = m - 1
         while i > n - 1:
             res._number[i] = big._number[i]
@@ -275,6 +275,24 @@ class Natural():
             res._dig_n = res._dig_n + 1
             res._number.append(1)
         return res
+
+'''
+    def __truediv__(self, num):
+        #Функция нахождения частого
+    # Показацкая Арина
+        res = Natural(str(self))
+        num = Natural(str(num))
+        count = Natural("0")
+        while (res.compare(num) == 2 or res.compare(num) == 0):
+            a = res.div_dk()[0] #первая цифра
+            res = Natural(str(a))
+            b = res.div_dk()[1] #номер позиции этой цифры
+            c = a.mul_k(b)
+            c = Natural(str(c))
+            res -= c
+            count = count.increment()
+        return count
+'''
 
     '''
     def lcm (self, num):
