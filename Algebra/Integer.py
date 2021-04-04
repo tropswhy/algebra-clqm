@@ -74,6 +74,13 @@ class Integer():
         else:
             return Natural()
 
+    def __mul__(self, num):
+        res = self._number * num._number
+        res = Integer(str(res))
+        if (self._sign == POSITIVE and num._sign == NEGATIVE) or (num._sign == POSITIVE and self._sign == NEGATIVE):
+            res.change_sign()
+        return res
+
     def __add__(self, num):
         '''Модуль ADD_ZZ_Z, оформил Трибунский Алексей'''
         res = Integer("0")
@@ -129,3 +136,30 @@ class Integer():
             else:
                 res = Integer(str(abs(self) + abs(num)))
         return res
+
+    ''' Модуль не работает в связи с отсутствием модуля DIV_NN_N
+    def __truediv__(self, num):
+        ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
+        res = Integer()
+        divisible = self
+        divisor = num
+        # Проверка на ноль(нуль)
+        if (divisor == Integer("0")):
+            return Integer()
+        # Определение знака частного
+        if (divisible._sign == divisor._sign):
+                res._sign = POSITIVE
+        else:
+            res._sign = NEGATIVE
+        # Присваиваем делумому и делителю их абсолютные значения
+        divisible = abs(divisible)
+        divisor = abs(divisor)
+        # Собственно, само деление
+        res._number = divisible / divisor
+        return res
+    '''
+
+
+
+
+

@@ -44,3 +44,14 @@ class Polynom():
             b._coef[i] = self._coef[i]
         return b
     '''
+
+    def mul_q(self, num):
+        ''' Выполнил Адиль Жексенгалиев'''
+        # Модуль P-3
+        res = Polynom()
+        res._coef_n = self._coef_n
+        res._coef = [Rational("1") for i in range(res._coef_n)]
+        for i in range(self._coef_n):
+            res._coef[i]._numerator = self._coef[i]._numerator * num._numerator
+            res._coef[i]._denumerator = self._coef[i]._denumerator * num._denumerator
+        return res
