@@ -300,7 +300,10 @@ class Natural():
             while n2.compare(n3) == 2:
                 dig += 1
                 n3 = n1.mul_d(dig)
-            dig -= 1
+            if n2.compare(n3) != 0:
+                dig -= 1
+            if dig == 10:
+                dig = 1
         elif n1.compare(n2) == 2:
             n3 = n2
             while n1.compare(n3) == 2:
@@ -313,7 +316,10 @@ class Natural():
             while n1.compare(n3) == 2:
                 dig += 1
                 n3 = n2.mul_d(dig)
-            dig -= 1
+            if n1.compare(n3) != 0:
+                dig -= 1
+            if dig == 10:
+                dig = 1
         else:
             return 1,0
         return dig,k
