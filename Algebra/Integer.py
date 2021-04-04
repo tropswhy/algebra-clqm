@@ -44,7 +44,7 @@ class Integer():
 
     def natural_to_integer(self, numb: Natural):
         '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
-        return Integer(numb)
+        return Integer(str(numb))
 
     def change_sign(self):
         ''' Функция умножения целого числа на -1'''
@@ -137,9 +137,9 @@ class Integer():
                 res = Integer(str(abs(self) + abs(num)))
         return res
 
-    ''' Модуль не работает в связи с отсутствием модуля DIV_NN_N
+''' Модуль не работает в связи с отсутствием модуля DIV_NN_N
     def __truediv__(self, num):
-        ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
+        # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
         res = Integer()
         divisible = self
         divisor = num
@@ -157,7 +157,7 @@ class Integer():
         # Собственно, само деление
         res._number = divisible / divisor
         return res
-    '''
+'''
 
 
 
