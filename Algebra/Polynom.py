@@ -60,11 +60,12 @@ class Polynom():
 
 
     def derivate(self):
-        res = Polynom(list(self._coef))
+        res = Polynom(self._coef[::-1])
         for i in range(len(self._coef)-1):
-            res._coef[i] = self._coef[i+1]*(i+1)
+            res._coef[i] = self._coef[i+1] * Rational(str(i+1))
         res._coef = res._coef[:len(self._coef)-1]
         self._coef_n -= 1
+        res = Polynom(res._coef[::-1])
         return res
 
 #Модуль не работает без ADD_QQ_Q
