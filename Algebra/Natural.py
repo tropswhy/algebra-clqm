@@ -278,19 +278,19 @@ class Natural():
         return res
 
 '''
-    def __truediv__(self, num):
+     def __truediv__(self, num):
         #Функция нахождения частого
     # Показацкая Арина
         res = Natural(str(self))
         num = Natural(str(num))
+        k = Natural("1")
         count = Natural("0")
         while (res.compare(num) == 2 or res.compare(num) == 0):
-            a = res.div_dk()[0] #первая цифра
-            res = Natural(str(a))
-            b = res.div_dk()[1] #номер позиции этой цифры
-            c = a.mul_k(b)
+            a = res.div_dk(num)[0] #первая цифра
+            b = res.div_dk(num)[1] #номер позиции этой цифры
+            c = k.mul_k(b)
             c = Natural(str(c))
-            res -= c
+            res = sub_dn(res, a, c)
             count = count.increment()
         return count
 '''
