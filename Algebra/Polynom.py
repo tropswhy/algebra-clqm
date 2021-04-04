@@ -63,3 +63,20 @@ class Polynom():
         res._coef = res._coef[:len(self._coef)-1]
         self._coef_n -= 1
         return res
+
+#Модуль не работает без ADD_QQ_Q
+'''
+    def __add__(self, num):
+        # Модуль ADD_PP_P выполнил и оформил Щусь Максим
+        p1 = Polynom(self._coef)
+        p2 = Polynom(num._coef)
+        if p2._coef_n > p1._coef_n:
+            res = Polynom(num._coef)
+            for i in range(p1._coef_n):
+                res._coef[i] = res._coef[i] + p1._coef[i]
+        else:
+            res = Polynom(self._coef)
+            for i in range(p2._coef_n):
+                res._coef[i] = res._coef[i] + p2._coef[i]
+        return res
+'''
