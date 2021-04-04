@@ -55,3 +55,11 @@ class Polynom():
             res._coef[i]._numerator = self._coef[i]._numerator * num._numerator
             res._coef[i]._denumerator = self._coef[i]._denumerator * num._denumerator
         return res
+
+    def derivate(self):
+        res = Polynom(list(self._coef))
+        for i in range(len(self._coef)-1):
+            res._coef[i] = self._coef[i+1]*(i+1)
+        res._coef = res._coef[:len(self._coef)-1]
+        self._coef_n -= 1
+        return res
