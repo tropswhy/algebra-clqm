@@ -97,3 +97,23 @@ class Polynom():
         res.numerator = num_gcd
         res.denumerator = num_lcm
         return res
+
+    '''
+    def __sub__(self, num):
+        # Вычитание многочленов
+        # Показацкая Арина
+        p = self._coef
+        p1 = Polynom(self._coef)
+        p2 = Polynom(num._coef)
+        if (p1._coef_n > p2._coef_n):
+            while (p2._coef_n != p1._coef_n):
+                num._coef.insert(0, 0)
+        elif (p1._coef_n < p2._coef_n):
+            while (p2._coef_n != p1._coef_n):
+                p.insert(0, 0)
+        res = Polynom(self._coef)
+        for i in range(p2._coef_n):
+            res._coef[i] = res._coef[i] - p2._coef[i]
+        while (res._coef[0] == 0):
+            del res._coef[0]
+        return res'''
