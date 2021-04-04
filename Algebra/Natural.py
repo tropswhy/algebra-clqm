@@ -343,3 +343,10 @@ class Natural():
             return 1,0
         return dig,k
 
+    def sub_dn(self, dig, num):
+        # Модуль SUB_NDN_N. Оформила Реброва Юлия
+        c = num.mul_d(dig)
+        if self.compare(c) != 1:
+            return self - c
+        else:
+            return Natural()
