@@ -6,32 +6,63 @@ __all__ = ["Rational"]
 
 class Rational():
 
-    def __init__(self, n = None, m = None):
-        # Если в __init__ не был передан ни один аргумент
-        # то создаём "пустое" число
-        if n is None and m is None:
-            self._numerator = Integer()
-            self._denumerator = Natural()
-        # Если m не было введено
-        # то оно считается равным единице
+    def __init__(self, n: str = None):
+        if n is None:
+            self._numerator = Integer("0")
+            self._denumerator = Natural("0")
         else:
-            self._numerator = Integer(n)
-            self._denumerator = Integer("1" if m is None else m)
+            k = n.find("/")
+            if k == -1:
+                self._numerator = Integer(n)
+                self._denumerator = Natural("1" if self._numerator != Integer("0") else "0")
+            else:
+                num = n[:k]
+                denum = n[k + 1:]
+                self._numerator = Integer(num)
+                self._denumerator = Natural(denum)
+                if self._numerator == Integer("0") or self._denumerator == Natural("0"):
+                    self._numerator = Integer()
+                    self._denumerator = Natural()
 
 
     def __str__(self):
-        return str(self._numerator) + " / " + str(self._denumerator)
+        return str(self._numerator) + "/" + str(self._denumerator)
 
-    def integer_to_rational(self, n):
+    def integer_to_rational(self, n: Integer):
         # Преобразование целого числа в дробное
         # Трибунский Алексей
         self._numerator = n
         self._denumerator = Natural("1")
+        return self
 
     def to_integer(self):
         ''' Функция преобразования дробного числа в целое '''
-    # Показацкая Арина
-        if str(self._denumerator) == "1":
+        # Показацкая Арина
+        if self._denumerator == Natural("1"):
             return self._numerator
         else:
             return Integer()
+
+    def __mul__(self, num):
+        res = Rational()
+        res._numerator = self._numerator * num._numerator
+        res._denumerator = self._denumerator * num._denumerator
+        return res
+
+    '''
+    НЕ РАБОЧИЙ КОД. НЕ ГОТОВЫ ПОДМОДУЛИ
+    def reduce(self):
+        #Модуль Q-1 RED_Q_Q оформил Шабров Иван
+        r = Rational(str(self))
+        k = abs(r._numerator).gcf(r._denumerator)
+        # Переводим k из Natural в Integer
+        k_int = Integer()
+        k_int = k_int.natural_to_integer(k)
+        # ---------------------------------
+        r._denumerator = r._denumerator / k
+        r._numerator = r._numerator / k_int
+        return r
+    '''
+
+    def is_int(self):
+        return self._denumerator == Natural("1")
