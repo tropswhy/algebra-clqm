@@ -63,3 +63,6 @@ class Rational():
         r._numerator = r._numerator / k_int
         return r
     '''
+
+    def is_int(self):
+        return self._denumerator == Natural("1")
