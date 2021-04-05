@@ -123,6 +123,7 @@ class Polynom():
             res._coef_n -= 1
         return res'''
 
+
     '''
     # не пашет без ADD_PP_P и MUL_Pxk_P
     # модуль MUL_PP_P, оформил Трибунский Алексей
@@ -132,3 +133,14 @@ class Polynom():
             res += res.mul_q(p._coef[i]).mul_xk(i)
         return res
     '''
+
+    def gcf(self, num):
+        '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
+        a = Polynom(self._coef)
+        b = Polynom(num._coef)
+        while a > 0 and b > 0:
+            if a.power() > b.power():
+                a = a.__mod__(b)
+            else:
+                b = b.__mod__(a)
+        return a + b

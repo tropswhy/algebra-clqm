@@ -47,8 +47,7 @@ class Natural():
                 temp = 0  # остаток после умножения разряда на число.
                 for j in range(self_c._dig_n):
                     if temp != 0:  # если после предыдущего шага есть остаток
-                        if self_c._number[
-                            j] * digit + temp >= 10:  # если умножение очередной цифры числа оказалось больше 10
+                        if self_c._number[j] * digit + temp >= 10:  # если умножение очередной цифры числа оказалось больше 10
                             temp_n = self_c._number[j]
                             self_c._number[j] = (self_c._number[j] * digit + temp) % 10
                             temp = (temp_n * digit + temp) // 10
@@ -282,10 +281,11 @@ class Natural():
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         res = Natural()
+        res._dig_n = n1.div_dk(n2)[1] + 1
+        res._number = [0 for i in range(res._dig_n)]
         while n1.compare(n2) != 1:
             a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
-            res._number.insert(0, Natural(str(a)))
-            res._dig_n += 1
+            res._number[b] = Natural(str(a))
             c = n2.mul_k(b)
             n1 = n1.sub_dn(a, c)
         return res

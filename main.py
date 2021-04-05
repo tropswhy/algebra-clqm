@@ -3,8 +3,9 @@ import Algebra
 
 pi = 1.23
 
-a = Algebra.Integer("-28")
-b = Algebra.Integer("-29")
+a = Algebra.Rational("-552/136")
+b = Algebra.Rational("176/527")
 
-print(a / b, int(str(a)) // int(str(b)))
+print(a,' - ',b,' = ',a-b)
+
 
