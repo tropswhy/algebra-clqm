@@ -157,7 +157,7 @@ class Integer():
                 res = Integer(str(abs(self) + abs(num)))
         return res
 
-''' Модуль не работает в связи с отсутствием модуля DIV_NN_N
+
     def __truediv__(self, num):
         # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
         res = Integer()
@@ -177,7 +177,7 @@ class Integer():
         # Собственно, само деление
         res._number = divisible / divisor
         return res
-'''
+
 
 
 
