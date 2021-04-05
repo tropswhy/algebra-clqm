@@ -263,10 +263,10 @@ class Natural():
     def increment(self):
         '''Модуль ADD_1N_N, оформил Проскуряк Влад.'''
         res = Natural(str(self))
-        if((res._number[0] + 1) < 10):
+        if (res._number[0] + 1) < 10:
             res._number[0] = res._number[0] + 1
         else:
-            i = int(0)
+            i = 0
             while((res._number[i] + 1) == 10)and(i < res._dig_n):
                 res._number[i] = 0
                 i = i + 1
@@ -277,21 +277,19 @@ class Natural():
                 res._number.append(1)
         return res
 
-    #  def __truediv__(self, num):
-    #     #Функция нахождения частого
-    # # Показацкая Арина
-    #     res = Natural(str(self))
-    #     num = Natural(str(num))
-    #     k = Natural("1")
-    #     count = Natural("0")
-    #     while (res.compare(num) == 2 or res.compare(num) == 0):
-    #         a = res.div_dk(num)[0] #первая цифра
-    #         b = res.div_dk(num)[1] #номер позиции этой цифры
-    #         c = k.mul_k(b)
-    #         c = Natural(str(c))
-    #         res = sub_dn(res, a, c)
-    #         count = count.increment()
-    #     return count
+    def __truediv__(self, num):
+        #Функция нахождения частого
+        # Показацкая Арина
+        n1 = Natural(str(self))
+        n2 = Natural(str(num))
+        res = Natural()
+        while n1.compare(n2) != 1:
+            a, b = n1.div_dk(n2) #первая цифра и номер позиции этой цифры
+            res._number.insert(0, Natural(str(a)))
+            res._dig_n += 1
+            c = n2.mul_k(b)
+            n1 = n1.sub_dn(a, c)
+        return res
 
     #def lcm (self, num):
     # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
@@ -336,8 +334,8 @@ class Natural():
             if dig == 10:
                 dig = 1
         else:
-            return 1,0
-        return dig,k
+            return 1, 0
+        return dig, k
 
     def sub_dn(self, dig, num):
         # Модуль SUB_NDN_N. Оформила Реброва Юлия
