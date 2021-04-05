@@ -122,3 +122,13 @@ class Polynom():
             res._coef.pop()
             res._coef_n -= 1
         return res'''
+
+    '''
+    # не пашет без ADD_PP_P и MUL_Pxk_P
+    # модуль MUL_PP_P, оформил Трибунский Алексей
+    def __mul__(self, p):
+        res = Polynom(self._coef[::-1])
+        for i in range(p._coef_n):
+            res += res.mul_q(p._coef[i]).mul_xk(i)
+        return res
+    '''
