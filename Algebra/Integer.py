@@ -163,16 +163,18 @@ class Integer():
         # Проверка на ноль(нуль)
         if (divisor == Integer("0")):
             return Integer()
+        elif (divisible == Integer("0")):
+            return Integer("0")
         # Определение знака частного
         if (divisible._sign == divisor._sign):
+            # Если у частного знак положительные, значит просто делим два натуральных числа и получаем ответ
                 res._sign = POSITIVE
+                res._number = divisible._number / divisor._number
         else:
+            # Если знак отрицательный, значит делим два натуральных числе, после чего вычитаем единицу
             res._sign = NEGATIVE
-        # Присваиваем делумому и делителю их абсолютные значения
-        divisible = abs(divisible)
-        divisor = abs(divisor)
-        # Собственно, само деление
-        res._number = divisible / divisor
+            res._number = divisible._number / divisor._number
+            res = res + Integer("-1")
         return res
 
 
