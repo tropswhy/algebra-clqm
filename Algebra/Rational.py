@@ -63,3 +63,22 @@ class Rational():
         r._numerator = r._numerator / k_int
         return r
     '''
+
+    def is_int(self):
+        return self._denumerator == Natural("1")
+
+    def __add__(self, num):
+        '''Модуль ADD_QQ_Q, оформил Проскуряк Влад.'''
+        res = Rational(str(self))
+        #res._numerator = __add__(__mul__(res._numerator, __div__(res._denumerator, lcm(self._denumerator, num._denumerator))), __mul__(num._numerator, __div__(num._denumerator, lcm(self._denumerator, num._denumerator))))
+        lcm = self._denumerator.lcm(num._denumerator)
+
+        common_div1 = res._denumerator / lcm
+        num1 = res._numerator * common_div1
+
+        common_div2 = num._denumerator / lcm
+        num2 = num._numerator * common_div2
+
+        res._numerator = num1 + num2
+        res._denumerator = lcm
+        return res

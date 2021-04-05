@@ -44,7 +44,7 @@ class Integer():
 
     def natural_to_integer(self, numb: Natural):
         '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
-        return Integer(numb)
+        return Integer(str(numb))
 
     def change_sign(self):
         ''' Функция умножения целого числа на -1'''
@@ -105,6 +105,23 @@ class Integer():
             if (large.sign() == 1):
                 res = res.change_sign()
         return res
+
+    def __mod__(self, num):
+        # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
+        z1 = Integer(str(self))
+        z2 = Integer(str(num))
+        div = z1 / z2
+        if z1._sign == NEGATIVE:
+            part = div * z2
+            if z2._sign == NEGATIVE:
+                z2 = z2.change_sign()
+            res = z2 - (part - z1)
+        else:
+            if z2._sign == NEGATIVE:
+                z2 = z2.change_sign()
+            res = z1 - div * z2
+        return res
+
 
     def __sub__(self, num):
         ''' Функция вычитания целых чисел '''
