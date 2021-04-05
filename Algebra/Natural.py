@@ -246,8 +246,6 @@ class Natural():
             i -= 1
         return res
 
-    '''
-    НЕ РАБОЧИЙ КОД. НЕ ГОТОВЫ ПОДМОДУЛИ
     def gcf(self, num):
         #Модуль GCF_NN_N. Оформил Шабров Иван
         n1 = Natural(str(self))
@@ -258,7 +256,7 @@ class Natural():
             else:
                 n2 = n2 % n1
         return n1 + n2
-    '''
+
     
     def increment(self):
         '''Модуль ADD_1N_N, оформил Проскуряк Влад.'''
@@ -350,5 +348,5 @@ class Natural():
         res = Natural(str(self))
         if(self.compare(num) != 1):
             i = res / num
-            res = res.sub_dn(i, num)
+            res = res - i * num
         return res
