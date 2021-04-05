@@ -49,8 +49,8 @@ class Rational():
         res._denumerator = self._denumerator * num._denumerator
         return res
 
-    '''
-    НЕ РАБОЧИЙ КОД. НЕ ГОТОВЫ ПОДМОДУЛИ
+
+
     def reduce(self):
         #Модуль Q-1 RED_Q_Q оформил Шабров Иван
         r = Rational(str(self))
@@ -62,7 +62,7 @@ class Rational():
         r._denumerator = r._denumerator / k
         r._numerator = r._numerator / k_int
         return r
-    '''
+
 
     def is_int(self):
         return self._denumerator == Natural("1")
