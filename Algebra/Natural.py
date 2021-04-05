@@ -277,30 +277,26 @@ class Natural():
                 res._number.append(1)
         return res
 
-'''
-     def __truediv__(self, num):
-        #Функция нахождения частого
-    # Показацкая Арина
-        res = Natural(str(self))
-        num = Natural(str(num))
-        k = Natural("1")
-        count = Natural("0")
-        while (res.compare(num) == 2 or res.compare(num) == 0):
-            a = res.div_dk(num)[0] #первая цифра
-            b = res.div_dk(num)[1] #номер позиции этой цифры
-            c = k.mul_k(b)
-            c = Natural(str(c))
-            res = sub_dn(res, a, c)
-            count = count.increment()
-        return count
-'''
+    #  def __truediv__(self, num):
+    #     #Функция нахождения частого
+    # # Показацкая Арина
+    #     res = Natural(str(self))
+    #     num = Natural(str(num))
+    #     k = Natural("1")
+    #     count = Natural("0")
+    #     while (res.compare(num) == 2 or res.compare(num) == 0):
+    #         a = res.div_dk(num)[0] #первая цифра
+    #         b = res.div_dk(num)[1] #номер позиции этой цифры
+    #         c = k.mul_k(b)
+    #         c = Natural(str(c))
+    #         res = sub_dn(res, a, c)
+    #         count = count.increment()
+    #     return count
 
-'''
-    def lcm (self, num):
+    #def lcm (self, num):
     # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
-      NoD = gcf(self, num)
-      return (self * num) / NoD
-'''
+    #  NoD = gcf(self, num)
+    #  return (self * num) / NoD
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
@@ -353,10 +349,8 @@ class Natural():
             
     def __mod__(self, num):
         '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
-        if(self >= num):
-            res = Natural(str(self))
-            i = __div__(self, num)
-            res = sub_dn(res, i, num)
-            return res
-        else:
-            return Natural()
+        res = Natural(str(self))
+        if(self.compare(num) != 1):
+            i = res / num
+            res = res.sub_dn(i, num)
+        return res
