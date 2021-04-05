@@ -14,7 +14,8 @@ class Natural():
     def __init__(self, n: str = None):
         self._number = []
         if n is None:
-            self._dig_n = 0
+            self._number = [0]
+            self._dig_n = 1
         # Число состоит из нулей
         elif n == "0" * len(n):
             self._number = [0]
@@ -278,6 +279,8 @@ class Natural():
     def __truediv__(self, num):
         # Функция нахождения частого
         # Показацкая Арина
+        if self.is_zero() or num.is_zero():
+            return Natural("0")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         res = Natural()
@@ -297,6 +300,8 @@ class Natural():
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
+        if self.is_zero() or num.is_zero():
+            return 0, 0
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         k = 0
