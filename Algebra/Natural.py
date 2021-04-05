@@ -289,10 +289,10 @@ class Natural():
             n1 = n1.sub_dn(a, c)
         return res
 
-    #def lcm (self, num):
-    # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
-    #  NoD = gcf(self, num)
-    #  return (self * num) / NoD
+    def lcm (self, num):
+        #Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
+        gcf = self.gcf(num)
+        return (self * num) / gcf
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
