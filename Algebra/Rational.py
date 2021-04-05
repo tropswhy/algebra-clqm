@@ -1,6 +1,6 @@
 
-from .Integer import *
 from .Natural import *
+from .Integer import *
 
 __all__ = ["Rational"]
 
@@ -49,7 +49,24 @@ class Rational():
         res._denumerator = self._denumerator * num._denumerator
         return res
 
-
+    def __sub__(self, num):
+        '''
+        Алгоритм вычитание дробей
+        Q-6.SUB_QQ_Q-__sub__
+        Выполнил Цыганков Дмитрий
+        Необходимые модули:
+            - Z-7 Вычитание целых чисел __sub__
+            - Z-8 Умножение целых чисел __mul__
+            - N-14 НОК натуральных чисел lcm
+        '''
+        res = Rational()
+        denum = self._denumerator.lcm(num._denumerator) #общий знаминатель
+        res._denumerator = denum
+        #вычесление числителя
+        res._numerator = self._numerator * Integer(str(denum / self._denumerator)) - num._numerator * Integer(str(denum / num._denumerator))
+        #сокращение дроби
+        res = res.reduce()
+        return res
 
     def reduce(self):
         #Модуль Q-1 RED_Q_Q оформил Шабров Иван
