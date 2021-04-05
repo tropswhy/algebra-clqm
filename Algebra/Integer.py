@@ -106,6 +106,26 @@ class Integer():
                 res = res.change_sign()
         return res
 
+
+#Модуль не работает без DIV_ZZ_Z, MUL_ZZ_Z и SUB_ZZ_Z
+'''
+    def __mod__(self, num):
+        # Модуль ADD_PP_P выполнил и оформил Щусь Максим
+        z1 = Integer(str(self))
+        z2 = Integer(str(num))
+        div = z1 / z2
+        if z1._sign == NEGATIVE:
+            part = div * z2
+            if z2._sign == NEGATIVE:
+                z2 = z2.change_sign()
+            res = z2 - (part - z1)
+        else:
+            if z2._sign == NEGATIVE:
+                z2 = z2.change_sign()
+            res = z1 - div * z2
+        return res
+'''
+
     def __sub__(self, num):
         ''' Функция вычитания целых чисел '''
     # Показацкая Арина
@@ -158,6 +178,7 @@ class Integer():
         res._number = divisible / divisor
         return res
 '''
+
 
 
 

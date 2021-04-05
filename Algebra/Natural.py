@@ -61,6 +61,7 @@ class Natural():
                         temp = 0
                 if temp != 0: #если на последнем шаге остался остаток, то записываем его в 1 позицию
                     self_c._number.insert(self_c._dig_n, temp)
+                    self_c._dig_n += 1
                 return self_c
         else:
             return Natural()
@@ -262,34 +263,34 @@ class Natural():
     def increment(self):
         '''Модуль ADD_1N_N, оформил Проскуряк Влад.'''
         res = Natural(str(self))
-        i = int(0)
         if((res._number[0] + 1) < 10):
             res._number[0] = res._number[0] + 1
         else:
+            i = int(0)
             while((res._number[i] + 1) == 10)and(i < res._dig_n):
                 res._number[i] = 0
                 i = i + 1
-        if(i < res._dig_n):
-            res._number[i] = res._number[i] + 1
-        else:
-            res._dig_n = res._dig_n + 1
-            res._number.append(1)
+            if(i < res._dig_n):
+                res._number[i] = res._number[i] + 1
+            else:
+                res._dig_n = res._dig_n + 1
+                res._number.append(1)
         return res
 
 '''
-    def __truediv__(self, num):
+     def __truediv__(self, num):
         #Функция нахождения частого
     # Показацкая Арина
         res = Natural(str(self))
         num = Natural(str(num))
+        k = Natural("1")
         count = Natural("0")
         while (res.compare(num) == 2 or res.compare(num) == 0):
-            a = res.div_dk()[0] #первая цифра
-            res = Natural(str(a))
-            b = res.div_dk()[1] #номер позиции этой цифры
-            c = a.mul_k(b)
+            a = res.div_dk(num)[0] #первая цифра
+            b = res.div_dk(num)[1] #номер позиции этой цифры
+            c = k.mul_k(b)
             c = Natural(str(c))
-            res -= c
+            res = sub_dn(res, a, c)
             count = count.increment()
         return count
 '''
@@ -300,3 +301,62 @@ class Natural():
       NoD = gcf(self, num)
       return (self * num) / NoD
     '''
+
+    def div_dk(self, num):
+        '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
+        n1 = Natural(str(self))
+        n2 = Natural(str(num))
+        k = 0
+        if n1.compare(n2) == 1:
+            n3 = n1
+            while n2.compare(n3) == 2:
+                k += 1
+                n3 = n1.mul_k(k)
+            k -= 1
+            n3 = n1.mul_k(k)
+            n1 = n3
+            dig = 1
+            while n2.compare(n3) == 2:
+                dig += 1
+                n3 = n1.mul_d(dig)
+            if n2.compare(n3) != 0:
+                dig -= 1
+            if dig == 10:
+                dig = 1
+        elif n1.compare(n2) == 2:
+            n3 = n2
+            while n1.compare(n3) == 2:
+                k += 1
+                n3 = n2.mul_k(k)
+            k -= 1
+            n3 = n2.mul_k(k)
+            n2 = n3
+            dig = 1
+            while n1.compare(n3) == 2:
+                dig += 1
+                n3 = n2.mul_d(dig)
+            if n1.compare(n3) != 0:
+                dig -= 1
+            if dig == 10:
+                dig = 1
+        else:
+            return 1,0
+        return dig,k
+
+    def sub_dn(self, dig, num):
+        # Модуль SUB_NDN_N. Оформила Реброва Юлия
+        c = num.mul_d(dig)
+        if self.compare(c) != 1:
+            return self - c
+        else:
+            return Natural()
+            
+    def __mod__(self, num):
+        '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
+        if(self >= num):
+            res = Natural(str(self))
+            i = __div__(self, num)
+            res = sub_dn(res, i, num)
+            return res
+        else:
+            return Natural()
