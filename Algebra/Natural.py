@@ -295,12 +295,12 @@ class Natural():
         return count
 '''
 
-    '''
+'''
     def lcm (self, num):
     # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
       NoD = gcf(self, num)
       return (self * num) / NoD
-    '''
+'''
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
