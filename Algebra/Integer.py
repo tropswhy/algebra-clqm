@@ -171,10 +171,12 @@ class Integer():
                 res._sign = POSITIVE
                 res._number = divisible._number / divisor._number
         else:
-            # Если знак отрицательный, значит делим два натуральных числе, после чего вычитаем единицу
+            # Если знак отрицательный, значит делим два натуральных числе, после чего проверяем остаток
             res._sign = NEGATIVE
             res._number = divisible._number / divisor._number
-            res = res + Integer("-1")
+            # Если остаток больше нуля, то вычитаем из полученного частного единицу
+            if (divisible._number % divisor._number > Natural("0")):
+                res = res + Integer("-1")
         return res
 
 
