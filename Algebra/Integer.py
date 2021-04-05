@@ -44,7 +44,7 @@ class Integer():
 
     def natural_to_integer(self, numb: Natural):
         '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
-        return Integer(numb)
+        return Integer(str(numb))
 
     def change_sign(self):
         ''' Функция умножения целого числа на -1'''
@@ -104,4 +104,76 @@ class Integer():
             res = Integer(str(abs(large) - abs(less)))
             if (large.sign() == 1):
                 res = res.change_sign()
+        return res
+
+    def __mod__(self, num):
+        # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
+        z1 = Integer(str(self))
+        z2 = Integer(str(num))
+        div = z1 / z2
+        if z1._sign == NEGATIVE:
+            part = div * z2
+            if z2._sign == NEGATIVE:
+                z2 = z2.change_sign()
+            res = z2 - (part - z1)
+        else:
+            if z2._sign == NEGATIVE:
+                z2 = z2.change_sign()
+            res = z1 - div * z2
+        return res
+
+
+    def __sub__(self, num):
+        ''' Функция вычитания целых чисел '''
+    # Показацкая Арина
+        res = Integer("0")
+        sign1 = self.sign()
+        sign2 = num.sign()
+        if (sign1 == 0):
+            res = num
+        elif (sign2 == 0):
+            res = self
+        elif (sign1 == 2 and sign2 == 2):
+            if (abs(self) > abs(num)):
+                res = Integer(str(abs(self) - abs(num)))
+            elif (abs(self) == abs(num)):
+                res = Integer(str(abs(self) - abs(num)))
+            else:
+                res = Integer(str(abs(num) - abs(self))).change_sign()
+        elif (sign1 == 1 and sign2 == 1):
+            if (abs(self) > abs(num)):
+                res = Integer(str(abs(self) - abs(num))).change_sign()
+            elif (abs(self) == abs(num)):
+                res = Integer(str(abs(self) - abs(num))).change_sign()
+            else:
+                res = Integer(str(abs(num) - abs(self)))
+        else:
+            if (sign1 == 1):
+                res = Integer(str(abs(self) + abs(num))).change_sign()
+            else:
+                res = Integer(str(abs(self) + abs(num)))
+        return res
+
+    def __truediv__(self, num):
+        # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
+        res = Integer()
+        divisible = self
+        divisor = num
+        # Проверка на ноль(нуль)
+        if (divisor == Integer("0")):
+            return Integer()
+        # Делим число без учета знака
+        res._number = divisible._number / divisor._number
+        # Определение знака частного
+        if (divisible._sign == divisor._sign):
+            # Если у делимого и делителя одинаковые знаки, то у частного будет положительный знак
+            res._sign = POSITIVE
+        elif divisible._sign != ZERO:
+            # В ином случае знак будет отрицательный.
+            res._sign = NEGATIVE
+            # Если остаток больше нуля, то вычитаем из полученного частного единицу
+            if (divisible._number % divisor._number > Natural("0")):
+                res = res - Integer("1")
+        else:
+            res._sign = ZERO
         return res
