@@ -154,7 +154,6 @@ class Integer():
                 res = Integer(str(abs(self) + abs(num)))
         return res
 
-
     def __truediv__(self, num):
         # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
         res = Integer()
@@ -163,21 +162,16 @@ class Integer():
         # Проверка на ноль(нуль)
         if (divisor == Integer("0")):
             return Integer()
+        # Делим число без учета знака
+        res._number = divisible._number / divisor._number
         # Определение знака частного
         if (divisible._sign == divisor._sign):
-                res._sign = POSITIVE
+            # Если у делимого и делителя одинаковые знаки, то у частного будет положительный знак
+            res._sign = POSITIVE
         else:
+            # В ином случае знак будет отрицательный.
             res._sign = NEGATIVE
-        # Присваиваем делумому и делителю их абсолютные значения
-        divisible = abs(divisible)
-        divisor = abs(divisor)
-        # Собственно, само деление
-        res._number = divisible / divisor
+            # Если остаток больше нуля, то вычитаем из полученного частного единицу
+            if (divisible._number % divisor._number > Natural("0")):
+                res = res + Integer("-1")
         return res
-
-
-
-
-
-
-

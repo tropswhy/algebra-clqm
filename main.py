@@ -3,10 +3,8 @@ import Algebra
 
 pi = 1.23
 
+a = Algebra.Integer("-28")
+b = Algebra.Integer("-29")
 
-a = Algebra.Rational("-21/7")
-b = Algebra.Natural("55")
-c = Algebra.Natural("27")
+print(a / b, int(str(a)) // int(str(b)))
 
-
-print(b / c)
