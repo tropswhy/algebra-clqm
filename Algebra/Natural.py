@@ -266,7 +266,7 @@ class Natural():
             res._number[0] = res._number[0] + 1
         else:
             i = 0
-            while ((res._number[i] + 1) == 10) and (i < res._dig_n):
+            while (i < res._dig_n) and ((res._number[i] + 1) == 10):
                 res._number[i] = 0
                 i = i + 1
             if (i < res._dig_n):
