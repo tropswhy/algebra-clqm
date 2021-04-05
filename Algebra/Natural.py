@@ -278,7 +278,7 @@ class Natural():
         return res
 
 '''
-     def __truediv__(self, num):
+    def __truediv__(self, num):
         #Функция нахождения частого
     # Показацкая Арина
         res = Natural(str(self))
@@ -289,9 +289,11 @@ class Natural():
             a = res.div_dk(num)[0] #первая цифра
             b = res.div_dk(num)[1] #номер позиции этой цифры
             c = k.mul_k(b)
+            d = c.mul_d(a)
+            count += d
+            c *= num
             c = Natural(str(c))
-            res = sub_dn(res, a, c)
-            count = count.increment()
+            res = res.sub_dn(a, c)
         return count
 '''
 
