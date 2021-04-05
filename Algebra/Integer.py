@@ -145,17 +145,15 @@ class Integer():
         # Проверка на ноль(нуль)
         if (divisor == Integer("0")):
             return Integer()
-        elif (divisible == Integer("0")):
-            return Integer("0")
+        # Делим число без учета знака
+        res._number = divisible._number / divisor._number
         # Определение знака частного
         if (divisible._sign == divisor._sign):
-            # Если у частного знак положительные, значит просто делим два натуральных числа и получаем ответ
+            # Если делимого и делителя одинаковые знаки, то у частного будет положительный знак
             res._sign = POSITIVE
-            res._number = divisible._number / divisor._number
         else:
-            # Если знак отрицательный, значит делим два натуральных числе, после чего проверяем остаток
+            # В ином случае знак будет отрицательный.
             res._sign = NEGATIVE
-            res._number = divisible._number / divisor._number
             # Если остаток больше нуля, то вычитаем из полученного частного единицу
             if (divisible._number % divisor._number > Natural("0")):
                 res = res + Integer("-1")
