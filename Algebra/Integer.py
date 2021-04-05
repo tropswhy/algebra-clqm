@@ -168,10 +168,12 @@ class Integer():
         if (divisible._sign == divisor._sign):
             # Если у делимого и делителя одинаковые знаки, то у частного будет положительный знак
             res._sign = POSITIVE
-        else:
+        elif divisible._sign != ZERO:
             # В ином случае знак будет отрицательный.
             res._sign = NEGATIVE
             # Если остаток больше нуля, то вычитаем из полученного частного единицу
             if (divisible._number % divisor._number > Natural("0")):
-                res = res + Integer("-1")
+                res = res - Integer("1")
+        else:
+            res._sign = ZERO
         return res
