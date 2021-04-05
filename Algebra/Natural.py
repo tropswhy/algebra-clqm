@@ -1,10 +1,11 @@
-
 __all__ = ["Natural"]
+
 
 # TO DO:
 # Создать отдельный файл для подобных функций?
 def remove_char(s, n):
     return s[:n] + s[n + 1:]
+
 
 class Natural():
 
@@ -36,30 +37,32 @@ class Natural():
             return "0"
 
     '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
+
     def mul_d(self, digit: int):
         self_c = Natural(str(self))
-        if self_c._dig_n != 0: #если числа не пустые
-            if self_c._number == [0] or digit == 0: #если одно из чисел нулевое
+        if self_c._dig_n != 0:  # если числа не пустые
+            if self_c._number == [0] or digit == 0:  # если одно из чисел нулевое
                 return Natural("0")
             else:
-                temp = 0 #остаток после умножения разряда на число.
+                temp = 0  # остаток после умножения разряда на число.
                 for j in range(self_c._dig_n):
-                    if temp != 0: #если после предыдущего шага есть остаток
-                        if self_c._number[j]*digit + temp >= 10: #если умножение очередной цифры числа оказалось больше 10
+                    if temp != 0:  # если после предыдущего шага есть остаток
+                        if self_c._number[
+                            j] * digit + temp >= 10:  # если умножение очередной цифры числа оказалось больше 10
                             temp_n = self_c._number[j]
-                            self_c._number[j] = (self_c._number[j]*digit + temp)%10
-                            temp = (temp_n*digit + temp)//10
+                            self_c._number[j] = (self_c._number[j] * digit + temp) % 10
+                            temp = (temp_n * digit + temp) // 10
                         else:
-                            self_c._number[j] = self_c._number[j]*digit + temp
+                            self_c._number[j] = self_c._number[j] * digit + temp
                             temp = 0
-                    elif self_c._number[j]*digit >= 10:#если умножение очередной цифры числа оказалось больше 10
+                    elif self_c._number[j] * digit >= 10:  # если умножение очередной цифры числа оказалось больше 10
                         temp_n = self_c._number[j]
-                        self_c._number[j] = (self_c._number[j]*digit)%10
-                        temp = (temp_n*digit)//10
+                        self_c._number[j] = (self_c._number[j] * digit) % 10
+                        temp = (temp_n * digit) // 10
                     else:
-                        self_c._number[j] = self_c._number[j]*digit
+                        self_c._number[j] = self_c._number[j] * digit
                         temp = 0
-                if temp != 0: #если на последнем шаге остался остаток, то записываем его в 1 позицию
+                if temp != 0:  # если на последнем шаге остался остаток, то записываем его в 1 позицию
                     self_c._number.insert(self_c._dig_n, temp)
                     self_c._dig_n += 1
                 return self_c
@@ -67,10 +70,11 @@ class Natural():
             return Natural()
 
     '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
+
     def mul_k(self, tenpow: int):
         self_c = Natural(str(self))
         for i in range(tenpow):
-            self_c._number.insert(i,0)
+            self_c._number.insert(i, 0)
             self_c._dig_n += 1
         return self_c
 
@@ -88,7 +92,6 @@ class Natural():
                     return False
         return False
 
-
     def __eq__(self, num):
         '''Перегрузка оператора "==". Оформила Реброва Юлия'''
         if self._dig_n != num._dig_n:
@@ -98,7 +101,6 @@ class Natural():
                 if self._number[i] != num._number[i]:
                     return False
             return True
-
 
     def __lt__(self, num):
         '''Модуль переполнения "<". Оформил Шабров Иван'''
@@ -212,7 +214,7 @@ class Natural():
         res = Natural()
         res._dig_n = big._dig_n
         res._number = [0 for i in range(big._dig_n)]
-        #print(res._number)
+        # print(res._number)
         i = m - 1
         while i > n - 1:
             res._number[i] = big._number[i]
@@ -247,7 +249,7 @@ class Natural():
         return res
 
     def gcf(self, num):
-        #Модуль GCF_NN_N. Оформил Шабров Иван
+        # Модуль GCF_NN_N. Оформил Шабров Иван
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         while (not n1.is_zero()) and (not n2.is_zero()):
@@ -257,7 +259,6 @@ class Natural():
                 n2 = n2 % n1
         return n1 + n2
 
-    
     def increment(self):
         '''Модуль ADD_1N_N, оформил Проскуряк Влад.'''
         res = Natural(str(self))
@@ -265,10 +266,10 @@ class Natural():
             res._number[0] = res._number[0] + 1
         else:
             i = 0
-            while((res._number[i] + 1) == 10)and(i < res._dig_n):
+            while ((res._number[i] + 1) == 10) and (i < res._dig_n):
                 res._number[i] = 0
                 i = i + 1
-            if(i < res._dig_n):
+            if (i < res._dig_n):
                 res._number[i] = res._number[i] + 1
             else:
                 res._dig_n = res._dig_n + 1
@@ -276,21 +277,21 @@ class Natural():
         return res
 
     def __truediv__(self, num):
-        #Функция нахождения частого
+        # Функция нахождения частого
         # Показацкая Арина
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         res = Natural()
         while n1.compare(n2) != 1:
-            a, b = n1.div_dk(n2) #первая цифра и номер позиции этой цифры
+            a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
             res._number.insert(0, Natural(str(a)))
             res._dig_n += 1
             c = n2.mul_k(b)
             n1 = n1.sub_dn(a, c)
         return res
 
-    def lcm (self, num):
-        #Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
+    def lcm(self, num):
+        # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
         gcf = self.gcf(num)
         return (self * num) / gcf
 
@@ -342,11 +343,11 @@ class Natural():
             return self - c
         else:
             return Natural()
-            
+
     def __mod__(self, num):
         '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
         res = Natural(str(self))
-        if(self.compare(num) != 1):
+        if (self.compare(num) != 1):
             i = res / num
             res = res - i * num
         return res
