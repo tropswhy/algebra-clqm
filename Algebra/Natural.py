@@ -321,6 +321,7 @@ class Natural():
                 dig -= 1
             if dig == 10:
                 dig = 1
+                k += 1
         elif n1.compare(n2) == 2:
             n3 = n2
             while n1.compare(n3) == 2:
@@ -337,6 +338,7 @@ class Natural():
                 dig -= 1
             if dig == 10:
                 dig = 1
+                k += 1
         else:
             return 1, 0
         return dig, k
