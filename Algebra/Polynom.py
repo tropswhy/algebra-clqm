@@ -121,6 +121,30 @@ class Polynom():
             res._coef_n -= 1
         return res
 
+    def __truediv__(self,pol):
+        '''
+        Частное от деления многочлена на многочлен при делении с остатком
+        P-9.DIV_PP_P-__truediv__
+        Выполнил Цыганков Дмитрий
+        '''
+        divisbl = Polynom(self._coef)
+        pol_ = Polynom(pol._coef)
+        # степнь искомого полинома
+        deg = divisbl.power() - pol_.power()
+        result = Polynom([0] * deg)
+        i = 0
+        while (divisbl.power() >= pol_.power()):
+            result._coef[deg-i] = divisbl._coef[-1] / pol_._coef[-1]
+            # умножаем делитель на полученный член полинома 
+            if not (divisbl._coef[-1]._numerator == Integer("0")):
+                temp_mon = Polynom([0] * (deg - i))
+                temp_mon._coef[deg-i] = result._coef[deg-i]
+                # отнимаем полученный полином от делимого
+                divisbl -= pol_ * temp_mon
+            i += 1
+            # удаление первого коэффициента
+            divisbl._coef.pop()
+        return result # возврат частного
 
 
     '''
@@ -143,3 +167,13 @@ class Polynom():
             else:
                 b = b.__mod__(a)
         return a + b
+
+    def nmr(self):
+        '''
+        Преобразование многочлена — кратные корни в простые
+        P-13.NMR_P_P-nmr
+        Выполнил Цыганков Дмитрий
+        '''
+        pol_ = Polynom(self._coef)
+        pol_ /= pol_.gcf(pol_.derivate()) # делим полином на НОД от него и его производной
+        return pol_ 
