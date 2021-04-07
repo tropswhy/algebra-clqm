@@ -192,18 +192,24 @@ class Integer():
         # Проверка на ноль(нуль)
         if (divisor == Integer("0")):
             return Integer()
+        elif (divisible == Integer("0")):
+            return Integer("0")
         # Делим число без учета знака
         res._number = divisible._number / divisor._number
         # Определение знака частного
         if (divisible._sign == divisor._sign):
             # Если у делимого и делителя одинаковые знаки, то у частного будет положительный знак
             res._sign = POSITIVE
+            # Если делимое и делитель - отрицательный числа, то добавляем к частному единицу
+            if (divisible._sign == NEGATIVE):
+                res += Integer("1")
         elif divisible._sign != ZERO:
             # В ином случае знак будет отрицательный.
             res._sign = NEGATIVE
-            # Если остаток больше нуля, то вычитаем из полученного частного единицу
-            if (divisible._number % divisor._number > Natural("0")):
+            # Если остаток больше нуля и делимое меньше нуля, то вычитаем из полученного частного единицу
+            if ((divisible._number % divisor._number > Natural("0")) and (divisible._sign == NEGATIVE)):
                 res = res - Integer("1")
-        else:
+        # Если частное по модулю равно нулю, то присваиваем знаку числа значение ZERO
+        if (res._number == Natural("0")):
             res._sign = ZERO
         return res
