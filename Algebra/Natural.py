@@ -288,7 +288,7 @@ class Natural():
         res._number = [0 for i in range(res._dig_n)]
         while n1.compare(n2) != 1:
             a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
-            res._number[b] = Natural(str(a))
+            res._number[b] = a
             c = n2.mul_k(b)
             n1 = n1.sub_dn(a, c)
         return res
