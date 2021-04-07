@@ -37,6 +37,22 @@ class Integer():
         else:
             return self._number == num._number
 
+    def __gt__(self, num):
+        # Если знаки одинаковые, то придётся сравнивать числа поразрядно
+        if self._sign == num._sign:
+            if self._sign == POSITIVE:
+                return self._number > num._number
+            else:
+                return self._number < num._number
+        # Иначе, достаточно сравнить знаки
+        elif self._sign != ZERO and num._sign != ZERO:
+            return self._sign > num._sign
+        elif self._sign == ZERO:
+            return num._sign == NEGATIVE
+        else: #num._sign == ZERO
+            return self._sign == POSITIVE
+
+
     def sign(self):
         # Определение положительности числа
         # Трибунский Алексей
