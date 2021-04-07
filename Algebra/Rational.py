@@ -59,14 +59,21 @@ class Rational():
             - Z-8 Умножение целых чисел __mul__
             - N-14 НОК натуральных чисел lcm
         '''
-        res = Rational()
-        denum = self._denumerator.lcm(num._denumerator) #общий знаминатель
-        res._denumerator = denum
-        #вычесление числителя
-        res._numerator = self._numerator * Integer(str(denum / self._denumerator)) - num._numerator * Integer(str(denum / num._denumerator))
-        #сокращение дроби
-        res = res.reduce()
-        return res
+        if self._numerator == Integer("0"):
+            res = Rational(str(num))
+            res._numerator.change_sign()
+            return res
+        elif num._numerator == Integer("0"):
+            return Rational(str(self))
+        else:
+            res = Rational()
+            denum = self._denumerator.lcm(num._denumerator) #общий знаминатель
+            res._denumerator = denum
+            #вычесление числителя
+            res._numerator = self._numerator * Integer(str(denum / self._denumerator)) - num._numerator * Integer(str(denum / num._denumerator))
+            #сокращение дроби
+            res = res.reduce()
+            return res
 
     def reduce(self):
         #Модуль Q-1 RED_Q_Q оформил Шабров Иван
