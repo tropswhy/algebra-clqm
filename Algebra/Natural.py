@@ -14,7 +14,8 @@ class Natural():
     def __init__(self, n: str = None):
         self._number = []
         if n is None:
-            self._dig_n = 0
+            self._number = [0]
+            self._dig_n = 1
         # Число состоит из нулей
         elif n == "0" * len(n):
             self._number = [0]
@@ -47,8 +48,7 @@ class Natural():
                 temp = 0  # остаток после умножения разряда на число.
                 for j in range(self_c._dig_n):
                     if temp != 0:  # если после предыдущего шага есть остаток
-                        if self_c._number[
-                            j] * digit + temp >= 10:  # если умножение очередной цифры числа оказалось больше 10
+                        if self_c._number[j] * digit + temp >= 10:  # если умножение очередной цифры числа оказалось больше 10
                             temp_n = self_c._number[j]
                             self_c._number[j] = (self_c._number[j] * digit + temp) % 10
                             temp = (temp_n * digit + temp) // 10
@@ -266,7 +266,7 @@ class Natural():
             res._number[0] = res._number[0] + 1
         else:
             i = 0
-            while ((res._number[i] + 1) == 10) and (i < res._dig_n):
+            while (i < res._dig_n) and ((res._number[i] + 1) == 10):
                 res._number[i] = 0
                 i = i + 1
             if (i < res._dig_n):
@@ -279,13 +279,16 @@ class Natural():
     def __truediv__(self, num):
         # Функция нахождения частого
         # Показацкая Арина
+        if self.is_zero() or num.is_zero():
+            return Natural("0")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         res = Natural()
+        res._dig_n = n1.div_dk(n2)[1] + 1
+        res._number = [0 for i in range(res._dig_n)]
         while n1.compare(n2) != 1:
             a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
-            res._number.insert(0, Natural(str(a)))
-            res._dig_n += 1
+            res._number[b] = a
             c = n2.mul_k(b)
             n1 = n1.sub_dn(a, c)
         return res
@@ -297,6 +300,8 @@ class Natural():
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
+        if self.is_zero() or num.is_zero():
+            return 0, 0
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         k = 0
@@ -316,6 +321,7 @@ class Natural():
                 dig -= 1
             if dig == 10:
                 dig = 1
+                k += 1
         elif n1.compare(n2) == 2:
             n3 = n2
             while n1.compare(n3) == 2:
@@ -332,6 +338,7 @@ class Natural():
                 dig -= 1
             if dig == 10:
                 dig = 1
+                k += 1
         else:
             return 1, 0
         return dig, k
