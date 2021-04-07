@@ -37,6 +37,36 @@ class Integer():
         else:
             return self._number == num._number
 
+    def __gt__(self, num):
+        # Если знаки одинаковые, то придётся сравнивать числа поразрядно
+        if self._sign == num._sign:
+            if self._sign == POSITIVE:
+                return self._number > num._number
+            else:
+                return self._number < num._number
+        # Иначе, достаточно сравнить знаки
+        elif self._sign != ZERO and num._sign != ZERO:
+            return self._sign > num._sign
+        elif self._sign == ZERO:
+            return num._sign == NEGATIVE
+        else: #num._sign == ZERO
+            return self._sign == POSITIVE
+
+    def __lt__(self, num):
+        # Если знаки одинаковые, то придётся сравнивать числа поразрядно
+        if self._sign == num._sign:
+            if self._sign == POSITIVE:
+                return self._number < num._number
+            else:
+                return self._number > num._number
+        # Иначе, достаточно сравнить знаки
+        elif self._sign != ZERO and num._sign != ZERO:
+            return self._sign < num._sign
+        elif self._sign == ZERO:
+            return num._sign == POSITIVE
+        else:  # num._sign == ZERO
+            return self._sign == NEGATIVE
+
     def sign(self):
         # Определение положительности числа
         # Трибунский Алексей
@@ -154,7 +184,6 @@ class Integer():
                 res = Integer(str(abs(self) + abs(num)))
         return res
 
-
     def __truediv__(self, num):
         # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
         res = Integer()
@@ -165,23 +194,19 @@ class Integer():
             return Integer()
         elif (divisible == Integer("0")):
             return Integer("0")
+        # Делим число без учета знака
+        res._number = divisible._number / divisor._number
         # Определение знака частного
         if (divisible._sign == divisor._sign):
-            # Если у частного знак положительные, значит просто делим два натуральных числа и получаем ответ
-                res._sign = POSITIVE
-                res._number = divisible._number / divisor._number
-        else:
-            # Если знак отрицательный, значит делим два натуральных числе, после чего проверяем остаток
+            # Если у делимого и делителя одинаковые знаки, то у частного будет положительный знак
+            res._sign = POSITIVE
+        elif divisible._sign != ZERO:
+            # В ином случае знак будет отрицательный.
             res._sign = NEGATIVE
-            res._number = divisible._number / divisor._number
             # Если остаток больше нуля, то вычитаем из полученного частного единицу
             if (divisible._number % divisor._number > Natural("0")):
-                res = res + Integer("-1")
+                res = res - Integer("1")
+        else:
+            res._sign = ZERO
         return res
-
-
-
-
-
-
 
