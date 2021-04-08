@@ -213,3 +213,11 @@ class Integer():
         if (res._number == Natural("0")):
             res._sign = ZERO
         return res
+
+    def __mod__(self, num):
+        # Модуль ADD_PP_P выполнил и оформил Щусь Максим
+        z1 = Integer(str(self))
+        z2 = Integer(str(num))
+        div = (z1 / z2)
+        res = z1 - z2 * div
+        return res
