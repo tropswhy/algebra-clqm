@@ -1,11 +1,10 @@
 __all__ = ["Natural"]
 
-
 # TO DO:
 # Создать отдельный файл для подобных функций?
+
 def remove_char(s, n):
     return s[:n] + s[n + 1:]
-
 
 class Natural():
 
@@ -16,6 +15,8 @@ class Natural():
         if n is None:
             self._number = [0]
             self._dig_n = 1
+        elif not Natural.isNatural(n):
+            raise Exception("Number is not natural")
         # Число состоит из нулей
         elif n == "0" * len(n):
             self._number = [0]
@@ -26,6 +27,13 @@ class Natural():
                 n = remove_char(n, n.index("0"))
             self._number = [int(i) for i in n[::-1]]
             self._dig_n = len(self._number)
+
+    @staticmethod
+    def isNatural(s):
+        for i in s:
+            if not ('0' <= i and i <= '9'):
+                return False
+        return True
 
     def __reversed__(self):
         return reversed(self._number)
