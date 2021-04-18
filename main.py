@@ -1,14 +1,20 @@
-
+import Algebra
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 import sys
 
+NATURAL = 0
+INTEGER = 1
+RATIONAL = 2
+POLYNOM = 3
 
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+
+        self.currentIndex = NATURAL
 
         self.setObjectName("self")
         self.resize(500, 600)
@@ -28,13 +34,14 @@ class MainWindow(QMainWindow):
         self.createIntegerPage()
         self.createRationalPage()
         self.createPolynomPage()
+        self.currentLineEdit = self.n_input
 
         self.createMenuBar()
 
         self.setActions()
 
         self.retranslateUi()
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(self.currentIndex)
         QtCore.QMetaObject.connectSlotsByName(self)
 
     def createNaturalPage(self):
@@ -311,50 +318,89 @@ class MainWindow(QMainWindow):
     def createMenuBar(self):
         self.menu_bar = QtWidgets.QMenuBar(self)
         self.menu_bar.setGeometry(QtCore.QRect(0, 0, 500, 21))
-        self.menu_bar.setObjectName("menu_bar")
         self.about = QtWidgets.QMenu(self.menu_bar)
-        self.about.setObjectName("about")
         self.help = QtWidgets.QMenu(self.menu_bar)
-        self.help.setObjectName("help")
         self.classes = QtWidgets.QMenu(self.menu_bar)
-        self.classes.setObjectName("classes")
         self.setMenuBar(self.menu_bar)
 
     def setActions(self):
-        self.action = QtWidgets.QAction(self)
-        self.action.setObjectName("action")
-        self.action_2 = QtWidgets.QAction(self)
-        self.action_2.setObjectName("action_2")
+        try:
+            # MENU BAR ACTIONS
+            self.to_wNatural = QtWidgets.QAction(self)
+            self.to_wNatural.triggered.connect(lambda: self.changePage(NATURAL))
+            self.to_wInteger = QtWidgets.QAction(self)
+            self.to_wInteger.triggered.connect(lambda: self.changePage(INTEGER))
+            self.to_wRational = QtWidgets.QAction(self)
+            self.to_wRational.triggered.connect(lambda: self.changePage(RATIONAL))
+            self.to_wPolynom = QtWidgets.QAction(self)
+            self.to_wPolynom.triggered.connect(lambda: self.changePage(POLYNOM))
+            # TO DO: add "help" and "about" triggers
+            self.classes.addAction(self.to_wNatural)
+            self.classes.addAction(self.to_wInteger)
+            self.classes.addAction(self.to_wRational)
+            self.classes.addAction(self.to_wPolynom)
+            self.menu_bar.addAction(self.classes.menuAction())
+            self.menu_bar.addAction(self.help.menuAction())
+            self.menu_bar.addAction(self.about.menuAction())
 
-        # ВОЗМОЖНО стоит убрать action_2...? Нигде не используется
+            # NATURAL BUTTONS ACTIONS
+            self.n_incr.clicked.connect(lambda: self.useUnaryOperation(self.getNumber().increment))
+        except:
+            self.currentLineEdit.clear()
 
-        self.action_3 = QtWidgets.QAction(self)
-        self.action_3.setObjectName("action_3")
-        self.action_4 = QtWidgets.QAction(self)
-        self.action_4.setObjectName("action_4")
-        self.action_5 = QtWidgets.QAction(self)
-        self.action_5.setObjectName("action_5")
-        self.action_6 = QtWidgets.QAction(self)
-        self.action_6.setObjectName("action_6")
-        self.to_wNatural = QtWidgets.QAction(self)
-        self.to_wNatural.setObjectName("to_wNatural")
-        self.to_wNatural.triggered.connect(lambda: self.stackedWidget.setCurrentIndex(0))
-        self.to_wInteger = QtWidgets.QAction(self)
-        self.to_wInteger.setObjectName("to_wInteger")
-        self.to_wInteger.triggered.connect(lambda: self.stackedWidget.setCurrentIndex(1))
-        self.to_wRational = QtWidgets.QAction(self)
-        self.to_wRational.setObjectName("to_wRational")
-        self.to_wRational.triggered.connect(lambda: self.stackedWidget.setCurrentIndex(2))
-        self.to_wPolynom = QtWidgets.QAction(self)
-        self.to_wPolynom.setObjectName("to_wPolynom")
-        self.to_wPolynom.triggered.connect(lambda: self.stackedWidget.setCurrentIndex(3))
-        self.classes.addAction(self.to_wNatural)
-        self.classes.addAction(self.to_wInteger)
-        self.classes.addAction(self.to_wRational)
-        self.classes.addAction(self.to_wPolynom)
-        self.menu_bar.addAction(self.classes.menuAction())
-        self.menu_bar.addAction(self.help.menuAction())
-        self.menu_bar.addAction(self.about.menuAction())
+    def getNumber(self):
+        text = str(self.currentLineEdit.text())
+        try:
+            if self.currentIndex == NATURAL:
+                return Algebra.Natural(text)
+            elif self.currentIndex == INTEGER:
+                return Algebra.Integer(text)
+            elif self.currentIndex == RATIONAL:
+                return Algebra.Rational(text)
+            else:
+                return Algebra.Polynom(text)
+        except:
+            self.errorHandle()
+            if self.currentIndex == NATURAL:
+                return Algebra.Natural()
+            elif self.currentIndex == INTEGER:
+                return Algebra.Integer()
+            elif self.currentIndex == RATIONAL:
+                return Algebra.Rational()
+            else:
+                return Algebra.Polynom()
+
+    def errorHandle(self):
+        self.currentLineEdit.clear()
+
+    def changePage(self, index):
+        self.stackedWidget.setCurrentIndex(index)
+        self.currentIndex = index
+        if index == NATURAL:
+            self.currentLineEdit = self.n_input
+        elif index == INTEGER:
+            self.currentLineEdit = self.z_input
+        elif index == RATIONAL:
+            self.currentLineEdit = self.r_input
+        else:
+            self.currentLineEdit = self.p_input
+
+    def useUnaryOperation(self, unary_operator):
+        line = str(self.currentLineEdit.text())
+        number = self.toNumber(line)
+        output = str(unary_operator())
+        self.currentLineEdit.setText(output)
+
+    def toNumber(self, n):
+        # TO DO: add try except
+        if self.currentIndex == NATURAL:
+            return Algebra.Natural(n)
+        elif self.currentIndex == INTEGER:
+            return Algebra.Integer(n)
+        elif self.currentIndex == RATIONAL:
+            return Algebra.Rational(n)
+        else:
+            return Algebra.Polynom(n)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -404,7 +450,7 @@ class MainWindow(QMainWindow):
         self.p_mul.setText(_translate("self", "*"))
         self.p_power.setText(_translate("self", "Степень"))
         self.p_nmr.setText(_translate("self", "Кр. корни\n"
-                                                    "в простые"))
+                                              "в простые"))
         self.p_mod.setText(_translate("self", "%"))
         self.p_fac.setText(_translate("self", "НОД / НОК"))
         self.p_derivative.setText(_translate("self", "Производная"))
@@ -412,20 +458,15 @@ class MainWindow(QMainWindow):
         self.about.setTitle(_translate("self", "О проекте"))
         self.help.setTitle(_translate("self", "Помощь"))
         self.classes.setTitle(_translate("self", "Классы"))
-        self.action.setText(_translate("self", "Помощь"))
 
         # ВОЗМОЖНО стоит убрать action_2...? Нигде не используется
         # (вроде привязаны к label)
 
-        self.action_2.setText(_translate("self", "О проекте"))
-        self.action_3.setText(_translate("self", "Натуральные числа"))
-        self.action_4.setText(_translate("self", "Целые числа"))
-        self.action_5.setText(_translate("self", "Рациональные числа"))
-        self.action_6.setText(_translate("self", "Многочлены (полиномы)"))
         self.to_wNatural.setText(_translate("self", "Натуральные числа"))
         self.to_wInteger.setText(_translate("self", "Целые числа"))
         self.to_wRational.setText(_translate("self", "Рациональные числа"))
         self.to_wPolynom.setText(_translate("self", "Полиномы (многочлены)"))
+
 
 def application():
     app = QApplication(sys.argv)
@@ -433,6 +474,7 @@ def application():
 
     main_window.show()
     sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     application()
