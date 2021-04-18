@@ -30,6 +30,8 @@ class Polynom():
 
     def power(self):
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
+        # self._coef_n - это количество коэффицентов
+        # Степень многочлена на единицу меньше количества коэффициентов
         return self._coef_n - 1
 
     def higher_coef(self):
@@ -91,6 +93,7 @@ class Polynom():
         # Присваиваем НОД и НОК значение числителя и знаменателя первых элементов соответственно
         num_gcf = abs(self._coef[0]._numerator)
         num_lcm = self._coef[0]._denumerator
+        # Циклом проходим по всем коэффициентам многочлена
         for i in range (1, self._coef_n):
             num_gcf = num_gcf.gcf(abs(self._coef[i]._numerator))
             num_lcm = num_lcm.lcm(self._coef[i]._denumerator)
