@@ -185,7 +185,7 @@ class Integer():
         return res
 
     def __truediv__(self, num):
-        # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
+        ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
         res = Integer()
         divisible = self
         divisor = num
