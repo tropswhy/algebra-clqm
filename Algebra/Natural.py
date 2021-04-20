@@ -285,20 +285,20 @@ class Natural():
         return res
 
     def __truediv__(self, num):
-        # Функция нахождения частого
+        '''Функция нахождения частого'''
         # Показацкая Арина
         if self.is_zero() or num.is_zero():
             return Natural("0")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
-        res = Natural()
-        res._dig_n = n1.div_dk(n2)[1] + 1
+        res = Natural()  # результат
+        res._dig_n = n1.div_dk(n2)[1] + 1  # количество разрядов в результирующем числе
         res._number = [0 for i in range(res._dig_n)]
         while n1.compare(n2) != 1:
             a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
             res._number[b] = a
-            c = n2.mul_k(b)
-            n1 = n1.sub_dn(a, c)
+            c = n2.mul_k(b)  # делитель, умноженный на 10 в степени b
+            n1 = n1.sub_dn(a, c)  # разность делимого и делителя, умноженного на первую цифру
         return res
 
     def lcm(self, num):
