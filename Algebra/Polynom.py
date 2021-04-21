@@ -64,21 +64,20 @@ class Polynom():
         res = Polynom(res._coef[::-1])
         return res
 
-#Модуль не работает без ADD_QQ_Q
-    #
-    # def __add__(self, num):
-    #     # Модуль ADD_PP_P выполнил и оформил Щусь Максим
-    #     p1 = Polynom(self._coef)
-    #     p2 = Polynom(num._coef)
-    #     if p2._coef_n > p1._coef_n:
-    #         res = Polynom(num._coef)
-    #         for i in range(p1._coef_n):
-    #             res._coef[i] = res._coef[i] + p1._coef[i]
-    #     else:
-    #         res = Polynom(self._coef)
-    #         for i in range(p2._coef_n):
-    #             res._coef[i] = res._coef[i] + p2._coef[i]
-    #     return res
+    #Модуль не работает без ADD_QQ_Q
+    def __add__(self, num):
+        # Модуль ADD_PP_P выполнил и оформил Щусь Максим
+        p1 = Polynom(self._coef)
+        p2 = Polynom(num._coef)
+        if p2._coef_n > p1._coef_n:
+            res = Polynom(num._coef)
+            for i in range(p1._coef_n):
+                res._coef[i] = res._coef[i] + p1._coef[i]
+        else:
+            res = Polynom(self._coef)
+            for i in range(p2._coef_n):
+                res._coef[i] = res._coef[i] + p2._coef[i]
+        return res
 
 
     def fac(self):
@@ -147,16 +146,13 @@ class Polynom():
             divisbl._coef.pop()
         return result # возврат частного
 
-
-    '''
-    # не пашет без ADD_PP_P и MUL_Pxk_P
     # модуль MUL_PP_P, оформил Трибунский Алексей
     def __mul__(self, p):
         res = Polynom(self._coef[::-1])
         for i in range(p._coef_n):
             res += res.mul_q(p._coef[i]).mul_xk(i)
         return res
-    '''
+
 
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
@@ -177,4 +173,4 @@ class Polynom():
         '''
         pol_ = Polynom(self._coef[::-1])
         pol_ /= pol_.gcf(pol_.derivate()) # делим полином на НОД от него и его производной
-        return pol_ 
+        return pol_
