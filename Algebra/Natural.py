@@ -19,7 +19,7 @@ class Natural():
             self._number = [0]
             self._dig_n = 1
         elif not Natural.isNatural(n):
-            raise Exception("Number passed to Natural Class constructor is invailid. "
+            raise Exception("Number passed to \"Natural\" class constructor is invailid. "
                             "You must enter only digits from 0 to 9 and no other symbols.")
         # Число состоит из нулей
         elif n == "0" * len(n):

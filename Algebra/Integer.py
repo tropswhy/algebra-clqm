@@ -14,6 +14,10 @@ class Integer():
         if n is None:
             self._number = Natural()
             self._sign = ZERO
+        elif not Integer.isInteger(n):
+            raise Exception("Number passed to \"Intger\" class constructor is invailid. "
+                            "You must enter only digits from 0 to 9 and minus in the begging if needed. "
+                            "No other symbols are allowed.")
         else:
             # Число отрицательное
             if n[0] == '-':
@@ -27,6 +31,11 @@ class Integer():
             else:
                 self._number = Natural(n)
                 self._sign = ZERO
+
+    @staticmethod
+    def isInteger(s):
+        i = 1 if s[0] == '-' else 0
+        return Natural.isNatural(s[i:])
 
     def __str__(self):
         return "-" * (self._sign == NEGATIVE) + str(self._number)
