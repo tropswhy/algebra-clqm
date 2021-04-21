@@ -128,8 +128,8 @@ class Polynom():
         P-9.DIV_PP_P-__truediv__
         Выполнил Цыганков Дмитрий
         '''
-        divisbl = Polynom(self._coef)
-        pol_ = Polynom(pol._coef)
+        divisbl = Polynom(self._coef[::-1])
+        pol_ = Polynom(pol._coef[::-1])
         # степнь искомого полинома
         deg = divisbl.power() - pol_.power()
         result = Polynom([0] * deg)
@@ -160,8 +160,8 @@ class Polynom():
 
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
-        a = Polynom(self._coef)
-        b = Polynom(num._coef)
+        a = Polynom(self._coef[::-1])
+        b = Polynom(num._coef[::-1])
         while a > 0 and b > 0:
             if a.power() > b.power():
                 a = a.__mod__(b)
@@ -175,6 +175,6 @@ class Polynom():
         P-13.NMR_P_P-nmr
         Выполнил Цыганков Дмитрий
         '''
-        pol_ = Polynom(self._coef)
+        pol_ = Polynom(self._coef[::-1])
         pol_ /= pol_.gcf(pol_.derivate()) # делим полином на НОД от него и его производной
         return pol_ 
