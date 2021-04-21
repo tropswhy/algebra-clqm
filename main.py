@@ -9,6 +9,8 @@ INTEGER = 1
 RATIONAL = 2
 POLYNOM = 3
 
+INPUT_ERROR = 0
+
 class MainWindow(QMainWindow):
 
     def __init__(self):
@@ -345,6 +347,7 @@ class MainWindow(QMainWindow):
 
             # NATURAL BUTTONS ACTIONS
             self.n_incr.clicked.connect(lambda: self.useUnaryOperation(self.getNumber().increment))
+        # Зачем?
         except:
             self.currentLineEdit.clear()
 
@@ -359,8 +362,8 @@ class MainWindow(QMainWindow):
                 return Algebra.Rational(text)
             else:
                 return Algebra.Polynom(text)
-        except:
-            self.errorHandle()
+        except Exception as exc:
+            self.errorHandle(INPUT_ERROR, repr(exc))
             if self.currentIndex == NATURAL:
                 return Algebra.Natural()
             elif self.currentIndex == INTEGER:
@@ -370,8 +373,22 @@ class MainWindow(QMainWindow):
             else:
                 return Algebra.Polynom()
 
-    def errorHandle(self):
+    def errorHandle(self, code, errorText):
         self.currentLineEdit.clear()
+        error = QtWidgets.QMessageBox()
+
+        error.setWindowTitle("Ошибка")
+        if code is INPUT_ERROR:
+            error.setText("Ошибка при вводе числа.")
+        else:
+            error.setText("Ошибка.")
+
+        error.setIcon(QtWidgets.QMessageBox.Warning)
+        error.setStandardButtons(QtWidgets.QMessageBox.Ok)
+
+        error.setDetailedText(errorText)
+
+        error.exec_()
 
     def changePage(self, index):
         self.stackedWidget.setCurrentIndex(index)
@@ -386,21 +403,8 @@ class MainWindow(QMainWindow):
             self.currentLineEdit = self.p_input
 
     def useUnaryOperation(self, unary_operator):
-        line = str(self.currentLineEdit.text())
-        number = self.toNumber(line)
         output = str(unary_operator())
         self.currentLineEdit.setText(output)
-
-    def toNumber(self, n):
-        # TO DO: add try except
-        if self.currentIndex == NATURAL:
-            return Algebra.Natural(n)
-        elif self.currentIndex == INTEGER:
-            return Algebra.Integer(n)
-        elif self.currentIndex == RATIONAL:
-            return Algebra.Rational(n)
-        else:
-            return Algebra.Polynom(n)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
