@@ -217,10 +217,7 @@ class Natural():
             n = num._dig_n
             m = self._dig_n
         elif t == 1:
-            big = num
-            less = self
-            n = self._dig_n
-            m = num._dig_n
+            raise Exception("You must not substitute greater number from less number.")
         else:
             return Natural("0")
         # создание результирующего натур  числа
