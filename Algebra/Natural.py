@@ -51,6 +51,8 @@ class Natural():
     '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
 
     def mul_d(self, digit: int):
+        if digit < 0:
+            raise Exception("You must not multiple a natural number by negative number")
         self_c = Natural(str(self))
         if self_c._dig_n != 0:  # если числа не пустые
             if self_c._number == [0] or digit == 0:  # если одно из чисел нулевое
@@ -366,6 +368,8 @@ class Natural():
 
     def sub_dn(self, dig, num):
         # Модуль SUB_NDN_N. Оформила Реброва Юлия
+        if dig < 0:
+            raise Exception("You must not multiple a number by a negative digit.")
         c = num.mul_d(dig)
         if self.compare(c) != 1:
             return self - c
@@ -374,6 +378,8 @@ class Natural():
 
     def __mod__(self, num):
         '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
+        if num.is_zero():
+            raise Exception("You must not try to find modulo by zero.")
         res = Natural(str(self))
         if (self.compare(num) != 1):
             i = res / num
