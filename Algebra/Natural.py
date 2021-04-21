@@ -260,6 +260,8 @@ class Natural():
 
     def gcf(self, num):
         # Модуль GCF_NN_N. Оформил Шабров Иван
+        if self.is_zero() and num.is_zero():
+            raise Exception("GCF of both zeros is undefined.")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         while (not n1.is_zero()) and (not n2.is_zero()):
