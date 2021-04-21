@@ -3,8 +3,11 @@ __all__ = ["Natural"]
 # TO DO:
 # Создать отдельный файл для подобных функций?
 
-def remove_char(s, n):
-    return s[:n] + s[n + 1:]
+def remove_zeros(s):
+    i = 0
+    while s[i] == '0':
+        i += 1
+    return s[i:]
 
 class Natural():
 
@@ -16,15 +19,15 @@ class Natural():
             self._number = [0]
             self._dig_n = 1
         elif not Natural.isNatural(n):
-            raise Exception("Number is not natural")
+            raise Exception("Number passed to Natural Class constructor is invailid. "
+                            "You must enter only digits from 0 to 9 and no other symbols.")
         # Число состоит из нулей
         elif n == "0" * len(n):
             self._number = [0]
             self._dig_n = 1
         else:
             # Убираем все нули
-            while n.find("0") != -1 and n[0] == "0":
-                n = remove_char(n, n.index("0"))
+            n = remove_zeros(n)
             self._number = [int(i) for i in n[::-1]]
             self._dig_n = len(self._number)
 
