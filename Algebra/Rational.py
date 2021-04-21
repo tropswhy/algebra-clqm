@@ -39,6 +39,7 @@ class Rational():
         ''' Функция преобразования дробного числа в целое '''
         # Показацкая Арина
         if self._denumerator == Natural("1"):
+        # если знаменатель равен "1", число преобразуется в целое
             return self._numerator
         else:
             return Integer()

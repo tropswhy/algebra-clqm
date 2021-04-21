@@ -164,14 +164,15 @@ class Integer():
     def __sub__(self, num):
         ''' Функция вычитания целых чисел '''
     # Показацкая Арина
-        res = Integer("0")
-        sign1 = self.sign()
-        sign2 = num.sign()
+        res = Integer("0")  # результат
+        sign1 = self.sign()  # знак числа
+        sign2 = num.sign()  # знак числа
         if (sign1 == 0):
             res = num
         elif (sign2 == 0):
             res = self
         elif (sign1 == 2 and sign2 == 2):
+            # если оба числа положительные, то из большего вычитаем меньшее
             if (abs(self) > abs(num)):
                 res = Integer(str(abs(self) - abs(num)))
             elif (abs(self) == abs(num)):
@@ -179,6 +180,8 @@ class Integer():
             else:
                 res = Integer(str(abs(num) - abs(self))).change_sign()
         elif (sign1 == 1 and sign2 == 1):
+            # если оба числа отрицательные, то из модуля большего числа вычитаем модуль меньшего
+            # если результат отличен от нуля, меняем знак
             if (abs(self) > abs(num)):
                 res = Integer(str(abs(self) - abs(num))).change_sign()
             elif (abs(self) == abs(num)):
@@ -186,9 +189,12 @@ class Integer():
             else:
                 res = Integer(str(abs(num) - abs(self)))
         else:
+            # если числа с разными знаками
             if (sign1 == 1):
+                # если отрицательно первое, складываем модули и меняем знак
                 res = Integer(str(abs(self) + abs(num))).change_sign()
             else:
+                # если отрицательно второе, складываем модули чисел
                 res = Integer(str(abs(self) + abs(num)))
         return res
 
