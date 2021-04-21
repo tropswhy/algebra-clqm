@@ -147,6 +147,8 @@ class Integer():
 
     def __mod__(self, num):
         # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
+        if num._number.is_zero():
+            raise Exception("You must not try to find modulo by zero.")
         z1 = Integer(str(self))
         z2 = Integer(str(num))
         div = z1 / z2
@@ -196,11 +198,11 @@ class Integer():
     def __truediv__(self, num):
         # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
         res = Integer()
-        divisible = self
-        divisor = num
+        divisible = Integer(str(self))
+        divisor = Integer(str(num))
         # Проверка на ноль(нуль)
         if (divisor == Integer("0")):
-            return Integer()
+            raise Exception("You must not divide by zero.")
         elif (divisible == Integer("0")):
             return Integer("0")
         # Делим число без учета знака
