@@ -28,14 +28,20 @@ class Rational():
                     self._numerator = Integer("0")
                     self._denumerator = Natural("0")
 
+    def is_zero(self):
+        return self._denumerator.is_zero()
+
     @staticmethod
     def isRational(s):
         k = s.find("/")
         if k == -1:
             return Integer.isInteger(s)
         else:
-            num, denum = s[:k], s[k + 1:]
-            return Integer.isInteger(num) and Natural.isNatural(denum) and not Natural(denum).is_zero()
+            integerPart, naturalPart = s[:k], s[k + 1:]
+            integer, natural = Integer(integerPart), Natural(naturalPart)
+            if natural.is_zero() and not integer._number.is_zero():
+                return False
+            return Integer.isInteger(integerPart) and Natural.isNatural(naturalPart)
 
     def __str__(self):
         return str(self._numerator) + "/" + str(self._denumerator)

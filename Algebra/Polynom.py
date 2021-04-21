@@ -7,26 +7,29 @@ __all__ = ["Polynom"]
 
 class Polynom():
 
-    # _coef - массив коэффициентов начиная с большего и заканчивая меньшим
+    # _coef - массив коэффициентов начиная с меньшего и заканчивая большим
     # _coef_n - количество коэффициентов
     def __init__(self, l: list = None):
         if l is None:
             self._coef = []
             self._coef_n = 0
         else:
-            self._coef = [Rational(str(i)) for i in l[::-1]]
-            self._coef_n = len(l)
+            try:
+                self._coef = [Rational(str(i)) for i in l[::-1]]
+                self._coef_n = len(l)
+                # Убираем 0 со старших коэффициентов
+                i = self._coef_n
+                while self._coef[i - 1].is_zero() and i > 1:
+                    i -= 1
+                if self._coef_n != i:
+                    self._coef = self._coef[:i]
+            except:
+                raise Exception("Error while converting coefficients into rational numbers")
 
     # TO DO:
     # Пофиксить вывод отрицательных коэффициентов
     def __str__(self):
-        s = ""
-        for i in range(self._coef_n - 1, -1, -1):
-            if i != 0:
-                s += str(self._coef[i]) + f"x^{i} + "
-            else:
-                s += str(self._coef[i])
-        return s
+        return " ".join(map(str, self._coef[::-1]))
 
     def power(self):
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
@@ -92,8 +95,9 @@ class Polynom():
         num_gcf = abs(self._coef[0]._numerator)
         num_lcm = self._coef[0]._denumerator
         for i in range (1, self._coef_n):
-            num_gcf = num_gcf.gcf(abs(self._coef[i]._numerator))
-            num_lcm = num_lcm.lcm(self._coef[i]._denumerator)
+            if self._coef[i] != Rational("0/0"):
+                num_gcf = num_gcf.gcf(abs(self._coef[i]._numerator))
+                num_lcm = num_lcm.lcm(self._coef[i]._denumerator)
         res._numerator = Integer(str(num_gcf))
         res._denumerator = num_lcm
         return res
