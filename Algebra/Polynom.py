@@ -33,6 +33,8 @@ class Polynom():
 
     def power(self):
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
+        # self._coef_n - это количество коэффицентов
+        # Степень многочлена на единицу меньше количества коэффициентов
         return self._coef_n - 1
 
     def higher_coef(self):
@@ -94,6 +96,7 @@ class Polynom():
         # Присваиваем НОД и НОК значение числителя и знаменателя первых элементов соответственно
         num_gcf = abs(self._coef[0]._numerator)
         num_lcm = self._coef[0]._denumerator
+        # Циклом проходим по всем коэффициентам многочлена
         for i in range (1, self._coef_n):
             if self._coef[i] != Rational("0/0"):
                 num_gcf = num_gcf.gcf(abs(self._coef[i]._numerator))
@@ -103,23 +106,27 @@ class Polynom():
         return res
 
     def __sub__(self, num):
-        # Вычитание многочленов
+    '''Вычитание многочленов'''
         # Показацкая Арина
-        k = max(self.power(), num.power())
-        c = min(self.power(), num.power())
-        res = Polynom([Rational("0") for i in range(k + 1)])
+        k = max(self.power(), num.power()) # степень большего многочлена
+        c = min(self.power(), num.power()) # степень меньшего многочлена
+        res = Polynom([Rational("0") for i in range(k + 1)]) # результат
         if (self._coef_n >= num._coef_n):
+            # если количество коэффициентов первого больше(или равно) второго
             for i in range(k + 1):
+                # записываем в результат первый многочлен и вычитаем из него второй
                 res._coef[i] = Rational(str(self._coef[i]))
             for i in range(c + 1):
-                print(res._coef[i] - num._coef[i])
                 res._coef[i] = res._coef[i] - num._coef[i]
         else:
+            # если количество коэффициентов второго больше первого
             for i in range(k + 1):
+                # записываем в результат второй многочлен и вычитаем из него первый
                 res._coef[i] = Rational(str(num._coef[i]))
             for i in range(c + 1):
                 res._coef[i] = self._coef[i] - res._coef[i]
         while (res._coef[res._coef_n - 1] == 0):
+            # удаляем нулевые коэффициенты вначале, если такие есть
             res._coef.pop()
             res._coef_n -= 1
         return res

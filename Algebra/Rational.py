@@ -47,8 +47,8 @@ class Rational():
         return str(self._numerator) + "/" + str(self._denumerator)
 
     def integer_to_rational(self, n: Integer):
-        # Преобразование целого числа в дробное
-        # Трибунский Алексей
+        '''Модуль TRANS_Z_Q, оформил Трибунский Алексей'''
+        # Числитель равен введенному числу, знаменатель равен единице
         self._numerator = n
         self._denumerator = Natural("1")
         return self
@@ -57,6 +57,7 @@ class Rational():
         ''' Функция преобразования дробного числа в целое '''
         # Показацкая Арина
         if self._denumerator == Natural("1"):
+        # если знаменатель равен "1", число преобразуется в целое
             return self._numerator
         else:
             raise Exception("You cannot transfer rational number to integer because denumerator is not equal to 1.")

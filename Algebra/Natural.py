@@ -204,7 +204,9 @@ class Natural():
     def __mul__(self, x):
         '''Модуль MUL_NN_N. Оформил Трибунский Алексей'''
         res = Natural("0")
+        # Проходим по всем цифрам второго множителя
         for i in range(x._dig_n):
+            # К res прибавляем первый множитель, умноженный на цифру второго множителя и на 10^i
             res += self.mul_d(x._number[i]).mul_k(i)
         res = Natural(str(res))
         return res
@@ -291,7 +293,7 @@ class Natural():
         return res
 
     def __truediv__(self, num):
-        # Функция нахождения частого
+        '''Функция нахождения частого'''
         # Показацкая Арина
         if self.is_zero():
             return Natural("0")
@@ -299,14 +301,14 @@ class Natural():
             raise Exception("You must not divide natural number by zero.")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
-        res = Natural()
-        res._dig_n = n1.div_dk(n2)[1] + 1
+        res = Natural()  # результат
+        res._dig_n = n1.div_dk(n2)[1] + 1  # количество разрядов в результирующем числе
         res._number = [0 for i in range(res._dig_n)]
         while n1.compare(n2) != 1:
             a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
             res._number[b] = a
-            c = n2.mul_k(b)
-            n1 = n1.sub_dn(a, c)
+            c = n2.mul_k(b)  # делитель, умноженный на 10 в степени b
+            n1 = n1.sub_dn(a, c)  # разность делимого и делителя, умноженного на первую цифру
         return res
 
     def lcm(self, num):
