@@ -7,29 +7,34 @@ __all__ = ["Polynom"]
 
 class Polynom():
 
-    # _coef - массив коэффициентов начиная с большего и заканчивая меньшим
+    # _coef - массив коэффициентов начиная с меньшего и заканчивая большим
     # _coef_n - количество коэффициентов
     def __init__(self, l: list = None):
         if l is None:
             self._coef = []
             self._coef_n = 0
         else:
-            self._coef = [Rational(str(i)) for i in l[::-1]]
-            self._coef_n = len(l)
+            try:
+                self._coef = [Rational(str(i)) for i in l[::-1]]
+                self._coef_n = len(l)
+                # Убираем 0 со старших коэффициентов
+                i = self._coef_n
+                while self._coef[i - 1].is_zero() and i > 1:
+                    i -= 1
+                if self._coef_n != i:
+                    self._coef = self._coef[:i]
+            except:
+                raise Exception("Error while converting coefficients into rational numbers")
 
     # TO DO:
     # Пофиксить вывод отрицательных коэффициентов
     def __str__(self):
-        s = ""
-        for i in range(self._coef_n - 1, -1, -1):
-            if i != 0:
-                s += str(self._coef[i]) + f"x^{i} + "
-            else:
-                s += str(self._coef[i])
-        return s
+        return " ".join(map(str, self._coef[::-1]))
 
     def power(self):
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
+        # self._coef_n - это количество коэффицентов
+        # Степень многочлена на единицу меньше количества коэффициентов
         return self._coef_n - 1
 
     def higher_coef(self):
@@ -91,36 +96,42 @@ class Polynom():
         # Присваиваем НОД и НОК значение числителя и знаменателя первых элементов соответственно
         num_gcf = abs(self._coef[0]._numerator)
         num_lcm = self._coef[0]._denumerator
+        # Циклом проходим по всем коэффициентам многочлена
         for i in range (1, self._coef_n):
-            num_gcf = num_gcf.gcf(abs(self._coef[i]._numerator))
-            num_lcm = num_lcm.lcm(self._coef[i]._denumerator)
+            if self._coef[i] != Rational("0/0"):
+                num_gcf = num_gcf.gcf(abs(self._coef[i]._numerator))
+                num_lcm = num_lcm.lcm(self._coef[i]._denumerator)
         res._numerator = Integer(str(num_gcf))
         res._denumerator = num_lcm
         return res
 
     def __sub__(self, num):
-        # Вычитание многочленов
+        '''Вычитание многочленов'''
         # Показацкая Арина
-        k = max(self.power(), num.power())
-        c = min(self.power(), num.power())
-        res = Polynom([Rational("0") for i in range(k + 1)])
+        k = max(self.power(), num.power()) # степень большего многочлена
+        c = min(self.power(), num.power()) # степень меньшего многочлена
+        res = Polynom([Rational("0") for i in range(k + 1)]) # результат
         if (self._coef_n >= num._coef_n):
+            # если количество коэффициентов первого больше(или равно) второго
             for i in range(k + 1):
+                # записываем в результат первый многочлен и вычитаем из него второй
                 res._coef[i] = Rational(str(self._coef[i]))
             for i in range(c + 1):
-                print(res._coef[i] - num._coef[i])
                 res._coef[i] = res._coef[i] - num._coef[i]
         else:
+            # если количество коэффициентов второго больше первого
             for i in range(k + 1):
+                # записываем в результат второй многочлен и вычитаем из него первый
                 res._coef[i] = Rational(str(num._coef[i]))
             for i in range(c + 1):
                 res._coef[i] = self._coef[i] - res._coef[i]
         while (res._coef[res._coef_n - 1] == 0):
+            # удаляем нулевые коэффициенты вначале, если такие есть
             res._coef.pop()
             res._coef_n -= 1
         return res
 
-    def __truediv__(self,pol):
+    def __truediv__(self, pol):
         '''
         Частное от деления многочлена на многочлен при делении с остатком
         P-9.DIV_PP_P-__truediv__

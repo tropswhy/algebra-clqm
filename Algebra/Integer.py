@@ -14,6 +14,10 @@ class Integer():
         if n is None:
             self._number = Natural()
             self._sign = ZERO
+        elif not Integer.isInteger(n):
+            raise Exception("Number passed to \"Intger\" class constructor is invailid. "
+                            "You must enter only digits from 0 to 9 and minus in the begging if needed. "
+                            "No other symbols are allowed.")
         else:
             # Число отрицательное
             if n[0] == '-':
@@ -27,6 +31,11 @@ class Integer():
             else:
                 self._number = Natural(n)
                 self._sign = ZERO
+
+    @staticmethod
+    def isInteger(s):
+        i = 1 if s[0] == '-' else 0
+        return Natural.isNatural(s[i:])
 
     def __str__(self):
         return "-" * (self._sign == NEGATIVE) + str(self._number)
@@ -116,28 +125,39 @@ class Integer():
         res = Integer("0")
         sign1 = self.sign()
         sign2 = num.sign()
+        # Если первое число - нуль, то выводим второе число
         if (sign1 == 0):
             res = num
+        # Если второе число - нуль, то выводим первое число
         elif (sign2 == 0):
             res = self
+        # Если оба числа положительные, то выводим сумму их модулей
         elif (sign1 == 2 and sign2 == 2):
             res = Integer(str(abs(self) + abs(num)))
+        # Если оба числа отрицательные, то выводим сумму их модулей с минусом
         elif (sign1 == 1 and sign2 == 1):
             res = Integer(str(abs(self) + abs(num))).change_sign()
         else:
+            # Если модуль первого числа больше модуля второго числа, то large присваиваем значение первого числа, а less - второго
             if (abs(self) > abs(num)):
                 large = self
                 less = num
+            # Если модуль первого числа меньше модуля второго числа, то large присваиваем значение второго числа, а less - первого
             else:
                 large = num
                 less = self
+            # Из большего числа вычитаем меньшее
             res = Integer(str(abs(large) - abs(less)))
+            # Если большее число отрицательное, то меняем знак
             if (large.sign() == 1):
                 res = res.change_sign()
         return res
 
     def __mod__(self, num):
         # Модуль ADD_PP_P выполнил и оформил Щусь Максим
+        # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
+        if num._number.is_zero():
+            raise Exception("You must not try to find modulo by zero.")
         z1 = Integer(str(self))
         z2 = Integer(str(num))
         div = (z1 / z2)
@@ -147,14 +167,15 @@ class Integer():
     def __sub__(self, num):
         ''' Функция вычитания целых чисел '''
     # Показацкая Арина
-        res = Integer("0")
-        sign1 = self.sign()
-        sign2 = num.sign()
+        res = Integer("0")  # результат
+        sign1 = self.sign()  # знак числа
+        sign2 = num.sign()  # знак числа
         if (sign1 == 0):
             res = num
         elif (sign2 == 0):
             res = self
         elif (sign1 == 2 and sign2 == 2):
+            # если оба числа положительные, то из большего вычитаем меньшее
             if (abs(self) > abs(num)):
                 res = Integer(str(abs(self) - abs(num)))
             elif (abs(self) == abs(num)):
@@ -162,6 +183,8 @@ class Integer():
             else:
                 res = Integer(str(abs(num) - abs(self))).change_sign()
         elif (sign1 == 1 and sign2 == 1):
+            # если оба числа отрицательные, то из модуля большего числа вычитаем модуль меньшего
+            # если результат отличен от нуля, меняем знак
             if (abs(self) > abs(num)):
                 res = Integer(str(abs(self) - abs(num))).change_sign()
             elif (abs(self) == abs(num)):
@@ -169,20 +192,23 @@ class Integer():
             else:
                 res = Integer(str(abs(num) - abs(self)))
         else:
+            # если числа с разными знаками
             if (sign1 == 1):
+                # если отрицательно первое, складываем модули и меняем знак
                 res = Integer(str(abs(self) + abs(num))).change_sign()
             else:
+                # если отрицательно второе, складываем модули чисел
                 res = Integer(str(abs(self) + abs(num)))
         return res
 
     def __truediv__(self, num):
-        # Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита
+        ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
         res = Integer()
-        divisible = self
-        divisor = num
+        divisible = Integer(str(self))
+        divisor = Integer(str(num))
         # Проверка на ноль(нуль)
         if (divisor == Integer("0")):
-            return Integer()
+            raise Exception("You must not divide by zero.")
         elif (divisible == Integer("0")):
             return Integer("0")
         # Делим число без учета знака

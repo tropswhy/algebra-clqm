@@ -1,11 +1,13 @@
 __all__ = ["Natural"]
 
-
 # TO DO:
 # Создать отдельный файл для подобных функций?
-def remove_char(s, n):
-    return s[:n] + s[n + 1:]
 
+def remove_zeros(s):
+    i = 0
+    while s[i] == '0':
+        i += 1
+    return s[i:]
 
 class Natural():
 
@@ -16,16 +18,25 @@ class Natural():
         if n is None:
             self._number = [0]
             self._dig_n = 1
+        elif not Natural.isNatural(n):
+            raise Exception("Number passed to \"Natural\" class constructor is invailid. "
+                            "You must enter only digits from 0 to 9 and no other symbols.")
         # Число состоит из нулей
         elif n == "0" * len(n):
             self._number = [0]
             self._dig_n = 1
         else:
             # Убираем все нули
-            while n.find("0") != -1 and n[0] == "0":
-                n = remove_char(n, n.index("0"))
+            n = remove_zeros(n)
             self._number = [int(i) for i in n[::-1]]
             self._dig_n = len(self._number)
+
+    @staticmethod
+    def isNatural(s):
+        for i in s:
+            if not ('0' <= i and i <= '9'):
+                return False
+        return True
 
     def __reversed__(self):
         return reversed(self._number)
@@ -40,6 +51,8 @@ class Natural():
     '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
 
     def mul_d(self, digit: int):
+        if digit < 0:
+            raise Exception("You must not multiple a natural number by negative number")
         self_c = Natural(str(self))
         if self_c._dig_n != 0:  # если числа не пустые
             if self_c._number == [0] or digit == 0:  # если одно из чисел нулевое
@@ -72,6 +85,8 @@ class Natural():
     '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
 
     def mul_k(self, tenpow: int):
+        if tenpow < 0:
+            raise Exception("You must not raise a natural number to a negative power.")
         self_c = Natural(str(self))
         for i in range(tenpow):
             self_c._number.insert(i, 0)
@@ -189,7 +204,9 @@ class Natural():
     def __mul__(self, x):
         '''Модуль MUL_NN_N. Оформил Трибунский Алексей'''
         res = Natural("0")
+        # Проходим по всем цифрам второго множителя
         for i in range(x._dig_n):
+            # К res прибавляем первый множитель, умноженный на цифру второго множителя и на 10^i
             res += self.mul_d(x._number[i]).mul_k(i)
         res = Natural(str(res))
         return res
@@ -204,10 +221,7 @@ class Natural():
             n = num._dig_n
             m = self._dig_n
         elif t == 1:
-            big = num
-            less = self
-            n = self._dig_n
-            m = num._dig_n
+            raise Exception("You must not substitute greater number from less number.")
         else:
             return Natural("0")
         # создание результирующего натур  числа
@@ -250,6 +264,8 @@ class Natural():
 
     def gcf(self, num):
         # Модуль GCF_NN_N. Оформил Шабров Иван
+        if self.is_zero() and num.is_zero():
+            raise Exception("GCF of both zeros is undefined.")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         while (not n1.is_zero()) and (not n2.is_zero()):
@@ -277,31 +293,40 @@ class Natural():
         return res
 
     def __truediv__(self, num):
-        # Функция нахождения частого
+        '''Функция нахождения частого'''
         # Показацкая Арина
-        if self.is_zero() or num.is_zero():
+        if self.is_zero():
             return Natural("0")
+        elif num.is_zero():
+            raise Exception("You must not divide natural number by zero.")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
-        res = Natural()
-        res._dig_n = n1.div_dk(n2)[1] + 1
+        res = Natural()  # результат
+        res._dig_n = n1.div_dk(n2)[1] + 1  # количество разрядов в результирующем числе
         res._number = [0 for i in range(res._dig_n)]
         while n1.compare(n2) != 1:
             a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
             res._number[b] = a
-            c = n2.mul_k(b)
-            n1 = n1.sub_dn(a, c)
+            c = n2.mul_k(b)  # делитель, умноженный на 10 в степени b
+            n1 = n1.sub_dn(a, c)  # разность делимого и делителя, умноженного на первую цифру
         return res
 
     def lcm(self, num):
         # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
+        if self.is_zero():
+            if num.is_zero():
+                raise Exception("LCM of both zeros is undefined")
+            else:
+                raise Exception("LCM of a zero and a number is undefined")
         gcf = self.gcf(num)
         return (self * num) / gcf
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
-        if self.is_zero() or num.is_zero():
+        if self.is_zero():
             return 0, 0
+        elif num.is_zero():
+            raise Exception("You must not divide natural number by zero.")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         k = 0
@@ -345,6 +370,8 @@ class Natural():
 
     def sub_dn(self, dig, num):
         # Модуль SUB_NDN_N. Оформила Реброва Юлия
+        if dig < 0:
+            raise Exception("You must not multiple a number by a negative digit.")
         c = num.mul_d(dig)
         if self.compare(c) != 1:
             return self - c
@@ -353,6 +380,8 @@ class Natural():
 
     def __mod__(self, num):
         '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
+        if num.is_zero():
+            raise Exception("You must not try to find modulo by zero.")
         res = Natural(str(self))
         if (self.compare(num) != 1):
             i = res / num
