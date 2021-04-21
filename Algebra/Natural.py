@@ -197,7 +197,9 @@ class Natural():
     def __mul__(self, x):
         '''Модуль MUL_NN_N. Оформил Трибунский Алексей'''
         res = Natural("0")
+        # Проходим по всем цифрам второго множителя
         for i in range(x._dig_n):
+            # К res прибавляем первый множитель, умноженный на цифру второго множителя и на 10^i
             res += self.mul_d(x._number[i]).mul_k(i)
         res = Natural(str(res))
         return res

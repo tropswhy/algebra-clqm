@@ -29,8 +29,8 @@ class Rational():
         return str(self._numerator) + "/" + str(self._denumerator)
 
     def integer_to_rational(self, n: Integer):
-        # Преобразование целого числа в дробное
-        # Трибунский Алексей
+        '''Модуль TRANS_Z_Q, оформил Трибунский Алексей'''
+        # Числитель равен введенному числу, знаменатель равен единице
         self._numerator = n
         self._denumerator = Natural("1")
         return self
