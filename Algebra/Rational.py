@@ -117,10 +117,10 @@ class Rational():
         res = Rational(str(self))
         lcm = self._denumerator.lcm(num._denumerator)
 
-        common_div1 = res._denumerator / lcm
+        common_div1 = Integer(str(lcm / res._denumerator))
         num1 = res._numerator * common_div1
 
-        common_div2 = num._denumerator / lcm
+        common_div2 = Integer(str(lcm / num._denumerator))
         num2 = num._numerator * common_div2
 
         res._numerator = num1 + num2

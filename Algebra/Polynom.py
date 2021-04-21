@@ -106,7 +106,7 @@ class Polynom():
         return res
 
     def __sub__(self, num):
-    '''Вычитание многочленов'''
+        '''Вычитание многочленов'''
         # Показацкая Арина
         k = max(self.power(), num.power()) # степень большего многочлена
         c = min(self.power(), num.power()) # степень меньшего многочлена
@@ -131,7 +131,7 @@ class Polynom():
             res._coef_n -= 1
         return res
 
-    def __truediv__(self,pol):
+    def __truediv__(self, pol):
         '''
         Частное от деления многочлена на многочлен при делении с остатком
         P-9.DIV_PP_P-__truediv__
