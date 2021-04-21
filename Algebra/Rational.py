@@ -10,6 +10,10 @@ class Rational():
         if n is None:
             self._numerator = Integer("0")
             self._denumerator = Natural("0")
+        elif not Rational.isRational(n):
+            raise Exception("Number passed to \"Rational\" class constructor is invailid. "
+                            "You must enter only digits from 0 to 9, minus in the begging if needed and \'/\'. "
+                            "No other symbols are allowed.")
         else:
             k = n.find("/")
             if k == -1:
@@ -20,10 +24,18 @@ class Rational():
                 denum = n[k + 1:]
                 self._numerator = Integer(num)
                 self._denumerator = Natural(denum)
-                if self._numerator == Integer("0") or self._denumerator == Natural("0"):
-                    self._numerator = Integer()
-                    self._denumerator = Natural()
+                if self._numerator == Integer("0"):
+                    self._numerator = Integer("0")
+                    self._denumerator = Natural("0")
 
+    @staticmethod
+    def isRational(s):
+        k = s.find("/")
+        if k == -1:
+            return Integer.isInteger(s)
+        else:
+            num, denum = s[:k], s[k + 1:]
+            return Integer.isInteger(num) and Natural.isNatural(denum) and not Natural(denum).is_zero()
 
     def __str__(self):
         return str(self._numerator) + "/" + str(self._denumerator)
@@ -41,7 +53,7 @@ class Rational():
         if self._denumerator == Natural("1"):
             return self._numerator
         else:
-            return Integer()
+            raise Exception("You cannot transfer rational number to integer because denumerator is not equal to 1.")
 
     def __mul__(self, num):
         res = Rational()
@@ -78,6 +90,8 @@ class Rational():
     def reduce(self):
         #Модуль Q-1 RED_Q_Q оформил Шабров Иван
         r = Rational(str(self))
+        if r._denumerator.is_zero():
+            return r
         k = abs(r._numerator).gcf(r._denumerator)
         # Переводим k из Natural в Integer
         k_int = Integer()
@@ -94,7 +108,6 @@ class Rational():
     def __add__(self, num):
         '''Модуль ADD_QQ_Q, оформил Проскуряк Влад.'''
         res = Rational(str(self))
-        #res._numerator = __add__(__mul__(res._numerator, __div__(res._denumerator, lcm(self._denumerator, num._denumerator))), __mul__(num._numerator, __div__(num._denumerator, lcm(self._denumerator, num._denumerator))))
         lcm = self._denumerator.lcm(num._denumerator)
 
         common_div1 = res._denumerator / lcm
