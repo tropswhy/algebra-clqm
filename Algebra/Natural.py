@@ -83,6 +83,8 @@ class Natural():
     '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
 
     def mul_k(self, tenpow: int):
+        if tenpow < 0:
+            raise Exception("You must not raise a natural number to a negative power.")
         self_c = Natural(str(self))
         for i in range(tenpow):
             self_c._number.insert(i, 0)
