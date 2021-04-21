@@ -309,16 +309,20 @@ class Natural():
 
     def lcm(self, num):
         # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
-        try:
-            gcf = self.gcf(num)
-            return (self * num) / gcf
-        except Exception as exc:
-            raise exc
+        if self.is_zero():
+            if num.is_zero():
+                raise Exception("LCM of both zeros is undefined")
+            else:
+                raise Exception("LCM of a zero and a number is undefined")
+        gcf = self.gcf(num)
+        return (self * num) / gcf
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
-        if self.is_zero() or num.is_zero():
+        if self.is_zero():
             return 0, 0
+        elif num.is_zero():
+            raise Exception("You must not divide natural number by zero.")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         k = 0
