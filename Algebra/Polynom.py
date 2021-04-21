@@ -11,20 +11,22 @@ class Polynom():
     # _coef_n - количество коэффициентов
     def __init__(self, l: list = None):
         if l is None:
-            self._coef = []
-            self._coef_n = 0
+            self._coef = [Rational("0")]
+            self._coef_n = 1
         else:
             try:
                 self._coef = [Rational(str(i)) for i in l[::-1]]
                 self._coef_n = len(l)
-                # Убираем 0 со старших коэффициентов
             except:
                 raise Exception("Error while converting coefficients into rational numbers")
 
     # TO DO:
     # Пофиксить вывод отрицательных коэффициентов
     def __str__(self):
-        return " ".join(map(str, self._coef[::-1]))
+        i = self._coef_n
+        while self._coef[i - 1]._numerator._number.is_zero():
+            i -= 1
+        return " ".join(map(str, self._coef[i - 1::-1]))
 
     def power(self):
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
