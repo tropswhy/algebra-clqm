@@ -18,11 +18,6 @@ class Polynom():
                 self._coef = [Rational(str(i)) for i in l[::-1]]
                 self._coef_n = len(l)
                 # Убираем 0 со старших коэффициентов
-                i = self._coef_n
-                while self._coef[i - 1].is_zero() and i > 1:
-                    i -= 1
-                if self._coef_n != i:
-                    self._coef = self._coef[:i]
             except:
                 raise Exception("Error while converting coefficients into rational numbers")
 
@@ -43,9 +38,7 @@ class Polynom():
 
     def mul_xk(self, k: int):
         #Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия
-        b = Polynom()
-        b._coef = [Rational("0")] * (self._coef_n + k)
-        b._coef_n = self._coef_n + k
+        b = Polynom(["0"] * (self._coef_n + k))
         for i in range(self._coef_n):
             b._coef[i + k] = self._coef[i]
         return b
