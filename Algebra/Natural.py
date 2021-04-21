@@ -291,8 +291,10 @@ class Natural():
     def __truediv__(self, num):
         # Функция нахождения частого
         # Показацкая Арина
-        if self.is_zero() or num.is_zero():
+        if self.is_zero():
             return Natural("0")
+        elif num.is_zero():
+            raise Exception("You must not divide natural number by zero.")
         n1 = Natural(str(self))
         n2 = Natural(str(num))
         res = Natural()
