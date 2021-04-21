@@ -309,8 +309,11 @@ class Natural():
 
     def lcm(self, num):
         # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
-        gcf = self.gcf(num)
-        return (self * num) / gcf
+        try:
+            gcf = self.gcf(num)
+            return (self * num) / gcf
+        except Exception as exc:
+            raise exc
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
