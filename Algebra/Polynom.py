@@ -41,16 +41,14 @@ class Polynom():
         '''Модуль LED_P_Q выполнил и оформил Шабров Иван'''
         return self._coef[-1]
 
-    # КОД НЕ РАБОТАЕТ
-    '''
     def mul_xk(self, k: int):
         #Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия
-        b = Polynom(self._coef_n + k)
-        b._coef = [0 * (self._coef_n + k)]
+        b = Polynom()
+        b._coef = [Rational("0")] * (self._coef_n + k)
+        b._coef_n = self._coef_n + k
         for i in range(self._coef_n):
-            b._coef[i] = self._coef[i]
+            b._coef[i + k] = self._coef[i]
         return b
-    '''
 
     def mul_q(self, num):
         ''' Выполнил Адиль Жексенгалиев'''
