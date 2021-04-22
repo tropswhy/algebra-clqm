@@ -372,11 +372,13 @@ class Natural():
         # Модуль SUB_NDN_N. Оформила Реброва Юлия
         if dig < 0:
             raise Exception("You must not multiple a number by a negative digit.")
+        elif dig > 9:
+            raise Exception("Entered digit must not be greater than 9.")
         c = num.mul_d(dig)
         if self.compare(c) != 1:
             return self - c
         else:
-            return Natural()
+            raise Exception("You can not substitute bigger number from less number.")
 
     def __mod__(self, num):
         '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
