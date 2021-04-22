@@ -176,3 +176,11 @@ class Polynom():
         pol_ = Polynom(self._coef[::-1])
         pol_ /= pol_.gcf(pol_.derivate()) # делим полином на НОД от него и его производной
         return pol_
+        
+    def __mod__(self, num):
+        '''Модуль MOD_PP_P, оформил Проскуряк Влад'''
+        res = Polynom(self._coef[::-1])
+        resnum = Polynom(num._coef[::-1])
+        # Вычитаем из многочлена произведение второго многочлена на частное от деления многочленов и получаем остаток
+        res = __sub__(res, __mul__(resnum, __div__(res, resnum)))
+        return res
