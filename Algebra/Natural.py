@@ -53,6 +53,8 @@ class Natural():
     def mul_d(self, digit: int):
         if digit < 0:
             raise Exception("You must not multiple a natural number by negative number")
+        elif digit > 9:
+            raise Exception("Entered digit must not be greater than 9.")
         self_c = Natural(str(self))
         if self_c._dig_n != 0:  # если числа не пустые
             if self_c._number == [0] or digit == 0:  # если одно из чисел нулевое
