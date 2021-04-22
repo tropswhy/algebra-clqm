@@ -1,5 +1,7 @@
 __all__ = ["Natural"]
 
+import Integer
+
 # TO DO:
 # Создать отдельный файл для подобных функций?
 
@@ -37,6 +39,11 @@ class Natural():
             if not ('0' <= i and i <= '9'):
                 return False
         return True
+
+    @staticmethod
+    def natural_to_integer(natural):
+        '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
+        return Integer(str(natural))
 
     def __reversed__(self):
         return reversed(self._number)

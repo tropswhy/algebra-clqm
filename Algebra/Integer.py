@@ -81,10 +81,6 @@ class Integer():
         # Трибунский Алексей
         return self._sign
 
-    def natural_to_integer(self, numb: Natural):
-        '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
-        return Integer(str(numb))
-
     def change_sign(self):
         ''' Функция умножения целого числа на -1'''
     # Показацкая Арина
