@@ -281,13 +281,13 @@ class Natural():
         '''Модуль ADD_1N_N, оформил Проскуряк Влад.'''
         res = Natural(str(self))
         if (res._number[0] + 1) < 10:
-            res._number[0] = res._number[0] + 1
+            res._number[0] = res._number[0] + 1 # Если число единиц не превысит 9 то прибавление 1 и окончание модуля
         else:
             i = 0
-            while (i < res._dig_n) and ((res._number[i] + 1) == 10):
+            while (i < res._dig_n) and ((res._number[i] + 1) == 10): # Прибавление 1 и в случае необходимости поднятие по разрядам
                 res._number[i] = 0
                 i = i + 1
-            if (i < res._dig_n):
+            if (i < res._dig_n): # Прибавление к высшему разряду единицу или добавление нового разряда
                 res._number[i] = res._number[i] + 1
             else:
                 res._dig_n = res._dig_n + 1
@@ -388,6 +388,6 @@ class Natural():
             raise Exception("You must not try to find modulo by zero.")
         res = Natural(str(self))
         if (self.compare(num) != 1):
-            i = res / num
-            res = res - i * num
+            i = res / num # Частное от деления 
+            res = res - i * num # Вычитаем из делимого произведение частного на делитель и получаем остаток
         return res
