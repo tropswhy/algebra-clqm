@@ -94,6 +94,35 @@ class Rational():
             res = res.reduce()
             return res
 
+    def div(self, num):
+        '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
+        if num._numerator == Integer("0"):
+            raise Exception("You cannot divide by null")
+        else:
+            k = Rational()
+            if (self._numerator._sign == 2 and num._numerator._sign == 2) or (
+                    self._numerator._sign == 1 and num._numerator._sign == 1):
+                n = Integer()
+                n = n.natural_to_integer(num._denumerator)
+
+                m = abs(num._numerator)
+
+                k._numerator = abs(self._numerator * n)
+                k._denumerator = self._denumerator * m
+                return k
+            elif (self._numerator._sign == 1 and num._numerator._sign == 2) or (
+                    self._numerator._sign == 2 and num._numerator._sign == 1):
+                n = Integer()
+                n = n.natural_to_integer(num._denumerator)
+
+                m = abs(num._numerator)
+
+                k._numerator = self._numerator * n
+                k._denumerator = self._denumerator * m
+
+                k._numerator._sign = 1
+                return k
+
     def reduce(self):
         #Модуль Q-1 RED_Q_Q оформил Шабров Иван
         r = Rational(str(self))
