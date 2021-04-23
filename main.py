@@ -574,4 +574,4 @@ def application():
 
 
 if __name__ == "__main__":
-    application()
+    print(Algebra.Polynom([0, 0, 0]))

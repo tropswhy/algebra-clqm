@@ -24,7 +24,7 @@ class Polynom():
     # Пофиксить вывод отрицательных коэффициентов
     def __str__(self):
         i = self._coef_n
-        while self._coef[i - 1]._numerator._number.is_zero():
+        while self._coef[i - 1]._numerator._number.is_zero() and i > 1:
             i -= 1
         return " ".join(map(str, self._coef[i - 1::-1]))
 
