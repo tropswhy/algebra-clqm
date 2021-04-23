@@ -94,7 +94,7 @@ class Rational():
             res = res.reduce()
             return res
 
-    def div(self, num):
+    def __truediv__(self, num):
         '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
         if num._numerator == Integer("0"):
             raise Exception("You cannot divide by null")
