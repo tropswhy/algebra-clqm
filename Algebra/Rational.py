@@ -115,14 +115,46 @@ class Rational():
     def __add__(self, num):
         '''Модуль ADD_QQ_Q, оформил Проскуряк Влад.'''
         res = Rational(str(self))
-        lcm = self._denumerator.lcm(num._denumerator)
+        lcm = self._denumerator.lcm(num._denumerator) # Получаем НОК
 
         common_div1 = Integer(str(lcm / res._denumerator))
-        num1 = res._numerator * common_div1
+        num1 = res._numerator * common_div1 # Получаем числитель первой дроби
 
         common_div2 = Integer(str(lcm / num._denumerator))
-        num2 = num._numerator * common_div2
+        num2 = num._numerator * common_div2 # Получаем числитель второй дроби
 
         res._numerator = num1 + num2
         res._denumerator = lcm
         return res
+
+    def __div__(self, num):
+        '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
+        if num._numerator == Integer("0"):
+            raise Exception("You cannot divide by null")
+        else:
+            k = Rational()
+            if (self._numerator._sign == 2 and num._numerator._sign == 2) or (self._numerator._sign == 1 and num._numerator._sign == 1):
+                n = Integer()
+                n = n.natural_to_integer(num._denumerator)
+
+                m = abs(num._numerator)
+
+                k._numerator = abs(self._numerator * n)
+                k._denumerator = self._denumerator * m
+                return k
+            elif (self._numerator._sign == 1 and num._numerator._sign == 2) or (self._numerator._sign == 2 and num._numerator._sign == 1):
+                n = Integer()
+                n = n.natural_to_integer(num._denumerator)
+
+                m = abs(num._numerator)
+
+                k._numerator = self._numerator * n
+                k._denumerator = self._denumerator * m
+
+                k._numerator._sign = 1
+                return k
+
+        res._numerator = num1 + num2 # Вычисляем общий числитель
+        res._denumerator = lcm # Приравниваем знаменатель к НОК
+        return res
+
