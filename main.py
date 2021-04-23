@@ -10,13 +10,22 @@ RATIONAL = 2
 POLYNOM = 3
 
 INPUT_ERROR = 0
+CALCULATION_ERROR = 1
 
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
 
+        # Страница сейчас
         self.currentIndex = NATURAL
+        # Когда errorHandle в getNumber, и не надо exec
+        self.errorFlag = False
+        # Сама операция (только если не унарная)
+        self.operation = None
+        # Количество операндов, нужно для выполнения операции
+        self.nOfOperands = 0
+        self.types = list()
 
         self.setObjectName("self")
         self.resize(500, 600)
@@ -41,6 +50,7 @@ class MainWindow(QMainWindow):
         self.createMenuBar()
 
         self.setActions()
+
 
         self.retranslateUi()
         self.stackedWidget.setCurrentIndex(self.currentIndex)
@@ -80,10 +90,10 @@ class MainWindow(QMainWindow):
         self.n_incr = QtWidgets.QPushButton(self.Natural)
         self.n_incr.setGeometry(QtCore.QRect(350, 240, 100, 45))
         self.n_incr.setObjectName("n_incr")
-        self.sub = QtWidgets.QPushButton(self.Natural)
-        self.sub.setGeometry(QtCore.QRect(140, 160, 50, 40))
-        self.sub.setFont(bold_font)
-        self.sub.setObjectName("sub")
+        self.n_sub = QtWidgets.QPushButton(self.Natural)
+        self.n_sub.setGeometry(QtCore.QRect(140, 160, 50, 40))
+        self.n_sub.setFont(bold_font)
+        self.n_sub.setObjectName("n_sub")
         self.n_cmp = QtWidgets.QPushButton(self.Natural)
         self.n_cmp.setGeometry(QtCore.QRect(50, 240, 100, 45))
         self.n_cmp.setObjectName("n_cmp")
@@ -97,9 +107,9 @@ class MainWindow(QMainWindow):
         self.n_mod.setGeometry(QtCore.QRect(400, 160, 50, 40))
         self.n_mod.setFont(font)
         self.n_mod.setObjectName("n_mod")
-        self.sub_dn = QtWidgets.QPushButton(self.Natural)
-        self.sub_dn.setGeometry(QtCore.QRect(350, 320, 100, 45))
-        self.sub_dn.setObjectName("sub_dn")
+        self.n_sub_dn = QtWidgets.QPushButton(self.Natural)
+        self.n_sub_dn.setGeometry(QtCore.QRect(350, 320, 100, 45))
+        self.n_sub_dn.setObjectName("n_sub_dn")
         self.n_mul_k = QtWidgets.QPushButton(self.Natural)
         self.n_mul_k.setGeometry(QtCore.QRect(50, 320, 100, 45))
         self.n_mul_k.setObjectName("n_mul_k")
@@ -326,56 +336,143 @@ class MainWindow(QMainWindow):
         self.setMenuBar(self.menu_bar)
 
     def setActions(self):
-        try:
-            # MENU BAR ACTIONS
-            self.to_wNatural = QtWidgets.QAction(self)
-            self.to_wNatural.triggered.connect(lambda: self.changePage(NATURAL))
-            self.to_wInteger = QtWidgets.QAction(self)
-            self.to_wInteger.triggered.connect(lambda: self.changePage(INTEGER))
-            self.to_wRational = QtWidgets.QAction(self)
-            self.to_wRational.triggered.connect(lambda: self.changePage(RATIONAL))
-            self.to_wPolynom = QtWidgets.QAction(self)
-            self.to_wPolynom.triggered.connect(lambda: self.changePage(POLYNOM))
-            # TO DO: add "help" and "about" triggers
-            self.classes.addAction(self.to_wNatural)
-            self.classes.addAction(self.to_wInteger)
-            self.classes.addAction(self.to_wRational)
-            self.classes.addAction(self.to_wPolynom)
-            self.menu_bar.addAction(self.classes.menuAction())
-            self.menu_bar.addAction(self.help.menuAction())
-            self.menu_bar.addAction(self.about.menuAction())
+        # MENU BAR ACTIONS
+        self.to_wNatural = QtWidgets.QAction(self)
+        self.to_wNatural.triggered.connect(lambda: self.changePage(NATURAL))
+        self.to_wInteger = QtWidgets.QAction(self)
+        self.to_wInteger.triggered.connect(lambda: self.changePage(INTEGER))
+        self.to_wRational = QtWidgets.QAction(self)
+        self.to_wRational.triggered.connect(lambda: self.changePage(RATIONAL))
+        self.to_wPolynom = QtWidgets.QAction(self)
+        self.to_wPolynom.triggered.connect(lambda: self.changePage(POLYNOM))
+        # TO DO: add "help" and "about" triggers
+        self.classes.addAction(self.to_wNatural)
+        self.classes.addAction(self.to_wInteger)
+        self.classes.addAction(self.to_wRational)
+        self.classes.addAction(self.to_wPolynom)
+        self.menu_bar.addAction(self.classes.menuAction())
+        self.menu_bar.addAction(self.help.menuAction())
+        self.menu_bar.addAction(self.about.menuAction())
 
-            # NATURAL BUTTONS ACTIONS
-            self.n_incr.clicked.connect(lambda: self.useUnaryOperation(self.getNumber().increment))
-        # Зачем?
-        except:
+        # NATURAL BUTTONS ACTIONS
+        self.n_input.returnPressed.connect(lambda: self.execOperation(self.getNumber(self.types)))
+
+        self.n_add.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__add__, 2, [Algebra.Natural]))
+        self.n_sub.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__sub__, 2, [Algebra.Natural]))
+        self.n_mul.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__mul__, 2, [Algebra.Natural]))
+        self.n_div.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__truediv__, 2, [Algebra.Natural]))
+        self.n_mod.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__mod__, 2, [Algebra.Natural]))
+        self.n_cmp.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).compare, 2, [Algebra.Natural]))
+        self.n_mul_k.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_k, 2, [Algebra.Natural]))
+        self.n_incr.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).increment, 1))
+        self.n_mul_d.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_d, 2, [Algebra.Natural]))
+        self.n_sub_dn.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).sub_dn, 3, [int, Algebra.Natural]))
+        self.n_div_dk.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).div_dk, 2, [Algebra.Natural]))
+        self.n_gcf.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).gcf, 2, [Algebra.Natural]))
+        self.n_lcm.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
+        self.n_lcm.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
+        self.n_is_zero.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).is_zero, 1))
+        self.z_ntoz.clicked.connect(lambda: self.toAnotherType(self.getNumber([Algebra.Natural]), INTEGER))
+
+
+    def makeAction(self, act, op, noop, types = []):
+        act(lambda: self.handleOperation(op, noop, types))
+
+    def toAnotherType(self, number):
+        question = QtWidgets.QMessageBox()
+
+        question.setWindowTitle("Перейти к другой странице")
+
+
+        error.setIcon(QtWidgets.QMessageBox.Warning)
+        error.setStandardButtons(QtWidgets.QMessageBox.Ok)
+
+        error.setDetailedText(errorText)
+
+        error.exec_()
+    # types - это массив типов чисел, которые должны быть введены
+    def getNumber(self, types):
+        numbers = list(str(self.currentLineEdit.text()).split())
+
+        # Если нужно ввести полином, то в конструктор нужно будет передать не строку, а массив
+        if len(types) == 1 and types[0] is Algebra.Polynom:
+            numbers = list(numbers)
+
+        result = list()
+        try:
+            # Если был нажат enter без операций
+            if len(types) == 0:
+                self.currentLineEdit.clear()
+                return self.classOfCurrentPage()()
+            elif len(types) != len(numbers):
+                raise Exception("You entered wrong amount of variables.")
+            # Каждое число преобразуем
+            for i in range(len(types)):
+                result.append(types[i](numbers[i]))
+            # Возвращаем объект, а не список, если у нас нужно было ввести всего 1 элемент
             self.currentLineEdit.clear()
-
-    def getNumber(self):
-        text = str(self.currentLineEdit.text())
-        try:
-            if self.currentIndex == NATURAL:
-                return Algebra.Natural(text)
-            elif self.currentIndex == INTEGER:
-                return Algebra.Integer(text)
-            elif self.currentIndex == RATIONAL:
-                return Algebra.Rational(text)
-            else:
-                return Algebra.Polynom(text)
+            return result if len(types) > 1 else result[0]
         except Exception as exc:
             self.errorHandle(INPUT_ERROR, repr(exc))
-            if self.currentIndex == NATURAL:
-                return Algebra.Natural()
-            elif self.currentIndex == INTEGER:
-                return Algebra.Integer()
-            elif self.currentIndex == RATIONAL:
-                return Algebra.Rational()
-            else:
-                return Algebra.Polynom()
+            self.errorFlag = True
+            # Чтобы не вылетела ошибка, возвращаем пустой объект
+            # ExecOperation или handleOperation не запустятся из-за флага в любом случае
+            return self.classOfCurrentPage()()
+
+    def handleOperation(self, operand, nOfOperands, types = []):
+        if self.errorFlag:
+            self.errorFlag = False
+            return
+        self.nOfOperands = nOfOperands
+        self.operation = operand
+        # Если унарная операция, то выполняем сразу
+        if nOfOperands == 1:
+            self.execOperation(operand)
+        # Если нужно, чтобы ввели ещё переменные
+        else:
+            # Нужно для ввода 2ого/3его операнда
+            self.types = types
+
+    def execOperation(self, operand):
+        if not self.operation is None and not self.errorFlag:
+            try:
+                if self.nOfOperands == 1:
+                    output = str(self.operation())
+                elif self.nOfOperands == 2:
+                    output = str(self.operation(operand))
+                elif self.nOfOperands == 3:
+                    output = str(self.operation(operand[0], operand[1]))
+                self.currentLineEdit.setText(output)
+            except Exception as exc:
+                self.errorHandle(CALCULATION_ERROR, repr(exc))
+        else:
+            self.currentLineEdit.clear()
+        self.resetVariables()
+        self.errorFlag = False
+
+    def classOfCurrentPage(self):
+        if self.currentIndex == 0:
+            return Algebra.Natural
+        elif self.currentIndex == 1:
+            return Algebra.Integer
+        elif self.currentIndex == 2:
+            return Algebra.Rational
+        else:
+            return Algebra.Polynom
+
+    def resetVariables(self):
+        self.operation = None
+        self.types = list()
+        self.firstEntered = False
+        # Сама операция (только если не унарная)
+        self.operation = None
+        # Количество операндов, нужно для выполнения операции
+        self.nOfOperands = 0
+        self.types = list()
 
     def errorHandle(self, code, errorText):
-        self.currentLineEdit.clear()
         error = QtWidgets.QMessageBox()
+        self.resetVariables()
 
         error.setWindowTitle("Ошибка")
         if code is INPUT_ERROR:
@@ -402,22 +499,18 @@ class MainWindow(QMainWindow):
         else:
             self.currentLineEdit = self.p_input
 
-    def useUnaryOperation(self, unary_operator):
-        output = str(unary_operator())
-        self.currentLineEdit.setText(output)
-
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("self", "Algebra-CLQM"))
         self.n_label.setText(_translate("self", "Натуральные числа (n)"))
         self.n_add.setText(_translate("self", "+"))
         self.n_incr.setText(_translate("self", "+1"))
-        self.sub.setText(_translate("self", "-"))
+        self.n_sub.setText(_translate("self", "-"))
         self.n_cmp.setText(_translate("self", ">, <, ="))
         self.n_is_zero.setText(_translate("self", "= 0"))
         self.n_mul_d.setText(_translate("self", "*d"))
         self.n_mod.setText(_translate("self", "%"))
-        self.sub_dn.setText(_translate("self", "- (n * d)"))
+        self.n_sub_dn.setText(_translate("self", "- (d * n)"))
         self.n_mul_k.setText(_translate("self", "*10^k"))
         self.n_div_dk.setText(_translate("self", "- (n * 10^k)"))
         self.n_mul.setText(_translate("self", "*"))

@@ -115,13 +115,13 @@ class Rational():
     def __add__(self, num):
         '''Модуль ADD_QQ_Q, оформил Проскуряк Влад.'''
         res = Rational(str(self))
-        lcm = self._denumerator.lcm(num._denumerator)
+        lcm = self._denumerator.lcm(num._denumerator) # Получаем НОК
 
-        common_div1 = res._denumerator / lcm
-        num1 = res._numerator * common_div1
+        common_div1 = Integer(str(lcm / res._denumerator))
+        num1 = res._numerator * common_div1 # Получаем числитель первой дроби
 
-        common_div2 = num._denumerator / lcm
-        num2 = num._numerator * common_div2
+        common_div2 = Integer(str(lcm / num._denumerator))
+        num2 = num._numerator * common_div2 # Получаем числитель второй дроби
 
         res._numerator = num1 + num2
         res._denumerator = lcm
@@ -153,3 +153,8 @@ class Rational():
 
                 k._numerator._sign = 1
                 return k
+
+        res._numerator = num1 + num2 # Вычисляем общий числитель
+        res._denumerator = lcm # Приравниваем знаменатель к НОК
+        return res
+

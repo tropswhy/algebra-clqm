@@ -11,25 +11,22 @@ class Polynom():
     # _coef_n - количество коэффициентов
     def __init__(self, l: list = None):
         if l is None:
-            self._coef = []
-            self._coef_n = 0
+            self._coef = [Rational("0")]
+            self._coef_n = 1
         else:
             try:
                 self._coef = [Rational(str(i)) for i in l[::-1]]
                 self._coef_n = len(l)
-                # Убираем 0 со старших коэффициентов
-                i = self._coef_n
-                while self._coef[i - 1].is_zero() and i > 1:
-                    i -= 1
-                if self._coef_n != i:
-                    self._coef = self._coef[:i]
             except:
                 raise Exception("Error while converting coefficients into rational numbers")
 
     # TO DO:
     # Пофиксить вывод отрицательных коэффициентов
     def __str__(self):
-        return " ".join(map(str, self._coef[::-1]))
+        i = self._coef_n
+        while self._coef[i - 1]._numerator._number.is_zero() and i > 1:
+            i -= 1
+        return " ".join(map(str, self._coef[i - 1::-1]))
 
     def power(self):
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
@@ -41,16 +38,12 @@ class Polynom():
         '''Модуль LED_P_Q выполнил и оформил Шабров Иван'''
         return self._coef[-1]
 
-    # КОД НЕ РАБОТАЕТ
-    '''
     def mul_xk(self, k: int):
         #Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия
-        b = Polynom(self._coef_n + k)
-        b._coef = [0 * (self._coef_n + k)]
+        b = Polynom(["0"] * (self._coef_n + k))
         for i in range(self._coef_n):
-            b._coef[i] = self._coef[i]
+            b._coef[i + k] = self._coef[i]
         return b
-    '''
 
     def mul_q(self, num):
         ''' Выполнил Адиль Жексенгалиев'''
@@ -73,21 +66,20 @@ class Polynom():
         res = Polynom(res._coef[::-1])
         return res
 
-#Модуль не работает без ADD_QQ_Q
-    #
-    # def __add__(self, num):
-    #     # Модуль ADD_PP_P выполнил и оформил Щусь Максим
-    #     p1 = Polynom(self._coef)
-    #     p2 = Polynom(num._coef)
-    #     if p2._coef_n > p1._coef_n:
-    #         res = Polynom(num._coef)
-    #         for i in range(p1._coef_n):
-    #             res._coef[i] = res._coef[i] + p1._coef[i]
-    #     else:
-    #         res = Polynom(self._coef)
-    #         for i in range(p2._coef_n):
-    #             res._coef[i] = res._coef[i] + p2._coef[i]
-    #     return res
+    #Модуль не работает без ADD_QQ_Q
+    def __add__(self, num):
+        # Модуль ADD_PP_P выполнил и оформил Щусь Максим
+        p1 = Polynom(self._coef[::-1])
+        p2 = Polynom(num._coef[::-1])
+        if p2._coef_n > p1._coef_n:
+            res = Polynom(num._coef)
+            for i in range(p1._coef_n):
+                res._coef[i] = res._coef[i] + p1._coef[i]
+        else:
+            res = Polynom(self._coef[::-1])
+            for i in range(p2._coef_n):
+                res._coef[i] = res._coef[i] + p2._coef[i]
+        return res
 
 
     def fac(self):
@@ -106,7 +98,7 @@ class Polynom():
         return res
 
     def __sub__(self, num):
-    '''Вычитание многочленов'''
+        '''Вычитание многочленов'''
         # Показацкая Арина
         k = max(self.power(), num.power()) # степень большего многочлена
         c = min(self.power(), num.power()) # степень меньшего многочлена
@@ -131,14 +123,14 @@ class Polynom():
             res._coef_n -= 1
         return res
 
-    def __truediv__(self,pol):
+    def __truediv__(self, pol):
         '''
         Частное от деления многочлена на многочлен при делении с остатком
         P-9.DIV_PP_P-__truediv__
         Выполнил Цыганков Дмитрий
         '''
-        divisbl = Polynom(self._coef)
-        pol_ = Polynom(pol._coef)
+        divisbl = Polynom(self._coef[::-1])
+        pol_ = Polynom(pol._coef[::-1])
         # степнь искомого полинома
         deg = divisbl.power() - pol_.power()
         result = Polynom([0] * deg)
@@ -156,21 +148,18 @@ class Polynom():
             divisbl._coef.pop()
         return result # возврат частного
 
-
-    '''
-    # не пашет без ADD_PP_P и MUL_Pxk_P
     # модуль MUL_PP_P, оформил Трибунский Алексей
     def __mul__(self, p):
         res = Polynom(self._coef[::-1])
         for i in range(p._coef_n):
             res += res.mul_q(p._coef[i]).mul_xk(i)
         return res
-    '''
+
 
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
-        a = Polynom(self._coef)
-        b = Polynom(num._coef)
+        a = Polynom(self._coef[::-1])
+        b = Polynom(num._coef[::-1])
         while a > 0 and b > 0:
             if a.power() > b.power():
                 a = a.__mod__(b)
@@ -184,6 +173,14 @@ class Polynom():
         P-13.NMR_P_P-nmr
         Выполнил Цыганков Дмитрий
         '''
-        pol_ = Polynom(self._coef)
+        pol_ = Polynom(self._coef[::-1])
         pol_ /= pol_.gcf(pol_.derivate()) # делим полином на НОД от него и его производной
-        return pol_ 
+        return pol_
+        
+    def __mod__(self, num):
+        '''Модуль MOD_PP_P, оформил Проскуряк Влад'''
+        res = Polynom(self._coef[::-1])
+        resnum = Polynom(num._coef[::-1])
+        # Вычитаем из многочлена произведение второго многочлена на частное от деления многочленов и получаем остаток
+        res = __sub__(res, __mul__(resnum, __div__(res, resnum)))
+        return res

@@ -81,10 +81,6 @@ class Integer():
         # Трибунский Алексей
         return self._sign
 
-    def natural_to_integer(self, numb: Natural):
-        '''Модуль TRANS_N_Z выполнил и оформил Солодков Никита'''
-        return Integer(str(numb))
-
     def change_sign(self):
         ''' Функция умножения целого числа на -1'''
     # Показацкая Арина
@@ -154,23 +150,15 @@ class Integer():
         return res
 
     def __mod__(self, num):
+        # Модуль ADD_PP_P выполнил и оформил Щусь Максим
         # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
         if num._number.is_zero():
             raise Exception("You must not try to find modulo by zero.")
         z1 = Integer(str(self))
         z2 = Integer(str(num))
-        div = z1 / z2
-        if z1._sign == NEGATIVE:
-            part = div * z2
-            if z2._sign == NEGATIVE:
-                z2 = z2.change_sign()
-            res = z2 - (part - z1)
-        else:
-            if z2._sign == NEGATIVE:
-                z2 = z2.change_sign()
-            res = z1 - div * z2
+        div = (z1 / z2)
+        res = z1 - z2 * div
         return res
-
 
     def __sub__(self, num):
         ''' Функция вычитания целых чисел '''
