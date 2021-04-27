@@ -96,8 +96,10 @@ class Rational():
 
     def __truediv__(self, num):
         '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
-        if num._numerator == Integer("0"):
+        if num.is_zero():
             raise Exception("You cannot divide by null")
+        elif self.is_zero():
+            return Rational("0/0")
         else:
             k = Rational()
             if (self._numerator._sign == 2 and num._numerator._sign == 2) or (
