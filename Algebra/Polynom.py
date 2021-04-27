@@ -117,6 +117,9 @@ class Polynom():
                 res._coef[i] = Rational(str(num._coef[i]))
             for i in range(c + 1):
                 res._coef[i] = self._coef[i] - res._coef[i]
+            zero = Rational("0")
+            for i in range(c + 1, k + 1):
+                res._coef[i] = zero - res._coef[i]
         while (res._coef[res._coef_n - 1] == 0):
             # удаляем нулевые коэффициенты вначале, если такие есть
             res._coef.pop()
