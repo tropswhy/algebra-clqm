@@ -90,9 +90,12 @@ class Polynom():
         num_lcm = self._coef[0]._denumerator
         # Циклом проходим по всем коэффициентам многочлена
         for i in range (1, self._coef_n):
-            if self._coef[i] != Rational("0/0"):
+            if not (self._coef[i].is_zero() and num_gcf.is_zero()):
                 num_gcf = num_gcf.gcf(abs(self._coef[i]._numerator))
+            if not (self._coef[i].is_zero() or num_lcm.is_zero()):
                 num_lcm = num_lcm.lcm(self._coef[i]._denumerator)
+            elif num_lcm.is_zero() and not self._coef[i].is_zero():
+                num_lcm = self._coef[i]._denumerator
         res._numerator = Integer(str(num_gcf))
         res._denumerator = num_lcm
         return res
