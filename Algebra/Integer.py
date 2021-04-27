@@ -113,6 +113,9 @@ class Integer():
     def natural_to_integer(natural):
         return Integer(str(natural))
 
+    def is_zero(self):
+        return self._sign == ZERO
+
     def __mul__(self, num):
         res = self._number * num._number
         res = Integer(str(res))
