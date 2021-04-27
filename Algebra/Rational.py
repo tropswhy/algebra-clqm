@@ -130,8 +130,7 @@ class Rational():
             return r
         k = abs(r._numerator).gcf(r._denumerator)
         # Переводим k из Natural в Integer
-        k_int = Integer()
-        k_int = k_int.natural_to_integer(k)
+        k_int = Integer.natural_to_integer(k)
         # ---------------------------------
         r._denumerator = r._denumerator / k
         r._numerator = r._numerator / k_int
