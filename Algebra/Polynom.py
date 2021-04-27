@@ -182,5 +182,5 @@ class Polynom():
         res = Polynom(self._coef[::-1])
         resnum = Polynom(num._coef[::-1])
         # Вычитаем из многочлена произведение второго многочлена на частное от деления многочленов и получаем остаток
-        res = __sub__(res, __mul__(resnum, __div__(res, resnum)))
+        res = res - resnum * (res / resnum)
         return res
