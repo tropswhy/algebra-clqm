@@ -55,12 +55,13 @@ class Rational():
         res._denumerator = Natural("1")
         return res
 
-    def to_integer(self):
+    @staticmethod
+    def to_integer(rational):
         ''' Функция преобразования дробного числа в целое '''
         # Показацкая Арина
-        if self._denumerator == Natural("1"):
+        if rational._denumerator == Natural("1"):
         # если знаменатель равен "1", число преобразуется в целое
-            return self._numerator
+            return rational._numerator
         else:
             raise Exception("You cannot transfer rational number to integer because denumerator is not equal to 1.")
 
