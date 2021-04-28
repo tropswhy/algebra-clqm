@@ -144,6 +144,11 @@ class Rational():
 
     def __add__(self, num):
         '''Модуль ADD_QQ_Q, оформил Проскуряк Влад.'''
+        if self.is_zero():
+            return Rational(str(num))
+        elif num.is_zero():
+            return Rational(str(self))
+
         res = Rational(str(self))
         lcm = self._denumerator.lcm(num._denumerator) # Получаем НОК
 
