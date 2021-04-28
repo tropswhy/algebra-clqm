@@ -100,14 +100,15 @@ class Integer():
         else:
             b = Natural(str(self))
             return b
-    
-    def to_natural(self):
+
+    @staticmethod
+    def to_natural(integer):
         '''Модуль TRANZ_Z_N, оформил Проскуряк Влад'''
-        if (self._sign != NEGATIVE):
-            res = Natural(str(self))
+        if (integer._sign != NEGATIVE):
+            res = Natural(str(integer))
             return res
         else:
-            return Natural()
+            raise Exception("Negative number cannot be converted to natural")
 
     @staticmethod
     def natural_to_integer(natural):
