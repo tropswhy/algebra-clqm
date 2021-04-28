@@ -81,11 +81,11 @@ class Rational():
             - Z-8 Умножение целых чисел __mul__
             - N-14 НОК натуральных чисел lcm
         '''
-        if self._numerator == Integer("0"):
+        if self.is_zero():
             res = Rational(str(num))
             res._numerator.change_sign()
             return res
-        elif num._numerator == Integer("0"):
+        elif num.is_zero():
             return Rational(str(self))
         else:
             res = Rational()
