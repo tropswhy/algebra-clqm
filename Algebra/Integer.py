@@ -11,7 +11,7 @@ class Integer():
 
     def __init__(self, n: str = None):
         # Если число не было передано в качестве аргумента
-        if n is None:
+        if not n:
             self._number = Natural()
             self._sign = ZERO
         elif not Integer.isInteger(n):

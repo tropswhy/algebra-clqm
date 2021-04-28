@@ -10,7 +10,7 @@ class Polynom():
     # _coef - массив коэффициентов начиная с меньшего и заканчивая большим
     # _coef_n - количество коэффициентов
     def __init__(self, l: list = None):
-        if l is None:
+        if not l:
             self._coef = [Rational("0")]
             self._coef_n = 1
         else:
@@ -40,6 +40,8 @@ class Polynom():
 
     def mul_xk(self, k: int):
         #Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия
+        if k < 0:
+            raise Exception("Cannot multiple polynom by x^k when k is negative")
         b = Polynom(["0"] * (self._coef_n + k))
         for i in range(self._coef_n):
             b._coef[i + k] = self._coef[i]

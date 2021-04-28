@@ -15,7 +15,7 @@ class Natural():
     # _number - натуральное число, представленое в виде перевёрнутого массива цифр
     def __init__(self, n: str = None):
         self._number = []
-        if n is None:
+        if not n:
             self._number = [0]
             self._dig_n = 1
         elif not Natural.isNatural(n):

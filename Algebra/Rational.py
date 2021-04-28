@@ -7,7 +7,7 @@ __all__ = ["Rational"]
 class Rational():
 
     def __init__(self, n: str = None):
-        if n is None:
+        if not n:
             self._numerator = Integer("0")
             self._denumerator = Natural("0")
         elif not Rational.isRational(n):
