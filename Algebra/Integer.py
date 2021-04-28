@@ -112,6 +112,7 @@ class Integer():
 
     @staticmethod
     def natural_to_integer(natural):
+        ''' Солодков '''
         return Integer(str(natural))
 
     def is_zero(self):
@@ -207,18 +208,19 @@ class Integer():
 
     def __truediv__(self, num):
         ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
-        # Проверка на ноль(нуль)
+        # Проверка на ноль
         if num.is_zero():
-            raise Exception("You must not divide by zero.")
+            raise Exception("Cannot divide by zero.")
         elif self.is_zero():
             return Integer("0")
+
         res = Integer()
         divisible = Integer(str(self))
         divisor = Integer(str(num))
         # Делим число без учета знака
         res._number = divisible._number / divisor._number
         # Определение знака частного
-        if (divisible._sign == divisor._sign):
+        if divisible._sign == divisor._sign:
             # Если у делимого и делителя одинаковые знаки, то у частного будет положительный знак
             res._sign = POSITIVE
             # Если делимое и делитель - отрицательный числа, то добавляем к частному единицу
@@ -228,8 +230,8 @@ class Integer():
             # В ином случае знак будет отрицательный.
             res._sign = NEGATIVE
             # Если остаток больше нуля и делимое меньше нуля, то вычитаем из полученного частного единицу
-            if ((divisible._number % divisor._number > Natural("0")) and (divisible._sign == NEGATIVE)):
-                res = res - Integer("1")
+            if (divisible._number % divisor._number > Natural("0")) and (divisible._sign == NEGATIVE):
+                res -= Integer("1")
         # Если частное по модулю равно нулю, то присваиваем знаку числа значение ZERO
         if (res._number == Natural("0")):
             res._sign = ZERO
