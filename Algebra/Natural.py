@@ -51,11 +51,6 @@ class Natural():
     '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
 
     def mul_d(self, digit: int):
-        # Проверка на цифру
-        if digit < 0:
-            raise Exception("You must not multiple a natural number by negative number")
-        elif digit > 9:
-            raise Exception("Entered digit must not be greater than 9.")
         # self_c - результат
         self_c = Natural(str(self))
         if self_c._dig_n != 0:  # если числа не пустые

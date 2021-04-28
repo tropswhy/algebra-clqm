@@ -127,12 +127,12 @@ class Rational():
 
         r = Rational()
         # Вычисляем НОД числителя и знаменателя
-        gcf = abs(r._numerator).gcf(r._denumerator)
+        gcf = abs(self._numerator).gcf(self._denumerator)
         # Переводим k из Natural в Integer
         gcf_int = Integer.natural_to_integer(gcf)
 
-        r._denumerator = r._denumerator / gcf
-        r._numerator = r._numerator / gcf_int
+        r._denumerator = self._denumerator / gcf
+        r._numerator = self._numerator / gcf_int
 
         return r
 
