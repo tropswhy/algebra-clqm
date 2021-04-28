@@ -184,6 +184,8 @@ class Polynom():
         Выполнил Цыганков Дмитрий
         '''
         pol_ = Polynom(self._coef[::-1])
+        if pol_.is_zero():
+            return pol_
         pol_ /= pol_.gcf(pol_.derivate()) # делим полином на НОД от него и его производной
         return pol_
         
