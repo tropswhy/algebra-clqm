@@ -107,8 +107,7 @@ class Rational():
             k = Rational()
             if (self._numerator._sign == 2 and num._numerator._sign == 2) or (
                     self._numerator._sign == 1 and num._numerator._sign == 1):
-                n = Integer()
-                n = n.natural_to_integer(num._denumerator)
+                n = Integer.natural_to_integer(num._denumerator)
 
                 m = abs(num._numerator)
 
@@ -117,8 +116,7 @@ class Rational():
                 return k
             elif (self._numerator._sign == 1 and num._numerator._sign == 2) or (
                     self._numerator._sign == 2 and num._numerator._sign == 1):
-                n = Integer()
-                n = n.natural_to_integer(num._denumerator)
+                n = Integer.natural_to_integer(num._denumerator)
 
                 m = abs(num._numerator)
 
@@ -172,8 +170,7 @@ class Rational():
         else:
             k = Rational()
             if (self._numerator._sign == 2 and num._numerator._sign == 2) or (self._numerator._sign == 1 and num._numerator._sign == 1):
-                n = Integer()
-                n = n.natural_to_integer(num._denumerator)
+                n = Integer.natural_to_integer(num._denumerator)
 
                 m = abs(num._numerator)
 
@@ -181,8 +178,7 @@ class Rational():
                 k._denumerator = self._denumerator * m
                 return k
             elif (self._numerator._sign == 1 and num._numerator._sign == 2) or (self._numerator._sign == 2 and num._numerator._sign == 1):
-                n = Integer()
-                n = n.natural_to_integer(num._denumerator)
+                n = Integer.natural_to_integer(num._denumerator)
 
                 m = abs(num._numerator)
 
