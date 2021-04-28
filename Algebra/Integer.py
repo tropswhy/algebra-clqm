@@ -207,14 +207,14 @@ class Integer():
 
     def __truediv__(self, num):
         ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
+        # Проверка на ноль(нуль)
+        if num.is_zero():
+            raise Exception("You must not divide by zero.")
+        elif self.is_zero():
+            return Integer("0")
         res = Integer()
         divisible = Integer(str(self))
         divisor = Integer(str(num))
-        # Проверка на ноль(нуль)
-        if (divisor == Integer("0")):
-            raise Exception("You must not divide by zero.")
-        elif (divisible == Integer("0")):
-            return Integer("0")
         # Делим число без учета знака
         res._number = divisible._number / divisor._number
         # Определение знака частного
