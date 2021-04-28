@@ -46,12 +46,14 @@ class Rational():
     def __str__(self):
         return str(self._numerator) + "/" + str(self._denumerator)
 
-    def integer_to_rational(self, n: Integer):
+    @staticmethod
+    def integer_to_rational(integer):
         '''Модуль TRANS_Z_Q, оформил Трибунский Алексей'''
         # Числитель равен введенному числу, знаменатель равен единице
-        self._numerator = n
-        self._denumerator = Natural("1")
-        return self
+        res = Rational()
+        res._numerator = Integer(str(integer))
+        res._denumerator = Natural("1")
+        return res
 
     def to_integer(self):
         ''' Функция преобразования дробного числа в целое '''
