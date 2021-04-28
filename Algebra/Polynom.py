@@ -161,12 +161,16 @@ class Polynom():
             res += res.mul_q(p._coef[i]).mul_xk(i)
         return res
 
+    def is_zero(self):
+        return self.power() == 0 and self._coef[0].is_zero()
 
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
+        if self.is_zero() and num.is_zero():
+            raise Exception("GCF of both zeros is undefined")
         a = Polynom(self._coef[::-1])
         b = Polynom(num._coef[::-1])
-        while a > 0 and b > 0:
+        while not a.is_zero() and not b.is_zero():
             if a.power() > b.power():
                 a = a % b
             else:
