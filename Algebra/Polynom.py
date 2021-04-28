@@ -137,6 +137,10 @@ class Polynom():
         P-9.DIV_PP_P-__truediv__
         Выполнил Цыганков Дмитрий
         '''
+        if pol.is_zero():
+            raise Exception("Cannot divide polynom by zero")
+        elif self.is_zero():
+            return Polynom()
         divisbl = Polynom(self._coef[::-1])
         pol_ = Polynom(pol._coef[::-1])
         # степнь искомого полинома
@@ -158,6 +162,8 @@ class Polynom():
 
     # модуль MUL_PP_P, оформил Трибунский Алексей
     def __mul__(self, p):
+        if self.is_zero() or p.is_zero():
+            return Polynom([])
         res = Polynom(self._coef[::-1])
         for i in range(p._coef_n):
             res += res.mul_q(p._coef[i]).mul_xk(i)
@@ -193,6 +199,8 @@ class Polynom():
         
     def __mod__(self, num):
         '''Модуль MOD_PP_P, оформил Проскуряк Влад'''
+        if num.is_zero():
+            raise Exception("Cannot calculate modulo by zero")
         res = Polynom(self._coef[::-1])
         resnum = Polynom(num._coef[::-1])
         # Вычитаем из многочлена произведение второго многочлена на частное от деления многочленов и получаем остаток
