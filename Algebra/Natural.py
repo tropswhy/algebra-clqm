@@ -211,7 +211,6 @@ class Natural():
         for i in range(x._dig_n):
             # К res прибавляем первый множитель, умноженный на цифру второго множителя и на 10^i
             res += self.mul_d(x._number[i]).mul_k(i)
-        res = Natural(str(res))
         return res
 
     def __sub__(self, num):

@@ -127,35 +127,33 @@ class Integer():
 
     def __add__(self, num):
         '''Модуль ADD_ZZ_Z, оформил Трибунский Алексей'''
-        res = Integer("0")
         sign1 = self.sign()
         sign2 = num.sign()
         # Если первое число - нуль, то выводим второе число
-        if (sign1 == 0):
-            res = num
+        if (sign1 == ZERO):
+            return Integer(str(num))
         # Если второе число - нуль, то выводим первое число
-        elif (sign2 == 0):
-            res = self
+        elif (sign2 == ZERO):
+            return Integer(str(self))
         # Если оба числа положительные, то выводим сумму их модулей
-        elif (sign1 == 2 and sign2 == 2):
-            res = Integer(str(abs(self) + abs(num)))
+        elif (sign1 == POSITIVE and sign2 == POSITIVE):
+            return Integer(str(abs(self) + abs(num)))
         # Если оба числа отрицательные, то выводим сумму их модулей с минусом
-        elif (sign1 == 1 and sign2 == 1):
-            res = Integer(str(abs(self) + abs(num))).change_sign()
+        elif (sign1 == NEGATIVE and sign2 == NEGATIVE):
+            return Integer(str(abs(self) + abs(num))).change_sign()
+        # Если модуль первого числа больше модуля второго числа, то large присваиваем значение первого числа, а less - второго
+        if (abs(self) > abs(num)):
+            large = self
+            less = num
+        # Если модуль первого числа меньше модуля второго числа, то large присваиваем значение второго числа, а less - первого
         else:
-            # Если модуль первого числа больше модуля второго числа, то large присваиваем значение первого числа, а less - второго
-            if (abs(self) > abs(num)):
-                large = self
-                less = num
-            # Если модуль первого числа меньше модуля второго числа, то large присваиваем значение второго числа, а less - первого
-            else:
-                large = num
-                less = self
-            # Из большего числа вычитаем меньшее
-            res = Integer(str(abs(large) - abs(less)))
-            # Если большее число отрицательное, то меняем знак
-            if (large.sign() == 1):
-                res = res.change_sign()
+            large = num
+            less = self
+        # Из большего числа вычитаем меньшее
+        res = Integer(str(abs(large) - abs(less)))
+        # Если большее число отрицательное, то меняем знак
+        if (large.sign() == 1):
+            res = res.change_sign()
         return res
 
     def __mod__(self, num):

@@ -167,11 +167,15 @@ class Polynom():
 
     # модуль MUL_PP_P, оформил Трибунский Алексей
     def __mul__(self, p):
+        # Проверка на 0
         if self.is_zero() or p.is_zero():
-            return Polynom([])
-        res = Polynom(self._coef[::-1])
+            return Polynom([0])
+
+        res = Polynom([0])
+        # Умножаем self на i-тый коэффициент второго полинома
+        # и возводим в степень i
         for i in range(p._coef_n):
-            res += res.mul_q(p._coef[i]).mul_xk(i)
+            res += self.mul_q(p._coef[i]).mul_xk(i)
         return res
 
     def is_zero(self):
