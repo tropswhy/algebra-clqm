@@ -168,9 +168,9 @@ class Polynom():
         b = Polynom(num._coef[::-1])
         while a > 0 and b > 0:
             if a.power() > b.power():
-                a = a.__mod__(b)
+                a = a % b
             else:
-                b = b.__mod__(a)
+                b = b % a
         return a + b
 
     def nmr(self):
