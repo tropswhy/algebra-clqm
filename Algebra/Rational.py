@@ -99,32 +99,26 @@ class Rational():
 
     def __truediv__(self, num):
         '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
+        # Проверка на ноль
         if num.is_zero():
             raise Exception("You cannot divide by null")
         elif self.is_zero():
             return Rational("0/0")
-        else:
-            k = Rational()
-            if (self._numerator._sign == 2 and num._numerator._sign == 2) or (
-                    self._numerator._sign == 1 and num._numerator._sign == 1):
-                n = Integer.natural_to_integer(num._denumerator)
 
-                m = abs(num._numerator)
+        res = Rational()
+        # "Переворачиваем" дробь
+        n = Integer.natural_to_integer(num._denumerator)
+        m = abs(num._numerator)
+        res._numerator = abs(self._numerator * n)
+        res._denumerator = self._denumerator * m
+        # Проверка на знаки
+        self_sign = self._numerator._sign
+        num_sign = num._numerator._sign
+        # Если знаки разные, то знак меняем на минус
+        if self_sign != num_sign:
+            res._numerator._sign = NEGATIVE
 
-                k._numerator = abs(self._numerator * n)
-                k._denumerator = self._denumerator * m
-                return k
-            elif (self._numerator._sign == 1 and num._numerator._sign == 2) or (
-                    self._numerator._sign == 2 and num._numerator._sign == 1):
-                n = Integer.natural_to_integer(num._denumerator)
-
-                m = abs(num._numerator)
-
-                k._numerator = self._numerator * n
-                k._denumerator = self._denumerator * m
-
-                k._numerator._sign = 1
-                return k
+        return res
 
     def reduce(self):
         #Модуль Q-1 RED_Q_Q оформил Шабров Иван
@@ -162,28 +156,3 @@ class Rational():
         res._numerator = num1 + num2 # Вычисляем общий числитель
         res._denumerator = lcm # Приравниваем знаменатель к НОК
         return res
-
-    def __truediv__(self, num):
-        '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
-        if num._numerator == Integer("0"):
-            raise Exception("You cannot divide by null")
-        else:
-            k = Rational()
-            if (self._numerator._sign == 2 and num._numerator._sign == 2) or (self._numerator._sign == 1 and num._numerator._sign == 1):
-                n = Integer.natural_to_integer(num._denumerator)
-
-                m = abs(num._numerator)
-
-                k._numerator = abs(self._numerator * n)
-                k._denumerator = self._denumerator * m
-                return k
-            elif (self._numerator._sign == 1 and num._numerator._sign == 2) or (self._numerator._sign == 2 and num._numerator._sign == 1):
-                n = Integer.natural_to_integer(num._denumerator)
-
-                m = abs(num._numerator)
-
-                k._numerator = self._numerator * n
-                k._denumerator = self._denumerator * m
-
-                k._numerator._sign = 1
-                return k

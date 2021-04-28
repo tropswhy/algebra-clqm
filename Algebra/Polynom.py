@@ -42,10 +42,12 @@ class Polynom():
         #Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия
         if k < 0:
             raise Exception("Cannot multiple polynom by x^k when k is negative")
-        b = Polynom(["0"] * (self._coef_n + k))
+        # Степень результирующего полинома увеличивается на k
+        res = Polynom(["0"] * (self._coef_n + k))
+        # Увеличиваем степени "иксов" изначального полинома
         for i in range(self._coef_n):
-            b._coef[i + k] = self._coef[i]
-        return b
+            res._coef[i + k] = self._coef[i]
+        return res
 
     def mul_q(self, num):
         ''' Выполнил Адиль Жексенгалиев'''

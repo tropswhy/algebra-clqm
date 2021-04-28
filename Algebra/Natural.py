@@ -111,13 +111,14 @@ class Natural():
 
     def __eq__(self, num):
         '''Перегрузка оператора "==". Оформила Реброва Юлия'''
+        # Если количество разрядов не совпадает
         if self._dig_n != num._dig_n:
             return False
-        else:
-            for i in range(num._dig_n):
-                if self._number[i] != num._number[i]:
-                    return False
-            return True
+        # Последовательно проверяем каждый разряд
+        for i in range(num._dig_n):
+            if self._number[i] != num._number[i]:
+                return False
+        return True
 
     def __lt__(self, num):
         '''Модуль переполнения "<". Оформил Шабров Иван'''
@@ -372,11 +373,14 @@ class Natural():
 
     def sub_dn(self, dig, num):
         # Модуль SUB_NDN_N. Оформила Реброва Юлия
+        # Проверка на цифру
         if dig < 0:
             raise Exception("You must not multiple a number by a negative digit.")
         elif dig > 9:
             raise Exception("Entered digit must not be greater than 9.")
+        # Умножаем число
         c = num.mul_d(dig)
+        # Если уменьшаемое не меньше вычитаемого
         if self.compare(c) != 1:
             return self - c
         else:

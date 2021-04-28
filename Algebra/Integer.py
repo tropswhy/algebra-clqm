@@ -1,7 +1,7 @@
 
 from .Natural import *
 
-__all__ = ["Integer"]
+__all__ = ["Integer", "POSITIVE", "NEGATIVE", "ZERO"]
 
 POSITIVE = 2
 NEGATIVE = 1
@@ -95,11 +95,11 @@ class Integer():
         if self._sign == NEGATIVE:
             a = Integer(str(self))
             a._sign = POSITIVE
-            b = Natural(str(a))
-            return b
+            res = Natural(str(a))
+            return res
         else:
-            b = Natural(str(self))
-            return b
+            res = Natural(str(self))
+            return res
 
     @staticmethod
     def to_natural(integer):
