@@ -59,9 +59,9 @@ class Rational():
     def to_integer(rational):
         ''' Функция преобразования дробного числа в целое '''
         # Показацкая Арина
+        # Если знаменатель равен "1", число преобразуется в целое
         if rational._denumerator == Natural("1"):
-        # если знаменатель равен "1", число преобразуется в целое
-            return rational._numerator
+            return Integer(str(rational._numerator))
         else:
             raise Exception("You cannot transfer rational number to integer because denumerator is not equal to 1.")
 
@@ -81,21 +81,21 @@ class Rational():
             - Z-8 Умножение целых чисел __mul__
             - N-14 НОК натуральных чисел lcm
         '''
+        # Проверка на ноль
         if self.is_zero():
             res = Rational(str(num))
             res._numerator.change_sign()
             return res
         elif num.is_zero():
             return Rational(str(self))
-        else:
-            res = Rational()
-            denum = self._denumerator.lcm(num._denumerator) #общий знаминатель
-            res._denumerator = denum
-            #вычесление числителя
-            res._numerator = self._numerator * Integer(str(denum / self._denumerator)) - num._numerator * Integer(str(denum / num._denumerator))
-            #сокращение дроби
-            res = res.reduce()
-            return res
+
+        res = Rational()
+        # Общий знаминатель
+        denum = self._denumerator.lcm(num._denumerator)
+        res._denumerator = denum
+        # Вычесление числителя
+        res._numerator = self._numerator * Integer(str(denum / self._denumerator)) - num._numerator * Integer(str(denum / num._denumerator))
+        return res
 
     def __truediv__(self, num):
         '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
@@ -109,7 +109,7 @@ class Rational():
         # "Переворачиваем" дробь
         n = Integer.natural_to_integer(num._denumerator)
         m = abs(num._numerator)
-        res._numerator = abs(self._numerator * n)
+        res._numerator = self._numerator * n
         res._denumerator = self._denumerator * m
         # Проверка на знаки
         self_sign = self._numerator._sign
@@ -122,15 +122,18 @@ class Rational():
 
     def reduce(self):
         #Модуль Q-1 RED_Q_Q оформил Шабров Иван
-        r = Rational(str(self))
-        if r._denumerator.is_zero():
-            return r
-        k = abs(r._numerator).gcf(r._denumerator)
+        if self.is_zero():
+            return Rational("0/0")
+
+        r = Rational()
+        # Вычисляем НОД числителя и знаменателя
+        gcf = abs(r._numerator).gcf(r._denumerator)
         # Переводим k из Natural в Integer
-        k_int = Integer.natural_to_integer(k)
-        # ---------------------------------
-        r._denumerator = r._denumerator / k
-        r._numerator = r._numerator / k_int
+        gcf_int = Integer.natural_to_integer(gcf)
+
+        r._denumerator = r._denumerator / gcf
+        r._numerator = r._numerator / gcf_int
+
         return r
 
 

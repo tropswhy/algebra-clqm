@@ -66,7 +66,7 @@ class Polynom():
         for i in range(len(self._coef)-1):
             res._coef[i] = self._coef[i+1] * Rational(str(i+1))
         res._coef = res._coef[:len(self._coef)-1]
-        self._coef_n -= 1
+        res._coef_n -= 1
         res = Polynom(res._coef[::-1])
         return res
 
@@ -110,30 +110,37 @@ class Polynom():
     def __sub__(self, num):
         '''Вычитание многочленов'''
         # Показацкая Арина
-        k = max(self.power(), num.power()) # степень большего многочлена
-        c = min(self.power(), num.power()) # степень меньшего многочлена
-        res = Polynom([Rational("0") for i in range(k + 1)]) # результат
+        # Cтепень большего многочлена
+        k = max(self.power(), num.power())
+        # Степень меньшего многочлена
+        c = min(self.power(), num.power())
+
+        res = Polynom([Rational("0") for i in range(k + 1)])
+
+        # Если количество коэффициентов первого больше(или равно) второго
         if (self._coef_n >= num._coef_n):
-            # если количество коэффициентов первого больше(или равно) второго
             for i in range(k + 1):
-                # записываем в результат первый многочлен и вычитаем из него второй
+                # Записываем в результат первый многочлен и вычитаем из него второй
                 res._coef[i] = Rational(str(self._coef[i]))
             for i in range(c + 1):
                 res._coef[i] = res._coef[i] - num._coef[i]
+        # Если количество коэффициентов второго больше первого
         else:
-            # если количество коэффициентов второго больше первого
+            # Записываем в результат второй многочлен и вычитаем из него первый
             for i in range(k + 1):
-                # записываем в результат второй многочлен и вычитаем из него первый
                 res._coef[i] = Rational(str(num._coef[i]))
             for i in range(c + 1):
                 res._coef[i] = self._coef[i] - res._coef[i]
+            # Вычитаем нулевые коэффициенты
             zero = Rational("0")
             for i in range(c + 1, k + 1):
                 res._coef[i] = zero - res._coef[i]
+
+        # Удаляем старшие нулевые коэффициенты, если такие есть
         while (res._coef[res._coef_n - 1] == 0):
-            # удаляем нулевые коэффициенты вначале, если такие есть
             res._coef.pop()
             res._coef_n -= 1
+
         return res
 
     def __truediv__(self, pol):
@@ -142,28 +149,39 @@ class Polynom():
         P-9.DIV_PP_P-__truediv__
         Выполнил Цыганков Дмитрий
         '''
-        if pol.is_zero():
-            raise Exception("Cannot divide polynom by zero")
-        elif self.is_zero():
-            return Polynom()
         divisbl = Polynom(self._coef[::-1])
         pol_ = Polynom(pol._coef[::-1])
+
+        # Уберем нули при старших степенях в pol
+        while pol_._coef[-1].is_zero():
+            pol_._coef.pop(-1)
+            pol_._coef_n -= 1
+
+        # Проверка на ноль
+        if pol_.is_zero():
+            raise Exception("Cannot divide polynom by zero")
+        elif divisbl.is_zero() or divisbl.power() < pol_.power():
+            return Polynom()
+
         # степнь искомого полинома
-        deg = divisbl.power() - pol_.power()
+        deg = divisbl.power() - pol_.power() + 1
         result = Polynom([0] * deg)
         i = 0
-        while (divisbl.power() >= pol_.power()):
-            result._coef[deg-i] = divisbl._coef[-1] / pol_._coef[-1]
-            # умножаем делитель на полученный член полинома 
-            if not (divisbl._coef[-1]._numerator == Integer("0")):
-                temp_mon = Polynom([0] * (deg - i))
-                temp_mon._coef[deg-i] = result._coef[deg-i]
-                # отнимаем полученный полином от делимого
-                divisbl -= pol_ * temp_mon
+        while divisbl.power() >= pol_.power():
+            # Вычисляем очередной коэффициент частного
+            res_coef = divisbl._coef[-1] / pol_._coef[-1]
+            result._coef[deg - i - 1] = res_coef
+            # Умножаем делитель на полученный коэффициент res_coef
+            temp_pol = pol_.mul_q(res_coef)
+            # Вычитаем temp_pol из делимого
+            temp_pol = temp_pol.mul_xk(divisbl._coef_n - pol_._coef_n)
+            divisbl -= temp_pol
+            # Удаляем старший нулевой коэффициент
+            divisbl._coef.pop(-1)
+            divisbl._coef_n -= 1
             i += 1
-            # удаление первого коэффициента
-            divisbl._coef.pop()
-        return result # возврат частного
+
+        return result
 
     # модуль MUL_PP_P, оформил Трибунский Алексей
     def __mul__(self, p):
@@ -183,6 +201,7 @@ class Polynom():
 
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
+        # Проверка на ноль
         if self.is_zero() and num.is_zero():
             raise Exception("GCF of both zeros is undefined")
         a = Polynom(self._coef[::-1])
@@ -203,7 +222,8 @@ class Polynom():
         pol_ = Polynom(self._coef[::-1])
         if pol_.is_zero():
             return pol_
-        pol_ /= pol_.gcf(pol_.derivate()) # делим полином на НОД от него и его производной
+        # Делим полином на НОД от него и его производной
+        pol_ /= pol_.gcf(pol_.derivate())
         return pol_
         
     def __mod__(self, num):

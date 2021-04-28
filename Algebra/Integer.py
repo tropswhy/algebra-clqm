@@ -169,39 +169,43 @@ class Integer():
 
     def __sub__(self, num):
         ''' Функция вычитания целых чисел '''
-    # Показацкая Арина
-        res = Integer("0")  # результат
-        sign1 = self.sign()  # знак числа
-        sign2 = num.sign()  # знак числа
-        if (sign1 == 0):
-            res = num
-        elif (sign2 == 0):
-            res = self
+        # Показацкая Арина
+        res = Integer("0")
+        sign1 = self.sign()
+        sign2 = num.sign()
+
+        # Проверка на нули
+        if (sign1 == ZERO):
+            res = Integer(str(num))
+        elif (sign2 == ZERO):
+            res = Integer(str(self))
+
+        # Если оба числа положительные
+        # то из большего вычитаем меньшее
         elif (sign1 == 2 and sign2 == 2):
-            # если оба числа положительные, то из большего вычитаем меньшее
-            if (abs(self) > abs(num)):
-                res = Integer(str(abs(self) - abs(num)))
-            elif (abs(self) == abs(num)):
+            compare = abs(self).compare(abs(num))
+            if compare != 1:
                 res = Integer(str(abs(self) - abs(num)))
             else:
                 res = Integer(str(abs(num) - abs(self))).change_sign()
-        elif (sign1 == 1 and sign2 == 1):
-            # если оба числа отрицательные, то из модуля большего числа вычитаем модуль меньшего
+        # Если оба числа отрицательные,
+        # то из модуля большего числа вычитаем модуль меньшего
+        elif (sign1 == NEGATIVE and sign2 == NEGATIVE):
             # если результат отличен от нуля, меняем знак
-            if (abs(self) > abs(num)):
-                res = Integer(str(abs(self) - abs(num))).change_sign()
-            elif (abs(self) == abs(num)):
+            compare = abs(self).compare(abs(num))
+            if compare != 1:
                 res = Integer(str(abs(self) - abs(num))).change_sign()
             else:
                 res = Integer(str(abs(num) - abs(self)))
+        # Если числа с разными знаками
         else:
-            # если числа с разными знаками
-            if (sign1 == 1):
-                # если отрицательно первое, складываем модули и меняем знак
+            # Если отрицательно первое, складываем модули и меняем знак
+            if (sign1 == NEGATIVE):
                 res = Integer(str(abs(self) + abs(num))).change_sign()
+            # Если отрицательно второе, складываем модули чисел
             else:
-                # если отрицательно второе, складываем модули чисел
                 res = Integer(str(abs(self) + abs(num)))
+
         return res
 
     def __truediv__(self, num):

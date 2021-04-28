@@ -51,10 +51,12 @@ class Natural():
     '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
 
     def mul_d(self, digit: int):
+        # Проверка на цифру
         if digit < 0:
             raise Exception("You must not multiple a natural number by negative number")
         elif digit > 9:
             raise Exception("Entered digit must not be greater than 9.")
+        # self_c - результат
         self_c = Natural(str(self))
         if self_c._dig_n != 0:  # если числа не пустые
             if self_c._number == [0] or digit == 0:  # если одно из чисел нулевое
@@ -87,9 +89,11 @@ class Natural():
     '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
 
     def mul_k(self, tenpow: int):
+        # Проверка на неотрицательность
         if tenpow < 0:
             raise Exception("You must not raise a natural number to a negative power.")
         self_c = Natural(str(self))
+        # Добавляем 0 tenpow раз
         for i in range(tenpow):
             self_c._number.insert(i, 0)
             self_c._dig_n += 1
@@ -97,11 +101,15 @@ class Natural():
 
     def __gt__(self, num):
         '''Модуль переполнения ">". Оформил Шабров Иван'''
+        # Если количетсво разрядов self больше num
         if self._dig_n > num._dig_n:
             return True
+        # Если количество разрядов self меньше num
         elif self._dig_n < num._dig_n:
             return False
+        # Если количество разрядов одинаковое
         else:
+            # Поочередно сравниваем разряды каждого числа
             for i in range(-1, -(self._dig_n + 1), -1):
                 if self._number[i] > num._number[i]:
                     return True
@@ -122,11 +130,14 @@ class Natural():
 
     def __lt__(self, num):
         '''Модуль переполнения "<". Оформил Шабров Иван'''
+        # Если количетсво разрядов self меньше num
         if self._dig_n < num._dig_n:
             return True
+        # Если количетсво разрядов self больше num
         elif self._dig_n > num._dig_n:
             return False
         else:
+            # Поочередно сравниваем разряды каждого числа
             for i in range(-1, -(self._dig_n + 1), -1):
                 if self._number[i] < num._number[i]:
                     return True
@@ -266,15 +277,20 @@ class Natural():
 
     def gcf(self, num):
         # Модуль GCF_NN_N. Оформил Шабров Иван
+        # Проверка на ноль
         if self.is_zero() and num.is_zero():
             raise Exception("GCF of both zeros is undefined.")
+
         n1 = Natural(str(self))
         n2 = Natural(str(num))
+
+        # Алгоритм Евклида
         while (not n1.is_zero()) and (not n2.is_zero()):
             if n1.compare(n2) == 2:
                 n1 = n1 % n2
             else:
                 n2 = n2 % n1
+
         return n1 + n2
 
     def increment(self):
@@ -297,20 +313,29 @@ class Natural():
     def __truediv__(self, num):
         '''Функция нахождения частого'''
         # Показацкая Арина
+        # Проверка на ноль
         if self.is_zero():
             return Natural("0")
         elif num.is_zero():
             raise Exception("You must not divide natural number by zero.")
+
         n1 = Natural(str(self))
         n2 = Natural(str(num))
-        res = Natural()  # результат
-        res._dig_n = n1.div_dk(n2)[1] + 1  # количество разрядов в результирующем числе
+        res = Natural()
+
+        # Количество разрядов в результирующем числе
+        res._dig_n = n1.div_dk(n2)[1] + 1
         res._number = [0 for i in range(res._dig_n)]
+
         while n1.compare(n2) != 1:
-            a, b = n1.div_dk(n2)  # первая цифра и номер позиции этой цифры
+            # Очередная цифра результата и номер позиции этой цифры
+            a, b = n1.div_dk(n2)
             res._number[b] = a
-            c = n2.mul_k(b)  # делитель, умноженный на 10 в степени b
-            n1 = n1.sub_dn(a, c)  # разность делимого и делителя, умноженного на первую цифру
+            # Делитель, умноженный на 10 в степени b
+            c = n2.mul_k(b)
+            # Разность делимого и делителя, умноженного на первую цифру
+            n1 = n1.sub_dn(a, c)
+
         return res
 
     def lcm(self, num):
