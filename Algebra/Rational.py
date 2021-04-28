@@ -153,11 +153,11 @@ class Rational():
         common_div2 = Integer(str(lcm / num._denumerator))
         num2 = num._numerator * common_div2 # Получаем числитель второй дроби
 
-        res._numerator = num1 + num2
-        res._denumerator = lcm
+        res._numerator = num1 + num2 # Вычисляем общий числитель
+        res._denumerator = lcm # Приравниваем знаменатель к НОК
         return res
 
-    def __div__(self, num):
+    def __truediv__(self, num):
         '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
         if num._numerator == Integer("0"):
             raise Exception("You cannot divide by null")
@@ -183,8 +183,3 @@ class Rational():
 
                 k._numerator._sign = 1
                 return k
-
-        res._numerator = num1 + num2 # Вычисляем общий числитель
-        res._denumerator = lcm # Приравниваем знаменатель к НОК
-        return res
-
