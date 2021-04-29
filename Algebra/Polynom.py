@@ -214,20 +214,6 @@ class Polynom():
     def is_zero(self):
         return self._coef_n == 1 and self._coef[0].is_zero()
 
-    def __gt__(self, num):
-        '''Перегрузка > для класса Polynome'''
-        if self.power() > num.power():
-            return True
-        elif self.power() < num.power():
-            return False
-        for i in range(self.power(), -1, -1):
-            compare = self._coef[i]._numerator._number.compare(num._coef[i]._numerator._number)
-            if compare == 2:
-                return True
-            elif compare == 1:
-                return False
-        return False
-
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
         # Проверка на ноль
