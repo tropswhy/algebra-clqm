@@ -224,7 +224,10 @@ class Polynom():
                 a = a % b
             else:
                 b = b % a
-        return a + b
+        res = a + b
+        if res.power() == 0 and not res._coef[0].is_int():
+            res = Polynom([1])
+        return res
 
     def nmr(self):
         '''
