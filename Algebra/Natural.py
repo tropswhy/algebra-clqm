@@ -25,13 +25,6 @@ class Natural():
             self._number = [int(i) for i in n[::-1]]
             self._dig_n = len(self._number)
 
-    @staticmethod
-    def isNatural(s):
-        for i in s:
-            if not ('0' <= i and i <= '9'):
-                return False
-        return True
-
     def __str__(self):
         if self._dig_n != 0:
             # Перевод списка в строку
@@ -39,53 +32,16 @@ class Natural():
         else:
             return "0"
 
-    def mul_d(self, digit: int):
-        '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
-        # self_c - результат
-        self_c = Natural(str(self))
-        if self_c._dig_n != 0:  # если числа не пустые
-            if self_c._number == [0] or digit == 0:  # если одно из чисел нулевое
-                return Natural("0")
-            else:
-                temp = 0  # остаток после умножения разряда на число.
-                for j in range(self_c._dig_n):
-                    if temp != 0:  # если после предыдущего шага есть остаток
-                        if self_c._number[j] * digit + temp >= 10:  # если умножение очередной цифры числа оказалось больше 10
-                            temp_n = self_c._number[j]
-                            self_c._number[j] = (self_c._number[j] * digit + temp) % 10
-                            temp = (temp_n * digit + temp) // 10
-                        else:
-                            self_c._number[j] = self_c._number[j] * digit + temp
-                            temp = 0
-                    elif self_c._number[j] * digit >= 10:  # если умножение очередной цифры числа оказалось больше 10
-                        temp_n = self_c._number[j]
-                        self_c._number[j] = (self_c._number[j] * digit) % 10
-                        temp = (temp_n * digit) // 10
-                    else:
-                        self_c._number[j] = self_c._number[j] * digit
-                        temp = 0
-                if temp != 0:  # если на последнем шаге остался остаток, то записываем его в 1 позицию
-                    self_c._number.insert(self_c._dig_n, temp)
-                    self_c._dig_n += 1
-                return self_c
-        else:
-            return Natural()
-
-    '''Модуль N-7.MUL_Nk_N-mul_k #11 выполнил и оформил Цыганков Дмитрий'''
-
-    def mul_k(self, tenpow: int):
-        # Проверка на неотрицательность
-        if tenpow < 0:
-            raise Exception("unable to raise a natural number to a negative power")
-        self_c = Natural(str(self))
-        # Добавляем 0 tenpow раз
-        for i in range(tenpow):
-            self_c._number.insert(i, 0)
-            self_c._dig_n += 1
-        return self_c
+    @staticmethod
+    def isNatural(s):
+        for i in s:
+            if not ('0' <= i and i <= '9'):
+                return False
+        return True
 
     def __gt__(self, num):
-        '''Модуль переполнения ">". Оформил Шабров Иван'''
+        '''Перегрузка оператора ">". Выполнил и оформил Шабров Иван'''
+
         # Если количетсво разрядов self больше num
         if self._dig_n > num._dig_n:
             return True
@@ -103,7 +59,8 @@ class Natural():
         return False
 
     def __eq__(self, num):
-        '''Перегрузка оператора "==". Оформила Реброва Юлия'''
+        '''Перегрузка оператора "==". Выполнила и оформила Реброва Юлия'''
+
         # Если количество разрядов не совпадает
         if self._dig_n != num._dig_n:
             return False
@@ -114,7 +71,8 @@ class Natural():
         return True
 
     def __lt__(self, num):
-        '''Модуль переполнения "<". Оформил Шабров Иван'''
+        '''Перегрузка оператора "<". Оформил Шабров Иван'''
+
         # Если количетсво разрядов self меньше num
         if self._dig_n < num._dig_n:
             return True
@@ -130,8 +88,11 @@ class Natural():
                     return False
         return False
 
+    '''МОДУЛИ NATURAL'''
+
     def compare(self, num):
-        '''Модуль COM_NN_D. Оформил Шабров Иван'''
+        '''Модуль N-1 COM_NN_D. Выполнил и оформил Шабров Иван'''
+
         if self > num:
             return 2
         elif self < num:
@@ -140,17 +101,38 @@ class Natural():
             return 0
 
     def is_zero(self):
-        '''Модуль NZER_N_B. Оформила Реброва Юлия'''
+        '''Модуль N-2 NZER_N_B. Выполнила и оформила Реброва Юлия'''
+
         if self == Natural("0"):
             return True
         else:
             return False
 
-    def __add__(self, num):
-        '''Модуль ADD_NN_N. Оформил Адиль Жексенгалиев'''
-        # Сложение натуральных чисел
-        res = Natural()
+    def increment(self):
+        '''Модуль N-3 ADD_1N_N. Выполнил и оформил Проскуряк Влад'''
 
+        res = Natural(str(self))
+        # Если число единиц не превысит 9, то прибавление 1 и окончание модуля
+        if (res._number[0] + 1) < 10:
+            res._number[0] = res._number[0] + 1
+        else:
+            i = 0
+            # Прибавление 1 и в случае необходимости поднятие по разрядам
+            while (i < res._dig_n) and ((res._number[i] + 1) == 10):
+                res._number[i] = 0
+                i = i + 1
+            # Прибавление к высшему разряду единицу или добавление нового разряда
+            if (i < res._dig_n):
+                res._number[i] = res._number[i] + 1
+            else:
+                res._dig_n = res._dig_n + 1
+                res._number.append(1)
+        return res
+
+    def __add__(self, num):
+        '''Модуль ADD_NN_N. Выполнил и оформил Жексенгалиев Адиль'''
+
+        res = Natural()
         # Находим наименьшее количество разрядов среди self и num
         if self.compare(num) == 1:
             res._dig_n = num._dig_n
@@ -158,15 +140,15 @@ class Natural():
         else:
             res._dig_n = self._dig_n
             n = num._dig_n
-        # Добавляем нули в результат
+        # Добавляем нули в искомое число
         res._number = [0 for i in range(res._dig_n)]
 
-        i = 0
         # Складываем числа до n - наименьшего количества разрядов
+        i = 0
         while i < n:
             # Получаем цифру i-того разряда
             x = res._number[i] + self._number[i] + num._number[i]
-            # Если цифра получилась не меньше 10
+            # Если после сложения получилось число, а не цифра
             if x >= 10:
                 res._number[i] = x - 10
                 # Если x - последний разряд, то расширяем массив чисел
@@ -200,22 +182,12 @@ class Natural():
                     res._number.append(0)
                 # Следующая цифра увелчиивается на 1
                 res._number[j + i + 1] += 1
-
             j = j + 1
 
         return res
 
-    def __mul__(self, x):
-        '''Модуль MUL_NN_N. Оформил Трибунский Алексей'''
-        res = Natural("0")
-        # Проходим по всем цифрам второго множителя
-        for i in range(x._dig_n):
-            # К res прибавляем первый множитель, умноженный на цифру второго множителя и на 10^i
-            res += self.mul_d(x._number[i]).mul_k(i)
-        return res
-
     def __sub__(self, num):
-        ''' SUB_NN_N '''
+        '''Модуль N-5 SUB_NN_N. Выполнил и оформил Солодков Никита'''
         t = self.compare(num)
         # Если self больше num
         if t == 2:
@@ -260,7 +232,6 @@ class Natural():
                 res._number[i] = x + 10
             else:
                 res._number[i] = x
-
             i -= 1
 
         # Удаляем незначащие нули
@@ -272,89 +243,97 @@ class Natural():
 
         return res
 
-    def gcf(self, num):
-        # Модуль GCF_NN_N. Оформил Шабров Иван
+    def mul_d(self, digit: int):
+        '''Модуль N-6 MUL_ND_N. Выполнил и оформил Цыганков Дмитрий'''
+        # Проверка цифры
+        if digit < 0:
+            raise Exception("unable to multiple a natural number by a negative digit")
+        elif digit > 9:
+            raise Exception("digit cannot be greater than 9")
         # Проверка на ноль
-        if self.is_zero() and num.is_zero():
-            raise Exception("gcf of both zeros is undefined")
+        if self.is_zero() or digit == 0:
+            return Natural("0")
 
-        n1 = Natural(str(self))
-        n2 = Natural(str(num))
+        # self_c - искомое число
+        # temp - остаток после умножения разряда на число.
+        self_c = Natural(str(self))
+        temp = 0
 
-        # Алгоритм Евклида
-        while (not n1.is_zero()) and (not n2.is_zero()):
-            if n1.compare(n2) == 2:
-                n1 = n1 % n2
+        for j in range(self_c._dig_n):
+            # Если после предыдущего шага есть остаток
+            if temp != 0:
+                # Если умножение очередной цифры числа оказалось больше 10
+                if self_c._number[j] * digit + temp >= 10:
+                    temp_n = self_c._number[j]
+                    self_c._number[j] = (self_c._number[j] * digit + temp) % 10
+                    temp = (temp_n * digit + temp) // 10
+                else:
+                    self_c._number[j] = self_c._number[j] * digit + temp
+                    temp = 0
+            # Если умножение очередной цифры числа оказалось больше 10
+            elif self_c._number[j] * digit >= 10:
+                temp_n = self_c._number[j]
+                self_c._number[j] = (self_c._number[j] * digit) % 10
+                temp = (temp_n * digit) // 10
             else:
-                n2 = n2 % n1
+                self_c._number[j] = self_c._number[j] * digit
+                temp = 0
 
-        return n1 + n2
+        # Если на последнем шаге остался остаток, то записываем его в 1 позицию
+        if temp != 0:
+            self_c._number.insert(self_c._dig_n, temp)
+            self_c._dig_n += 1
 
-    def increment(self):
-        '''Модуль ADD_1N_N, оформил Проскуряк Влад.'''
-        res = Natural(str(self))
-        if (res._number[0] + 1) < 10:
-            res._number[0] = res._number[0] + 1 # Если число единиц не превысит 9 то прибавление 1 и окончание модуля
-        else:
-            i = 0
-            while (i < res._dig_n) and ((res._number[i] + 1) == 10): # Прибавление 1 и в случае необходимости поднятие по разрядам
-                res._number[i] = 0
-                i = i + 1
-            if (i < res._dig_n): # Прибавление к высшему разряду единицу или добавление нового разряда
-                res._number[i] = res._number[i] + 1
-            else:
-                res._dig_n = res._dig_n + 1
-                res._number.append(1)
-        return res
+        return self_c
 
-    def __truediv__(self, num):
-        '''Функция нахождения частого'''
-        # Показацкая Арина
+    def mul_k(self, tenpow: int):
+        '''Модуль N-7 MUL_Nk_N. Выполнил и оформил Цыганков Дмитрий'''
+        # Проверка на неотрицательность
+        if tenpow < 0:
+            raise Exception("unable to raise a natural number to a negative power")
         # Проверка на ноль
         if self.is_zero():
             return Natural("0")
-        elif num.is_zero():
-            raise Exception("unable to divide natural number by zero")
 
-        n1 = Natural(str(self))
-        n2 = Natural(str(num))
-        res = Natural()
+        self_c = Natural(str(self))
+        # Добавляем ноль tenpow раз
+        for i in range(tenpow):
+            self_c._number.insert(i, 0)
+            self_c._dig_n += 1
 
-        # Количество разрядов в результирующем числе
-        res._dig_n = n1.div_dk(n2)[1] + 1
-        res._number = [0 for i in range(res._dig_n)]
+        return self_c
 
-        while n1.compare(n2) != 1:
-            # Очередная цифра результата и номер позиции этой цифры
-            a, b = n1.div_dk(n2)
-            res._number[b] = a
-            # Делитель, умноженный на 10 в степени b
-            c = n2.mul_k(b)
-            # Разность делимого и делителя, умноженного на первую цифру
-            n1 = n1.sub_dn(a, c)
-
+    def __mul__(self, x):
+        '''Модуль N-8 MUL_NN_N. Выполнил и оформил Трибунский Алексей'''
+        res = Natural("0")
+        # Проходим по всем цифрам второго множителя
+        for i in range(x._dig_n):
+            # К res прибавляем первый множитель, умноженный на цифру второго множителя и на 10^i
+            res += self.mul_d(x._number[i]).mul_k(i)
         return res
 
-    def lcm(self, num):
-        # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
-        # Проверка на ноль
-        if self.is_zero():
-            if num.is_zero():
-                raise Exception("lcm of both zeros is undefined")
-            else:
-                raise Exception("lcm of a zero and a number is undefined")
+    def sub_dn(self, dig, num):
+        '''Модуль N-9 SUB_NDN_N. Выполнила и оформила Реброва Юлия'''
+        # Проверка цифры
+        if dig < 0:
+            raise Exception("unable to multiple a natural number by a negative digit")
+        elif dig > 9:
+            raise Exception("digit cannot be greater than 9")
 
-        gcf = self.gcf(num)
-        return (self * num) / gcf
+        c = num.mul_d(dig)
+        if self.compare(c) != 1:
+            return self - c
+        else:
+            raise Exception("unable to substitute greater natural number from less natural number")
 
     def div_dk(self, num):
-        '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
+        '''Модуль N-10 DIV_NN_Dk. Выполнил и оформил Щусь Максим'''
         # Проверка на ноль
         if self.is_zero():
             return 0, 0
         elif num.is_zero():
             raise Exception("unable to divide natural number by zero")
-        elif self.compare(num) == 0:
+        if self.compare(num) == 0:
             return 1, 0
 
         n1 = Natural(str(self))
@@ -362,11 +341,9 @@ class Natural():
         # k - первая цифра деления
         k = 0
 
-        # Если первое число меньше второго
         if n1.compare(n2) == 1:
             less = n1
             greater = n2
-        # Если второе число не больше второго
         else:
             less = n2
             greater = n1
@@ -386,6 +363,7 @@ class Natural():
         while greater.compare(n3) == 2:
             dig += 1
             n3 = less.mul_d(dig)
+
         # Если n3 стало больше greater, то уменьшаем цифру деления на 1
         if greater.compare(n3) != 0:
             dig -= 1
@@ -397,27 +375,70 @@ class Natural():
 
         return dig, k
 
-    def sub_dn(self, dig, num):
-        # Модуль SUB_NDN_N. Оформила Реброва Юлия
-        # Проверка на цифру
-        if dig < 0:
-            raise Exception("unable to multiple a natural number by a negative digit")
-        elif dig > 9:
-            raise Exception("digit cannot be greater than 9")
-        # Умножаем число
-        c = num.mul_d(dig)
-        # Если уменьшаемое не меньше вычитаемого
-        if self.compare(c) != 1:
-            return self - c
-        else:
-            raise Exception("unable to substitute greater natural number from less natural number")
+    def __truediv__(self, num):
+        '''Модуль N-11 DIV_NN_N. Выполнила и оформила Показацкая Арина'''
+        # Проверка на ноль
+        if self.is_zero():
+            return Natural("0")
+        elif num.is_zero():
+            raise Exception("unable to divide natural number by zero")
+
+        n1 = Natural(str(self))
+        n2 = Natural(str(num))
+        res = Natural()
+
+        res._number = [0 for i in range(res._dig_n)]
+        # Количество разрядов в результирующем числе
+        res._dig_n = n1.div_dk(n2)[1] + 1
+
+        while n1.compare(n2) != 1:
+            # Очередная цифра результата и номер позиции этой цифры
+            a, b = n1.div_dk(n2)
+            res._number[b] = a
+            # Делитель, умноженный на 10 в степени b
+            c = n2.mul_k(b)
+            n1 = n1.sub_dn(a, c)
+
+        return res
 
     def __mod__(self, num):
-        '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
+        '''Модуль N-12 MOD_NN_N. Выполнил и оформил Проскуряк Влад'''
+        # Проверка на ноль
         if num.is_zero():
             raise Exception("unable to find modulo by zero")
+
         res = Natural(str(self))
-        if (self.compare(num) != 1):
-            i = res / num # Частное от деления 
+        if self.compare(num) != 1:
+            i = res / num # Частное от деления
             res = res - i * num # Вычитаем из делимого произведение частного на делитель и получаем остаток
         return res
+
+    def gcf(self, num):
+        '''Модуль N-13 GCF_NN_N. Выполнил и оформил Шабров Иван'''
+        # Проверка на ноль
+        if self.is_zero() and num.is_zero():
+            raise Exception("gcf of both zeros is undefined")
+
+        n1 = Natural(str(self))
+        n2 = Natural(str(num))
+
+        # Алгоритм Евклида
+        while (not n1.is_zero()) and (not n2.is_zero()):
+            if n1.compare(n2) == 2:
+                n1 = n1 % n2
+            else:
+                n2 = n2 % n1
+
+        return n1 + n2
+
+    def lcm(self, num):
+        '''Модуль N-14 LCM_NN_N. Выполнил и оформил Жексенгалиев Адиль'''
+        # Проверка на ноль
+        if self.is_zero():
+            if num.is_zero():
+                raise Exception("lcm of both zeros is undefined")
+            else:
+                raise Exception("lcm of a zero and a number is undefined")
+
+        gcf = self.gcf(num)
+        return (self * num) / gcf
