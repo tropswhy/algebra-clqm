@@ -29,7 +29,7 @@ class Rational():
                     self._denumerator = Natural("0")
 
     def is_zero(self):
-        return self._denumerator.is_zero()
+        return self._numerator.is_zero()
 
     @staticmethod
     def isRational(s):
@@ -117,12 +117,6 @@ class Rational():
         m = abs(num._numerator)
         res._numerator = self._numerator * n
         res._denumerator = self._denumerator * m
-        # Проверка на знаки
-        self_sign = self._numerator._sign
-        num_sign = num._numerator._sign
-        # Если знаки разные, то знак меняем на минус
-        if self_sign != num_sign:
-            res._numerator._sign = NEGATIVE
 
         return res
 
@@ -146,7 +140,7 @@ class Rational():
     def is_int(self):
         # Щусь
         num = self.reduce()
-        return num._denumerator == Natural("1")
+        return num._denumerator == Natural("1") or num.is_zero()
 
     def __add__(self, num):
         '''Модуль ADD_QQ_Q, оформил Проскуряк Влад.'''
@@ -166,4 +160,5 @@ class Rational():
 
         res._numerator = num1 + num2 # Вычисляем общий числитель
         res._denumerator = lcm # Приравниваем знаменатель к НОК
+
         return res

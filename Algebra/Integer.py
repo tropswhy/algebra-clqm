@@ -83,7 +83,7 @@ class Integer():
 
     def change_sign(self):
         ''' Функция умножения целого числа на -1'''
-    # Показацкая Арина
+        # Показацкая Арина
         if self._sign == NEGATIVE:
             self._sign = POSITIVE
         elif self._sign == POSITIVE:
@@ -116,7 +116,7 @@ class Integer():
         return Integer(str(natural))
 
     def is_zero(self):
-        return self._sign == ZERO
+        return self._number.is_zero()
 
     def __mul__(self, num):
         # Жексенгалиев
@@ -192,7 +192,7 @@ class Integer():
 
         # Если оба числа положительные
         # то из большего вычитаем меньшее
-        elif (sign1 == 2 and sign2 == 2):
+        elif (sign1 == POSITIVE and sign2 == POSITIVE):
             compare = abs(self).compare(abs(num))
             if compare != 1:
                 res = Integer(str(abs(self) - abs(num)))

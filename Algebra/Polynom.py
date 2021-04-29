@@ -116,8 +116,10 @@ class Polynom():
             # Если i-тый коэффициент не равен 0
             elif num_lcm.is_zero() and not self._coef[i].is_zero():
                 num_lcm = self._coef[i]._denumerator
+
         res._numerator = Integer.natural_to_integer(num_gcf)
         res._denumerator = Natural(str(num_lcm))
+
         return res
 
     def __sub__(self, num):
@@ -131,7 +133,7 @@ class Polynom():
         res = Polynom([Rational("0") for i in range(k + 1)])
 
         # Если количество коэффициентов первого больше(или равно) второго
-        if (self._coef_n >= num._coef_n):
+        if self._coef_n >= num._coef_n:
             for i in range(k + 1):
                 # Записываем в результат первый многочлен и вычитаем из него второй
                 res._coef[i] = Rational(str(self._coef[i]))
@@ -212,6 +214,20 @@ class Polynom():
     def is_zero(self):
         return self._coef_n == 1 and self._coef[0].is_zero()
 
+    def __gt__(self, num):
+        '''Перегрузка > для класса Polynome'''
+        if self.power() > num.power():
+            return True
+        elif self.power() < num.power():
+            return False
+        for i in range(self.power(), -1, -1):
+            compare = self._coef[i]._numerator._number.compare(num._coef[i]._numerator._number)
+            if compare == 2:
+                return True
+            elif compare == 1:
+                return False
+        return False
+
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
         # Проверка на ноль
@@ -219,12 +235,14 @@ class Polynom():
             raise Exception("GCF of both zeros is undefined")
         a = Polynom(self._coef[::-1])
         b = Polynom(num._coef[::-1])
-        while not a.is_zero() and not b.is_zero():
+
+        while a.power() != 0 and b.power() != 0:
             if a.power() > b.power():
                 a = a % b
             else:
                 b = b % a
-        res = a + b
+
+        res = a if a.power() == 0 else b
         if res.power() == 0 and not res._coef[0].is_int():
             res = Polynom([1])
         return res
