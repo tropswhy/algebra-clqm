@@ -32,7 +32,10 @@ class Polynom():
         '''Модуль DEG_P_N выполнил и оформил Солодков Никита'''
         # self._coef_n - это количество коэффицентов
         # Степень многочлена на единицу меньше количества коэффициентов
-        return self._coef_n - 1
+        i = 0
+        while (i + 1) < self._coef_n and self._coef[-i - 1].is_zero():
+            i += 1
+        return self._coef_n - i - 1
 
     def higher_coef(self):
         '''Модуль LED_P_Q выполнил и оформил Шабров Иван'''
@@ -207,7 +210,7 @@ class Polynom():
         return res
 
     def is_zero(self):
-        return self.power() == 0 and self._coef[0].is_zero()
+        return self._coef_n == 1 and self._coef[0].is_zero()
 
     def gcf(self, num):
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
