@@ -18,7 +18,7 @@ class Polynom():
                 self._coef = [Rational(str(i)) for i in l[::-1]]
                 self._coef_n = len(l)
             except:
-                raise Exception("Error while converting coefficients into rational numbers")
+                raise Exception("error while converting coefficients into rational numbers")
 
     # TO DO:
     # Пофиксить вывод отрицательных коэффициентов
@@ -44,7 +44,7 @@ class Polynom():
     def mul_xk(self, k: int):
         #Модуль MUL_Pxk_P выполнила и оформила Реброва Юлия
         if k < 0:
-            raise Exception("Cannot multiple polynom by x^k when k is negative")
+            raise Exception("unable to multiple polynom by x^k when k is negative")
         # Степень результирующего полинома увеличивается на k
         res = Polynom(["0"] * (self._coef_n + k))
         # Увеличиваем степени "иксов" изначального полинома
@@ -174,7 +174,7 @@ class Polynom():
 
         # Проверка на ноль
         if pol_.is_zero():
-            raise Exception("Cannot divide polynom by zero")
+            raise Exception("unable to divide polynom by zero")
         elif divisbl.is_zero() or divisbl.power() < pol_.power():
             return Polynom()
 
@@ -218,7 +218,7 @@ class Polynom():
         '''Модуль P-11 GCF_PP_P выполнил и оформил Шабров Иван'''
         # Проверка на ноль
         if self.is_zero() and num.is_zero():
-            raise Exception("GCF of both zeros is undefined")
+            raise Exception("gcf of both zeros is undefined")
         a = Polynom(self._coef[::-1])
         b = Polynom(num._coef[::-1])
 
@@ -249,7 +249,7 @@ class Polynom():
     def __mod__(self, num):
         '''Модуль MOD_PP_P, оформил Проскуряк Влад'''
         if num.is_zero():
-            raise Exception("Cannot calculate modulo by zero")
+            raise Exception("unable to find modulo by zero")
         res = Polynom(self._coef[::-1])
         resnum = Polynom(num._coef[::-1])
         # Вычитаем из многочлена произведение второго многочлена на частное от деления многочленов и получаем остаток

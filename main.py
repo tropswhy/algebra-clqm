@@ -405,7 +405,7 @@ class MainWindow(QMainWindow):
                 self.currentLineEdit.clear()
                 return self.classOfCurrentPage()()
             elif len(types) != len(numbers):
-                raise Exception("You entered wrong amount of variables.")
+                raise Exception("wrong amount of variables was entered")
             # Каждое число преобразуем
             for i in range(len(types)):
                 result.append(types[i](numbers[i]))

@@ -15,9 +15,7 @@ class Integer():
             self._number = Natural()
             self._sign = ZERO
         elif not Integer.isInteger(n):
-            raise Exception("Number passed to \"Intger\" class constructor is invailid. "
-                            "You must enter only digits from 0 to 9 and minus in the begging if needed. "
-                            "No other symbols are allowed.")
+            raise Exception("number passed to \"Integer\" class constructor is invailid")
         else:
             # Число отрицательное
             if n[0] == '-':
@@ -108,7 +106,7 @@ class Integer():
             res = Natural(str(integer))
             return res
         else:
-            raise Exception("Negative number cannot be converted to natural")
+            raise Exception("negative number cannot be converted into natural")
 
     @staticmethod
     def natural_to_integer(natural):
@@ -168,7 +166,7 @@ class Integer():
         # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
         # Проверка на ноль
         if num._number.is_zero():
-            raise Exception("You must not try to find modulo by zero.")
+            raise Exception("unable to find modulo by zero")
 
         z1 = Integer(str(self))
         z2 = Integer(str(num))
@@ -222,7 +220,7 @@ class Integer():
         ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
         # Проверка на ноль
         if num.is_zero():
-            raise Exception("Cannot divide by zero.")
+            raise Exception("unable to divide by zero")
         elif self.is_zero():
             return Integer("0")
 

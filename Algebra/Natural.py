@@ -1,26 +1,20 @@
 __all__ = ["Natural"]
 
-# TO DO:
-# Создать отдельный файл для подобных функций?
-
 def remove_zeros(s):
-    i = 0
-    while s[i] == '0':
-        i += 1
-    return s[i:]
+    while s[0] == '0':
+        s.pop(0)
+    return s
 
 class Natural():
 
     # _dig_n - количество разрядов в числе
-    # _number - натуральное число, представленое в виде перевёрнутого массива цифр
+    # _number - натуральное число, представленое в виде перевёрнутого массива цифр (начиная с младших разрядов)
     def __init__(self, n: str = None):
-        self._number = []
         if not n:
             self._number = [0]
             self._dig_n = 1
         elif not Natural.isNatural(n):
-            raise Exception("Number passed to \"Natural\" class constructor is invailid. "
-                            "You must enter only digits from 0 to 9 and no other symbols.")
+            raise Exception("number passed to \"Natural\" class constructor is invalid")
         # Число состоит из нулей
         elif n == "0" * len(n):
             self._number = [0]
@@ -38,9 +32,6 @@ class Natural():
                 return False
         return True
 
-    def __reversed__(self):
-        return reversed(self._number)
-
     def __str__(self):
         if self._dig_n != 0:
             # Перевод списка в строку
@@ -48,9 +39,8 @@ class Natural():
         else:
             return "0"
 
-    '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
-
     def mul_d(self, digit: int):
+        '''Модуль N-6.MUL_ND_N-mul_d #6 выполнил и оформил Цыганков Дмитрий'''
         # self_c - результат
         self_c = Natural(str(self))
         if self_c._dig_n != 0:  # если числа не пустые
@@ -86,7 +76,7 @@ class Natural():
     def mul_k(self, tenpow: int):
         # Проверка на неотрицательность
         if tenpow < 0:
-            raise Exception("You must not raise a natural number to a negative power.")
+            raise Exception("unable to raise a natural number to a negative power")
         self_c = Natural(str(self))
         # Добавляем 0 tenpow раз
         for i in range(tenpow):
@@ -235,7 +225,7 @@ class Natural():
             m = self._dig_n
         # Если self меньше num, то вычитание нельзя произвести
         elif t == 1:
-            raise Exception("You must not substitute greater number from less number.")
+            raise Exception("unable to substitute greater natural number from less natural number")
         # Если числа равны
         else:
             return Natural("0")
@@ -286,7 +276,7 @@ class Natural():
         # Модуль GCF_NN_N. Оформил Шабров Иван
         # Проверка на ноль
         if self.is_zero() and num.is_zero():
-            raise Exception("GCF of both zeros is undefined.")
+            raise Exception("gcf of both zeros is undefined")
 
         n1 = Natural(str(self))
         n2 = Natural(str(num))
@@ -324,7 +314,7 @@ class Natural():
         if self.is_zero():
             return Natural("0")
         elif num.is_zero():
-            raise Exception("You must not divide natural number by zero.")
+            raise Exception("unable to divide natural number by zero")
 
         n1 = Natural(str(self))
         n2 = Natural(str(num))
@@ -350,9 +340,9 @@ class Natural():
         # Проверка на ноль
         if self.is_zero():
             if num.is_zero():
-                raise Exception("LCM of both zeros is undefined")
+                raise Exception("lcm of both zeros is undefined")
             else:
-                raise Exception("LCM of a zero and a number is undefined")
+                raise Exception("lcm of a zero and a number is undefined")
 
         gcf = self.gcf(num)
         return (self * num) / gcf
@@ -363,7 +353,7 @@ class Natural():
         if self.is_zero():
             return 0, 0
         elif num.is_zero():
-            raise Exception("You must not divide natural number by zero.")
+            raise Exception("unable to divide natural number by zero")
         elif self.compare(num) == 0:
             return 1, 0
 
@@ -411,21 +401,21 @@ class Natural():
         # Модуль SUB_NDN_N. Оформила Реброва Юлия
         # Проверка на цифру
         if dig < 0:
-            raise Exception("You must not multiple a number by a negative digit.")
+            raise Exception("unable to multiple a natural number by a negative digit")
         elif dig > 9:
-            raise Exception("Entered digit must not be greater than 9.")
+            raise Exception("digit cannot be greater than 9")
         # Умножаем число
         c = num.mul_d(dig)
         # Если уменьшаемое не меньше вычитаемого
         if self.compare(c) != 1:
             return self - c
         else:
-            raise Exception("You can not substitute bigger number from less number.")
+            raise Exception("unable to substitute greater natural number from less natural number")
 
     def __mod__(self, num):
         '''Модуль MOD_NN_N, оформил Проскуряк Влад.'''
         if num.is_zero():
-            raise Exception("You must not try to find modulo by zero.")
+            raise Exception("unable to find modulo by zero")
         res = Natural(str(self))
         if (self.compare(num) != 1):
             i = res / num # Частное от деления 

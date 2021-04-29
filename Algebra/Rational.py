@@ -11,9 +11,7 @@ class Rational():
             self._numerator = Integer("0")
             self._denumerator = Natural("0")
         elif not Rational.isRational(n):
-            raise Exception("Number passed to \"Rational\" class constructor is invailid. "
-                            "You must enter only digits from 0 to 9, minus in the begging if needed and \'/\'. "
-                            "No other symbols are allowed.")
+            raise Exception("number passed to \"Rational\" class constructor is invailid")
         else:
             k = n.find("/")
             if k == -1:
@@ -63,7 +61,7 @@ class Rational():
         if rational._denumerator == Natural("1"):
             return Integer(str(rational._numerator))
         else:
-            raise Exception("You cannot transfer rational number to integer because denumerator is not equal to 1.")
+            raise Exception("unable to convert rational number into integer (denumerator is not equal to 1)")
 
     def __mul__(self, num):
         # Жексенгалиев
@@ -107,7 +105,7 @@ class Rational():
         '''Модуль DIV_QQ_Q, оформила Реброва Юлия.'''
         # Проверка на ноль
         if num.is_zero():
-            raise Exception("You cannot divide by null")
+            raise Exception("unable to divide by zero")
         elif self.is_zero():
             return Rational("0/0")
 
