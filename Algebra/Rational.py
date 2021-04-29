@@ -145,7 +145,8 @@ class Rational():
 
     def is_int(self):
         # Щусь
-        return self._denumerator == Natural("1")
+        num = self.reduce()
+        return num._denumerator == Natural("1")
 
     def __add__(self, num):
         '''Модуль ADD_QQ_Q, оформил Проскуряк Влад.'''
