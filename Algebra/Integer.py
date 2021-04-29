@@ -119,10 +119,18 @@ class Integer():
         return self._sign == ZERO
 
     def __mul__(self, num):
-        res = self._number * num._number
-        res = Integer(str(res))
-        if (self._sign == POSITIVE and num._sign == NEGATIVE) or (num._sign == POSITIVE and self._sign == NEGATIVE):
+        # Жексенгалиев
+        # Проверка на ноль
+        if self.is_zero() or num.is_zero():
+            return Integer("0")
+
+        res = Integer()
+        res._number = self._number * num._number
+        res._sign = POSITIVE
+        # Если знаки self и num отличаются
+        if self._sign != num._sign:
             res.change_sign()
+
         return res
 
     def __add__(self, num):
@@ -157,15 +165,17 @@ class Integer():
         return res
 
     def __mod__(self, num):
-        # Модуль ADD_PP_P выполнил и оформил Щусь Максим
         # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
+        # Проверка на ноль
         if num._number.is_zero():
             raise Exception("You must not try to find modulo by zero.")
+
         z1 = Integer(str(self))
         z2 = Integer(str(num))
+        # div - частное
         div = (z1 / z2)
-        res = z1 - z2 * div
-        return res
+
+        return z1 - z2 * div
 
     def __sub__(self, num):
         ''' Функция вычитания целых чисел '''

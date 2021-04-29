@@ -52,39 +52,49 @@ class Polynom():
     def mul_q(self, num):
         ''' Выполнил Адиль Жексенгалиев'''
         # Модуль P-3
+        # Проверка на ноль
+        if self.is_zero() or num.is_zero():
+            return Polynom([0])
+
         res = Polynom()
         res._coef_n = self._coef_n
         res._coef = [Rational("1") for i in range(res._coef_n)]
+
+        # Поочередно перемножаем коэффициенты на num
         for i in range(self._coef_n):
-            res._coef[i]._numerator = self._coef[i]._numerator * num._numerator
-            res._coef[i]._denumerator = self._coef[i]._denumerator * num._denumerator
+            res._coef[i] = self._coef[i] * num
+
         return res
 
 
     def derivate(self):
+        # Щусь
         res = Polynom(self._coef[::-1])
-        for i in range(len(self._coef)-1):
+        # Диффиренцируем каждый элемент полинома
+        for i in range(self.power()):
             res._coef[i] = self._coef[i+1] * Rational(str(i+1))
-        res._coef = res._coef[:len(self._coef)-1]
+        # Убираем последний "лишний" элемент
+        res._coef.pop(-1)
         res._coef_n -= 1
-        res = Polynom(res._coef[::-1])
+
         return res
 
-    #Модуль не работает без ADD_QQ_Q
-    def __add__(self, num):
+    def __add__(self, pol):
         # Модуль ADD_PP_P выполнил и оформил Щусь Максим
-        p1 = Polynom(self._coef[::-1])
-        p2 = Polynom(num._coef[::-1])
-        if p2._coef_n > p1._coef_n:
-            res = Polynom(num._coef[::-1])
-            for i in range(p1._coef_n):
-                res._coef[i] = res._coef[i] + p1._coef[i]
+        # Если степень p2 больше p1
+        if pol._coef_n > self._coef_n:
+            res = Polynom(pol._coef[::-1])
+            # Складываем коэффициенты соответствующих степеней
+            for i in range(self._coef_n):
+                res._coef[i] = res._coef[i] + self._coef[i]
+        # Если степень p2 не меньше p1
         else:
             res = Polynom(self._coef[::-1])
-            for i in range(p2._coef_n):
-                res._coef[i] = res._coef[i] + p2._coef[i]
-        return res
+            # Складываем коэффициенты соответствующих степеней
+            for i in range(pol._coef_n):
+                res._coef[i] = res._coef[i] + pol._coef[i]
 
+        return res
 
     def fac(self):
         # Модуль FAC_P_Q выполнил и оформил Солодков Никита'''

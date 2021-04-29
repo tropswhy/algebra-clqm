@@ -66,9 +66,15 @@ class Rational():
             raise Exception("You cannot transfer rational number to integer because denumerator is not equal to 1.")
 
     def __mul__(self, num):
+        # Жексенгалиев
+        # Провекра на ноль
+        if self.is_zero() or num.is_zero():
+            return Rational("0")
+
         res = Rational()
         res._numerator = self._numerator * num._numerator
         res._denumerator = self._denumerator * num._denumerator
+
         return res
 
     def __sub__(self, num):
@@ -138,6 +144,7 @@ class Rational():
 
 
     def is_int(self):
+        # Щусь
         return self._denumerator == Natural("1")
 
     def __add__(self, num):

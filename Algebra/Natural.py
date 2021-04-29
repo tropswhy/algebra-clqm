@@ -160,54 +160,59 @@ class Natural():
         '''Модуль ADD_NN_N. Оформил Адиль Жексенгалиев'''
         # Сложение натуральных чисел
         res = Natural()
+
+        # Находим наименьшее количество разрядов среди self и num
         if self.compare(num) == 1:
             res._dig_n = num._dig_n
             n = self._dig_n
         else:
             res._dig_n = self._dig_n
             n = num._dig_n
+        # Добавляем нули в результат
         res._number = [0 for i in range(res._dig_n)]
-        i = 0
-        while i < n:
-            x = res._number[i] + self._number[i] + num._number[i]
-            if x == 10:
-                res._number[i] = 0
-                #  расширение массива чисел
-                if (i == res._dig_n - 1):
-                    res._number.append(0)
-                    res._dig_n += 1
-                res._number[i + 1] += 1
-                if res._number[i + 1] == 10:
-                    res._number[i + 1] = 0
-                    res._number[i + 2] += 1
 
-            elif x > 10:
+        i = 0
+        # Складываем числа до n - наименьшего количества разрядов
+        while i < n:
+            # Получаем цифру i-того разряда
+            x = res._number[i] + self._number[i] + num._number[i]
+            # Если цифра получилась не меньше 10
+            if x >= 10:
                 res._number[i] = x - 10
+                # Если x - последний разряд, то расширяем массив чисел
                 if (i == res._dig_n - 1):
                     res._number.append(0)
                     res._dig_n += 1
+                # Прибавляем единицу к следующему разряду
                 res._number[i + 1] += 1
+            # Если х - цифра
             else:
                 res._number[i] += self._number[i] + num._number[i]
-
-            i = i + 1
+            i += 1
         # Для случая когда числа имеют разные разряды
         j = 0
-        while j < abs(self._dig_n - num._dig_n):
-            # cтоит ли заменить метод  на переменную или оставить так для читаемости кода?
-            if self.compare(num) == 2:
+        # m - количество разрядов, не добавленных в искомое число
+        m = abs(self._dig_n - num._dig_n)
+        compare = self.compare(num)
+        while j < m:
+            # Если self больше num
+            if compare == 2:
                 res._number[j + i] += self._number[j + i]
+            # Если num больше self
             else:
                 res._number[j + i] += num._number[j + i]
+            # Если цифра равна 10, то приравниваем её к нулю
             if res._number[j + i] == 10:
                 res._number[j + i] = 0
+                # Если складывается последний разряд
                 if (j + i == res._dig_n - 1):
                     res._dig_n += 1
                     res._number.append(0)
-
+                # Следующая цифра увелчиивается на 1
                 res._number[j + i + 1] += 1
 
             j = j + 1
+
         return res
 
     def __mul__(self, x):
@@ -220,54 +225,61 @@ class Natural():
         return res
 
     def __sub__(self, num):
-        '''Модуль LCM_NN_N. Оформил Жексенгалиев Адиль'''
-        ''' SUB_NN_N'''
+        ''' SUB_NN_N '''
         t = self.compare(num)
+        # Если self больше num
         if t == 2:
             big = self
             less = num
             n = num._dig_n
             m = self._dig_n
+        # Если self меньше num, то вычитание нельзя произвести
         elif t == 1:
             raise Exception("You must not substitute greater number from less number.")
+        # Если числа равны
         else:
             return Natural("0")
-        # создание результирующего натур  числа
+
         res = Natural()
         res._dig_n = big._dig_n
         res._number = [0 for i in range(big._dig_n)]
-        # print(res._number)
+
+        # Вычитаем, начиная со старшего разряда
         i = m - 1
         while i > n - 1:
             res._number[i] = big._number[i]
             i -= 1
-        # i  по сути будет равно n
+        # Вычитаем ненулевые разряды
         while i >= 0:
             x = big._number[i] - less._number[i]
+            # Если цифра меньше 0
             if x < 0:
-                # Поиск разряда у которого можно занять
+                # Поиск разряда у которого можно "занять" единицу
                 j = i + 1
                 while res._number[j] == 0:
                     j += 1
+                # "Занимаем" единицу
                 res._number[j] -= 1
                 n = i
+                # Вычитаем единицу из нулевых разрядов
                 z = j - 1
                 while z > n - 1:
                     if res._number[z] == 0:
                         res._number[z] = 9
                     z -= 1
                 res._number[i] = x + 10
-            elif x > 0:
-                res._number[i] = x
             else:
-                res._number[i] = 0
+                res._number[i] = x
+
             i -= 1
-        # Удаление нулей
+
+        # Удаляем незначащие нули
         i = m - 1
         while res._number[i] == 0:
             res._dig_n -= 1
             del res._number[i]
             i -= 1
+
         return res
 
     def gcf(self, num):
@@ -335,59 +347,64 @@ class Natural():
 
     def lcm(self, num):
         # Модуль LCM_NN_N. Оформил Жексенгалиев Адиль
+        # Проверка на ноль
         if self.is_zero():
             if num.is_zero():
                 raise Exception("LCM of both zeros is undefined")
             else:
                 raise Exception("LCM of a zero and a number is undefined")
+
         gcf = self.gcf(num)
         return (self * num) / gcf
 
     def div_dk(self, num):
         '''Модуль DIV_NN_Dk, оформил Щусь Максим.'''
+        # Проверка на ноль
         if self.is_zero():
             return 0, 0
         elif num.is_zero():
             raise Exception("You must not divide natural number by zero.")
+        elif self.compare(num) == 0:
+            return 1, 0
+
         n1 = Natural(str(self))
         n2 = Natural(str(num))
+        # k - первая цифра деления
         k = 0
+
+        # Если первое число меньше второго
         if n1.compare(n2) == 1:
-            n3 = n1
-            while n2.compare(n3) == 2:
-                k += 1
-                n3 = n1.mul_k(k)
-            k -= 1
-            n3 = n1.mul_k(k)
-            n1 = n3
-            dig = 1
-            while n2.compare(n3) == 2:
-                dig += 1
-                n3 = n1.mul_d(dig)
-            if n2.compare(n3) != 0:
-                dig -= 1
-            if dig == 10:
-                dig = 1
-                k += 1
-        elif n1.compare(n2) == 2:
-            n3 = n2
-            while n1.compare(n3) == 2:
-                k += 1
-                n3 = n2.mul_k(k)
-            k -= 1
-            n3 = n2.mul_k(k)
-            n2 = n3
-            dig = 1
-            while n1.compare(n3) == 2:
-                dig += 1
-                n3 = n2.mul_d(dig)
-            if n1.compare(n3) != 0:
-                dig -= 1
-            if dig == 10:
-                dig = 1
-                k += 1
+            less = n1
+            greater = n2
+        # Если второе число не больше второго
         else:
-            return 1, 0
+            less = n2
+            greater = n1
+
+        # Номер позиции первой цифры от деления greater на less
+        n3 = less
+        while greater.compare(n3) == 2:
+            k += 1
+            n3 = less.mul_k(k)
+        k -= 1
+
+        n3 = less.mul_k(k)
+        less = n3
+
+        # Находим цифру деления greater на less
+        dig = 1
+        while greater.compare(n3) == 2:
+            dig += 1
+            n3 = less.mul_d(dig)
+        # Если n3 стало больше greater, то уменьшаем цифру деления на 1
+        if greater.compare(n3) != 0:
+            dig -= 1
+        # Если оказалось, что цифра равна 10
+        if dig == 10:
+            # Увеличиваем номер позиции цифра на 1, dig присваиваем 1
+            dig = 1
+            k += 1
+
         return dig, k
 
     def sub_dn(self, dig, num):
