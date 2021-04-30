@@ -375,15 +375,13 @@ class MainWindow(QMainWindow):
         self.n_incr.clicked.connect(
             lambda: self.handleOperation(self.getNumber([Algebra.Natural]).increment, 1))
         self.n_mul_d.clicked.connect(
-            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_d, 2, [Algebra.Natural]))
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_d, 2, [int]))
         self.n_sub_dn.clicked.connect(
             lambda: self.handleOperation(self.getNumber([Algebra.Natural]).sub_dn, 3, [int, Algebra.Natural]))
         self.n_div_dk.clicked.connect(
             lambda: self.handleOperation(self.getNumber([Algebra.Natural]).div_dk, 2, [Algebra.Natural]))
         self.n_gcf.clicked.connect(
             lambda: self.handleOperation(self.getNumber([Algebra.Natural]).gcf, 2, [Algebra.Natural]))
-        self.n_lcm.clicked.connect(
-            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
         self.n_lcm.clicked.connect(
             lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
         self.n_is_zero.clicked.connect(
@@ -463,7 +461,7 @@ class MainWindow(QMainWindow):
         self.p_derivative.clicked.connect(
             lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).derivate, 1))
         self.p_gcf.clicked.connect(
-            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).__mod__, 2, [Algebra.Polynom]))
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).gcf, 2, [Algebra.Polynom]))
 
     def makeAction(self, act, op, noop, types = []):
         act(lambda: self.handleOperation(op, noop, types))
@@ -471,7 +469,7 @@ class MainWindow(QMainWindow):
     def toAnotherType(self, number, page):
         if self.errorFlag:
             self.errorFlag = False
-            pass
+            return
 
         question = QtWidgets.QMessageBox()
 
@@ -504,7 +502,7 @@ class MainWindow(QMainWindow):
                 elif page == RATIONAL:
                     self.operation = Algebra.Rational.integer_to_rational(number)
                 self.changePage(page)
-                self.currentLineEdit.setText(str(number))
+                self.currentLineEdit.setText(str(self.operation))
         except Exception as exc:
             self.errorHandle(CONVERTION_ERROR, repr(exc))
 
@@ -514,7 +512,7 @@ class MainWindow(QMainWindow):
 
         # Если нужно ввести полином, то в конструктор нужно будет передать не строку, а массив
         if len(types) == 1 and types[0] is Algebra.Polynom:
-            numbers = list(numbers)
+            numbers = [numbers]
 
         result = list()
         try:
@@ -689,7 +687,6 @@ def application():
 
     main_window.show()
     sys.exit(app.exec_())
-
 
 if __name__ == "__main__":
     application()
