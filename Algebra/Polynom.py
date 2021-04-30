@@ -72,6 +72,8 @@ class Polynom():
 
     def derivate(self):
         # Щусь
+        if self.power() == 0:
+            return Polynom([0])
         res = Polynom(self._coef[::-1])
         # Диффиренцируем каждый элемент полинома
         for i in range(self.power()):
