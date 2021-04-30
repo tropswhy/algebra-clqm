@@ -58,7 +58,8 @@ class Rational():
         ''' Функция преобразования дробного числа в целое '''
         # Показацкая Арина
         # Если знаменатель равен "1", число преобразуется в целое
-        if rational._denumerator == Natural("1"):
+        rational = rational.reduce()
+        if rational.is_int():
             return Integer(str(rational._numerator))
         else:
             raise Exception("unable to convert rational number into integer (denumerator is not equal to 1)")
