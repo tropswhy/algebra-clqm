@@ -44,7 +44,7 @@ class Rational():
     def __str__(self):
         return str(self._numerator) + "/" + str(self._denumerator)
 
-    '''МОДУЛИ INTEGER'''
+    '''МОДУЛИ RATIONAL'''
 
     def reduce(self):
         '''Модуль Q-1 RED_Q_Q. Выполнил и оформил Шабров Иван'''
