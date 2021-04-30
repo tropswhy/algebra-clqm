@@ -98,17 +98,20 @@ class Rational():
         elif num.is_zero():
             return Rational(str(self))
 
+        # lcm - знаменатель искомой дроби
         res = Rational(str(self))
-        lcm = self._denumerator.lcm(num._denumerator) # Получаем НОК
+        lcm = self._denumerator.lcm(num._denumerator)
 
+        # Получаем числитель первой дроби
         common_div1 = Integer(str(lcm / res._denumerator))
-        num1 = res._numerator * common_div1 # Получаем числитель первой дроби
+        num1 = res._numerator * common_div1
 
+        # Получаем числитель второй дроби
         common_div2 = Integer(str(lcm / num._denumerator))
-        num2 = num._numerator * common_div2 # Получаем числитель второй дроби
+        num2 = num._numerator * common_div2
 
-        res._numerator = num1 + num2 # Вычисляем общий числитель
-        res._denumerator = lcm # Приравниваем знаменатель к НОК
+        res._numerator = num1 + num2
+        res._denumerator = lcm
 
         return res
 
@@ -132,10 +135,9 @@ class Rational():
         return res
 
     def __mul__(self, num):
-        '''Модуль Q-7 MUL_QQ_Q. Выполнил и оформил Цыганков Дмитрий'''
+        '''Модуль Q-7 MUL_QQ_Q. Выполнил и оформил Жексенгалиев Адиль'''
 
-        # Жексенгалиев
-        # Провекра на ноль
+        # Проверка на ноль
         if self.is_zero() or num.is_zero():
             return Rational("0")
 
