@@ -228,7 +228,7 @@ class Polynom():
             else:
                 b = b % a
 
-        res = a if a.power() == 0 else b
+        res = b if a.power() == 0 else a
         if res.power() == 0 and not res._coef[0].is_int():
             res = Polynom([1])
         return res
