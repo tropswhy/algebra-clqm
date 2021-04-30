@@ -11,6 +11,7 @@ POLYNOM = 3
 
 INPUT_ERROR = 0
 CALCULATION_ERROR = 1
+CONVERTION_ERROR = 2
 
 class MainWindow(QMainWindow):
 
@@ -357,39 +358,156 @@ class MainWindow(QMainWindow):
         # NATURAL BUTTONS ACTIONS
         self.n_input.returnPressed.connect(lambda: self.execOperation(self.getNumber(self.types)))
 
-        self.n_add.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__add__, 2, [Algebra.Natural]))
-        self.n_sub.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__sub__, 2, [Algebra.Natural]))
-        self.n_mul.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__mul__, 2, [Algebra.Natural]))
-        self.n_div.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__truediv__, 2, [Algebra.Natural]))
-        self.n_mod.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__mod__, 2, [Algebra.Natural]))
-        self.n_cmp.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).compare, 2, [Algebra.Natural]))
-        self.n_mul_k.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_k, 2, [Algebra.Natural]))
-        self.n_incr.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).increment, 1))
-        self.n_mul_d.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_d, 2, [Algebra.Natural]))
-        self.n_sub_dn.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).sub_dn, 3, [int, Algebra.Natural]))
-        self.n_div_dk.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).div_dk, 2, [Algebra.Natural]))
-        self.n_gcf.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).gcf, 2, [Algebra.Natural]))
-        self.n_lcm.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
-        self.n_lcm.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
-        self.n_is_zero.clicked.connect(lambda: self.handleOperation(self.getNumber([Algebra.Natural]).is_zero, 1))
-        self.z_ntoz.clicked.connect(lambda: self.toAnotherType(self.getNumber([Algebra.Natural]), INTEGER))
+        self.n_add.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__add__, 2, [Algebra.Natural]))
+        self.n_sub.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__sub__, 2, [Algebra.Natural]))
+        self.n_mul.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__mul__, 2, [Algebra.Natural]))
+        self.n_div.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__truediv__, 2, [Algebra.Natural]))
+        self.n_mod.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).__mod__, 2, [Algebra.Natural]))
+        self.n_cmp.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).compare, 2, [Algebra.Natural]))
+        self.n_mul_k.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_k, 2, [int]))
+        self.n_incr.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).increment, 1))
+        self.n_mul_d.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).mul_d, 2, [Algebra.Natural]))
+        self.n_sub_dn.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).sub_dn, 3, [int, Algebra.Natural]))
+        self.n_div_dk.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).div_dk, 2, [Algebra.Natural]))
+        self.n_gcf.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).gcf, 2, [Algebra.Natural]))
+        self.n_lcm.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
+        self.n_lcm.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).lcm, 2, [Algebra.Natural]))
+        self.n_is_zero.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Natural]).is_zero, 1))
+        self.z_ntoz.clicked.connect(
+            lambda: self.toAnotherType(self.getNumber([Algebra.Natural]), INTEGER))
 
+        # INTEGER BUTTONS ACTIONS
+        self.z_input.returnPressed.connect(
+            lambda: self.execOperation(self.getNumber(self.types)))
+
+        self.z_zton.clicked.connect(
+            lambda: self.toAnotherType(self.getNumber([Algebra.Integer]), NATURAL))
+        self.z_change_sign.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).change_sign, 1))
+        self.z_div.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).__truediv__, 2, [Algebra.Integer]))
+        self.z_mod.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).__mod__, 2, [Algebra.Integer]))
+        self.z_add.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).__add__, 2, [Algebra.Integer]))
+        self.z_mul.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).__mul__, 2, [Algebra.Integer]))
+        self.z_abs.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).__abs__, 1))
+        self.z_sub.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).__sub__, 2, [Algebra.Integer]))
+        self.z_sign.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Integer]).sign, 1))
+        self.r_to_rational.clicked.connect(
+            lambda: self.toAnotherType(self.getNumber([Algebra.Integer]), RATIONAL))
+
+        # RATIONAL BUTTONS ACTIONS
+        self.r_input.returnPressed.connect(
+            lambda: self.execOperation(self.getNumber(self.types)))
+
+        self.r_mul.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Rational]).__mul__, 2, [Algebra.Rational]))
+        self.r_add.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Rational]).__add__, 2, [Algebra.Rational]))
+        self.r_reduce.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Rational]).reduce, 1))
+        self.r_sub.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Rational]).__sub__, 2, [Algebra.Rational]))
+        self.r_is_int.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Rational]).is_int, 1))
+        self.r_div.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Rational]).__truediv__, 2, [Algebra.Rational]))
+        self.r_to_int.clicked.connect(
+            lambda: self.toAnotherType(self.getNumber([Algebra.Rational]), INTEGER))
+
+        # POLYNOM BUTTONS ACTIONS
+        self.p_input.returnPressed.connect(lambda: self.execOperation(self.getNumber(self.types)))
+
+        self.p_add.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).__add__, 2, [Algebra.Polynom]))
+        self.p_sub.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).__sub__, 2, [Algebra.Polynom]))
+        self.p_mul.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).__mul__, 2, [Algebra.Polynom]))
+        self.p_div.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).__truediv__, 2, [Algebra.Polynom]))
+        self.p_mod.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).__mod__, 2, [Algebra.Polynom]))
+        self.p_mul_q.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).mul_q, 2, [Algebra.Rational]))
+        self.p_high_c.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).higher_coef, 1))
+        self.p_mul_xk.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).mul_xk, 2, [int]))
+        self.p_power.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).power, 1))
+        self.p_nmr.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).nmr, 1))
+        self.p_fac.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).fac, 1))
+        self.p_derivative.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).derivate, 1))
+        self.p_gcf.clicked.connect(
+            lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).__mod__, 2, [Algebra.Polynom]))
 
     def makeAction(self, act, op, noop, types = []):
         act(lambda: self.handleOperation(op, noop, types))
 
-    def toAnotherType(self, number):
+    def toAnotherType(self, number, page):
+        if self.errorFlag:
+            self.errorFlag = False
+            pass
+
         question = QtWidgets.QMessageBox()
 
         question.setWindowTitle("Перейти к другой странице")
+        if page == NATURAL:
+            question.setText("Перейти к странице с натуральными числами?")
+        elif page == INTEGER:
+            question.setText("Перейти к странице с целыми числами?")
+        elif page == RATIONAL:
+            question.setText("Перейти к странице с дробными числами?")
+        else:
+            question.setText("Перейти к странице с многочленами (полиномами)?")
 
+        question.setIcon(QtWidgets.QMessageBox.Warning)
+        question.setStandardButtons(QtWidgets.QMessageBox.Ok|QtWidgets.QMessageBox.Cancel)
 
-        error.setIcon(QtWidgets.QMessageBox.Warning)
-        error.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        question.buttonClicked.connect(lambda x: self.btnClicked(x, number, page))
 
-        error.setDetailedText(errorText)
+        question.exec_()
 
-        error.exec_()
+    def btnClicked(self, btn, number, page):
+        try:
+            if btn.text() == "OK":
+                if page == NATURAL:
+                    self.operation = Algebra.Integer.to_natural(number)
+                elif page == INTEGER and self.currentIndex == NATURAL:
+                    self.operation = Algebra.Integer.natural_to_integer(number)
+                elif page == INTEGER and self.currentIndex == RATIONAL:
+                    self.operation = Algebra.Rational.to_integer(number)
+                elif page == RATIONAL:
+                    self.operation = Algebra.Rational.integer_to_rational(number)
+                self.changePage(page)
+                self.currentLineEdit.setText(str(number))
+        except Exception as exc:
+            self.errorHandle(CONVERTION_ERROR, repr(exc))
+
     # types - это массив типов чисел, которые должны быть введены
     def getNumber(self, types):
         numbers = list(str(self.currentLineEdit.text()).split())
