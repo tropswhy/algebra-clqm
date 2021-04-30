@@ -248,8 +248,8 @@ class Natural():
         # Проверка цифры
         if digit < 0:
             raise Exception("unable to multiple a natural number by a negative digit")
-        elif digit > 9:
-            raise Exception("digit cannot be greater than 9")
+        elif digit > 10:
+            raise Exception("digit cannot be greater than 10")
         # Проверка на ноль
         if self.is_zero() or digit == 0:
             return Natural("0")
@@ -387,9 +387,10 @@ class Natural():
         n2 = Natural(str(num))
         res = Natural()
 
-        res._number = [0 for i in range(res._dig_n)]
         # Количество разрядов в результирующем числе
         res._dig_n = n1.div_dk(n2)[1] + 1
+        res._number = [0 for i in range(res._dig_n)]
+
 
         while n1.compare(n2) != 1:
             # Очередная цифра результата и номер позиции этой цифры
@@ -398,6 +399,13 @@ class Natural():
             # Делитель, умноженный на 10 в степени b
             c = n2.mul_k(b)
             n1 = n1.sub_dn(a, c)
+
+        # Удаляем нули после деления
+        c = res._dig_n - 1
+        while c > 0 and res._number[c] == 0:
+            res._number.pop(c)
+            res._dig_n -= 1
+            c -= 1
 
         return res
 
