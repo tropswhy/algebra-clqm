@@ -1,4 +1,5 @@
 import Algebra
+import webbrowser
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -331,8 +332,8 @@ class MainWindow(QMainWindow):
     def createMenuBar(self):
         self.menu_bar = QtWidgets.QMenuBar(self)
         self.menu_bar.setGeometry(QtCore.QRect(0, 0, 500, 21))
-        self.about = QtWidgets.QMenu(self.menu_bar)
-        self.help = QtWidgets.QMenu(self.menu_bar)
+        # self.about = QtWidgets.QMenu(self.menu_bar)
+        self.others = QtWidgets.QMenu(self.menu_bar)
         self.classes = QtWidgets.QMenu(self.menu_bar)
         self.setMenuBar(self.menu_bar)
 
@@ -346,14 +347,21 @@ class MainWindow(QMainWindow):
         self.to_wRational.triggered.connect(lambda: self.changePage(RATIONAL))
         self.to_wPolynom = QtWidgets.QAction(self)
         self.to_wPolynom.triggered.connect(lambda: self.changePage(POLYNOM))
-        # TO DO: add "help" and "about" triggers
+
+        self.help = QtWidgets.QAction(self)
+        self.help.triggered.connect(self.open_help)
+        self.about = QtWidgets.QAction(self)
+        self.about.triggered.connect(self.open_about)
+
         self.classes.addAction(self.to_wNatural)
         self.classes.addAction(self.to_wInteger)
         self.classes.addAction(self.to_wRational)
         self.classes.addAction(self.to_wPolynom)
+        self.others.addAction(self.help)
+        self.others.addAction(self.about)
+
         self.menu_bar.addAction(self.classes.menuAction())
-        self.menu_bar.addAction(self.help.menuAction())
-        self.menu_bar.addAction(self.about.menuAction())
+        self.menu_bar.addAction(self.others.menuAction())
 
         # NATURAL BUTTONS ACTIONS
         self.n_input.returnPressed.connect(lambda: self.execOperation(self.getNumber(self.types)))
@@ -462,6 +470,14 @@ class MainWindow(QMainWindow):
             lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).derivate, 1))
         self.p_gcf.clicked.connect(
             lambda: self.handleOperation(self.getNumber([Algebra.Polynom]).gcf, 2, [Algebra.Polynom]))
+
+    def open_help(self):
+        webbrowser.open(
+            "https://docs.google.com/document/d/1bI2HqqG6HD9MqF5VXyMlmQ4HzDjcNjzlJ-XzVP2vOlA/edit?usp=sharing")
+
+    def open_about(self):
+        webbrowser.open(
+            "https://docs.google.com/document/d/1UQml9XQd2H7PG7L-zd97Js5zGSWCsT7vJ1h2A91Pz2k/edit?usp=sharing")
 
     def makeAction(self, act, op, noop, types = []):
         act(lambda: self.handleOperation(op, noop, types))
@@ -668,8 +684,7 @@ class MainWindow(QMainWindow):
         self.p_fac.setText(_translate("self", "НОД / НОК"))
         self.p_derivative.setText(_translate("self", "Производная"))
         self.p_gcf.setText(_translate("self", "НОД"))
-        self.about.setTitle(_translate("self", "О проекте"))
-        self.help.setTitle(_translate("self", "Помощь"))
+        self.others.setTitle(_translate("self", "Другое"))
         self.classes.setTitle(_translate("self", "Классы"))
 
         # ВОЗМОЖНО стоит убрать action_2...? Нигде не используется
@@ -679,7 +694,8 @@ class MainWindow(QMainWindow):
         self.to_wInteger.setText(_translate("self", "Целые числа"))
         self.to_wRational.setText(_translate("self", "Рациональные числа"))
         self.to_wPolynom.setText(_translate("self", "Полиномы (многочлены)"))
-
+        self.help.setText("Помощь")
+        self.about.setText("О проекте")
 
 def application():
     app = QApplication(sys.argv)
