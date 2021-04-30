@@ -9,15 +9,16 @@ ZERO = 0
 
 class Integer():
 
+    # _number - "натуральная часть" числа
+    # _sign - знак целого числа: 2 - положительное, 1 - отрицательное, 0 - ноль
     def __init__(self, n: str = None):
-        # Если число не было передано в качестве аргумента
         if not n:
             self._number = Natural()
             self._sign = ZERO
         elif not Integer.isInteger(n):
             raise Exception("number passed to \"Integer\" class constructor is invailid")
         else:
-            # Число отрицательное
+            # Если число отрицательное
             if n[0] == '-':
                 self._number = Natural(n[1:])
                 self._sign = NEGATIVE
@@ -74,22 +75,14 @@ class Integer():
         else:  # num._sign == ZERO
             return self._sign == NEGATIVE
 
-    def sign(self):
-        # Определение положительности числа
-        # Трибунский Алексей
-        return self._sign
+    def is_zero(self):
+        return self._number.is_zero()
 
-    def change_sign(self):
-        ''' Функция умножения целого числа на -1'''
-        # Показацкая Арина
-        if self._sign == NEGATIVE:
-            self._sign = POSITIVE
-        elif self._sign == POSITIVE:
-            self._sign = NEGATIVE
-        return self
+    '''МОДУЛИ INTEGER'''
 
     def __abs__(self):
-        '''Модуль ABS_Z_N выполнила и оформила Реброва Юлия'''
+        '''Модуль Z-1 ABS_Z_N. Выполнила и оформила Реброва Юлия'''
+
         if self._sign == NEGATIVE:
             a = Integer(str(self))
             a._sign = POSITIVE
@@ -99,40 +92,39 @@ class Integer():
             res = Natural(str(self))
             return res
 
+    def sign(self):
+        '''Модуль Z-2 POZ_Z_D. Выполнил и оформил Трибунский Алексей'''
+
+        return self._sign
+
+    def change_sign(self):
+        '''Модуль Z-3 MUL_ZM_Z. Выполнила и оформила Показацкая Арина'''
+
+        if self._sign == NEGATIVE:
+            self._sign = POSITIVE
+        elif self._sign == POSITIVE:
+            self._sign = NEGATIVE
+        return self
+
+    @staticmethod
+    def natural_to_integer(natural):
+        '''Модуль Z-4 TRANS_N_Z. Выполнил и оформил Солодков Никита'''
+
+        return Integer(str(natural))
+
     @staticmethod
     def to_natural(integer):
-        '''Модуль TRANZ_Z_N, оформил Проскуряк Влад'''
+        '''Модуль Z-5 TRANZ_Z_N. Выполнил и оформил Проскуряк Влад'''
+
         if (integer._sign != NEGATIVE):
             res = Natural(str(integer))
             return res
         else:
             raise Exception("negative number cannot be converted into natural")
 
-    @staticmethod
-    def natural_to_integer(natural):
-        ''' Солодков '''
-        return Integer(str(natural))
-
-    def is_zero(self):
-        return self._number.is_zero()
-
-    def __mul__(self, num):
-        # Жексенгалиев
-        # Проверка на ноль
-        if self.is_zero() or num.is_zero():
-            return Integer("0")
-
-        res = Integer()
-        res._number = self._number * num._number
-        res._sign = POSITIVE
-        # Если знаки self и num отличаются
-        if self._sign != num._sign:
-            res.change_sign()
-
-        return res
-
     def __add__(self, num):
-        '''Модуль ADD_ZZ_Z, оформил Трибунский Алексей'''
+        '''Модуль Z-6 ADD_ZZ_Z. Выполнил и оформил Трибунский Алексей'''
+
         sign1 = self.sign()
         sign2 = num.sign()
         # Если первое число - нуль, то выводим второе число
@@ -162,22 +154,9 @@ class Integer():
             res = res.change_sign()
         return res
 
-    def __mod__(self, num):
-        # Модуль ADD_ZZ_Z выполнил и оформил Щусь Максим
-        # Проверка на ноль
-        if num._number.is_zero():
-            raise Exception("unable to find modulo by zero")
-
-        z1 = Integer(str(self))
-        z2 = Integer(str(num))
-        # div - частное
-        div = (z1 / z2)
-
-        return z1 - z2 * div
-
     def __sub__(self, num):
-        ''' Функция вычитания целых чисел '''
-        # Показацкая Арина
+        '''Модуль Z-7 SUB_ZZ_Z. Выполнила и оформила Показацкая Арина'''
+
         res = Integer("0")
         sign1 = self.sign()
         sign2 = num.sign()
@@ -216,8 +195,25 @@ class Integer():
 
         return res
 
+    def __mul__(self, num):
+        '''Модуль Z-8 MUL_ZZ_Z. Выполнил и оформил Жексенгалиев Адиль'''
+
+        # Проверка на ноль
+        if self.is_zero() or num.is_zero():
+            return Integer("0")
+
+        res = Integer()
+        res._number = self._number * num._number
+        res._sign = POSITIVE
+        # Если знаки self и num отличаются
+        if self._sign != num._sign:
+            res.change_sign()
+
+        return res
+
     def __truediv__(self, num):
-        ''' Модуль DIV_ZZ_Z выполнил и оформил Солодков Никита '''
+        '''Модуль Z-9 DIV_ZZ_Z. Выполнил и оформил Солодков Никита'''
+
         # Проверка на ноль
         if num.is_zero():
             raise Exception("unable to divide by zero")
@@ -246,3 +242,16 @@ class Integer():
         if (res._number == Natural("0")):
             res._sign = ZERO
         return res
+
+    def __mod__(self, num):
+        '''Модуль Z-10 MOD_ZZ_Z. Выполнил и оформил Щусь Максим'''
+
+        # Проверка на ноль
+        if num._number.is_zero():
+            raise Exception("unable to find modulo by zero")
+
+        z1 = Integer(str(self))
+        z2 = Integer(str(num))
+        div = (z1 / z2)
+
+        return z1 - z2 * div

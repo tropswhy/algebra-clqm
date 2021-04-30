@@ -188,6 +188,7 @@ class Natural():
 
     def __sub__(self, num):
         '''Модуль N-5 SUB_NN_N. Выполнил и оформил Солодков Никита'''
+
         t = self.compare(num)
         # Если self больше num
         if t == 2:
@@ -245,6 +246,7 @@ class Natural():
 
     def mul_d(self, digit: int):
         '''Модуль N-6 MUL_ND_N. Выполнил и оформил Цыганков Дмитрий'''
+
         # Проверка цифры
         if digit < 0:
             raise Exception("unable to multiple a natural number by a negative digit")
@@ -288,6 +290,7 @@ class Natural():
 
     def mul_k(self, tenpow: int):
         '''Модуль N-7 MUL_Nk_N. Выполнил и оформил Цыганков Дмитрий'''
+
         # Проверка на неотрицательность
         if tenpow < 0:
             raise Exception("unable to raise a natural number to a negative power")
@@ -305,6 +308,7 @@ class Natural():
 
     def __mul__(self, x):
         '''Модуль N-8 MUL_NN_N. Выполнил и оформил Трибунский Алексей'''
+
         res = Natural("0")
         # Проходим по всем цифрам второго множителя
         for i in range(x._dig_n):
@@ -314,6 +318,7 @@ class Natural():
 
     def sub_dn(self, dig, num):
         '''Модуль N-9 SUB_NDN_N. Выполнила и оформила Реброва Юлия'''
+
         # Проверка цифры
         if dig < 0:
             raise Exception("unable to multiple a natural number by a negative digit")
@@ -328,6 +333,7 @@ class Natural():
 
     def div_dk(self, num):
         '''Модуль N-10 DIV_NN_Dk. Выполнил и оформил Щусь Максим'''
+
         # Проверка на ноль
         if self.is_zero():
             return 0, 0
@@ -377,6 +383,7 @@ class Natural():
 
     def __truediv__(self, num):
         '''Модуль N-11 DIV_NN_N. Выполнила и оформила Показацкая Арина'''
+
         # Проверка на ноль
         if self.is_zero():
             return Natural("0")
@@ -411,6 +418,7 @@ class Natural():
 
     def __mod__(self, num):
         '''Модуль N-12 MOD_NN_N. Выполнил и оформил Проскуряк Влад'''
+
         # Проверка на ноль
         if num.is_zero():
             raise Exception("unable to find modulo by zero")
@@ -423,6 +431,7 @@ class Natural():
 
     def gcf(self, num):
         '''Модуль N-13 GCF_NN_N. Выполнил и оформил Шабров Иван'''
+
         # Проверка на ноль
         if self.is_zero() and num.is_zero():
             raise Exception("gcf of both zeros is undefined")
@@ -441,6 +450,7 @@ class Natural():
 
     def lcm(self, num):
         '''Модуль N-14 LCM_NN_N. Выполнил и оформил Жексенгалиев Адиль'''
+
         # Проверка на ноль
         if self.is_zero():
             if num.is_zero():
